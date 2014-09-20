@@ -1,0 +1,26 @@
+{
+    "name": "jorgeborges/php-ga-measurement-protocol",
+    "description": "PHP library for sending user interaction data directly to GA servers using Google Analytics Measurement Protocol.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jorge A. Borges",
+            "email": "contact@jorgeborges.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "guzzlehttp/guzzle": "4.*",
+        "symfony/finder": "~2.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.2.*",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "JorgeBorges\\Google\\Analytics": "src/"
+        }
+    }
+}
