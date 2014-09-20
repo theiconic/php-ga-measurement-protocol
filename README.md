@@ -1,4 +1,4 @@
 php-ga-measurement-protocol
 ===========================
 
-PHP library to send user interaction data directly to GA servers using Google Analytics Measurement Protocol.
+PHP library for sending user interaction data directly to GA servers using Google Analytics Measurement Protocol.
