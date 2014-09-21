@@ -3,7 +3,7 @@
 namespace JorgeBorges\Google\Analytics;
 
 use JorgeBorges\Google\Analytics\Parameters\Hit\HitType;
-use GuzzleHttp\Client as HttpClient;
+
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -32,6 +32,8 @@ class Analytics
 
     private $availableParameters;
 
+    private $httpClient;
+
     public function __construct($isSsl = false)
     {
         if (!is_bool($isSsl)) {
@@ -45,13 +47,34 @@ class Analytics
         $this->availableParameters = $this->getAvailableParameters();
     }
 
+    /**
+     * @param HttpClient $httpClient
+     */
+    public function setHttpClient($httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    /**
+     * @return HttpClient
+     */
+    private function getHttpClient()
+    {
+        if ($this->httpClient === null) {
+            // @codeCoverageIgnoreStart
+            $this->setHttpClient(new HttpClient());
+        }
+        // @codeCoverageIgnoreEnd
+
+        return $this->httpClient;
+    }
+
     private function getAvailableParameters()
     {
         $parameterClassNames = [];
 
         $finder = new Finder();
 
-        // Filter for only valid parser files, not MasterParser, Abstract class or Interface
         $filter = function (\SplFileInfo $file) {
             if (strpos($file, static::ABSTRACT_SUBSTRING) !== false) {
                 return false;
@@ -82,28 +105,7 @@ class Analytics
     {
         $this->setHitType(HitType::HIT_TYPE_PAGEVIEW);
 
-        $client = new HttpClient();
-
-        $respose = $client->post(
-            $this->getEndpoint(),
-            [
-                'body' => $this->getPostBody(),
-            ]
-        );
-
-
-        return $respose->getReasonPhrase();
-    }
-
-    private function getPostBody()
-    {
-        $postData = [];
-
-        foreach ($this->parameters as $parameterObj) {
-            $postData[$parameterObj->getName()] = $parameterObj->getValue();
-        }
-
-        return $postData;
+        return $this->getHttpClient()->post($this->getEndpoint(), $this->parameters);
     }
 
     public function __call($methodName, array $methodArguments)
@@ -122,18 +124,6 @@ class Analytics
             $this->parameters[$parameterObject->getName()] = $parameterObject;
 
             return $this;
-
-/*            if (array_key_exists($matches[2], $this->getStructure()->getAttributeMap())) {
-                $methodType = substr($methodName, 0, 3);
-
-                if ($methodType === 'get') {
-                    return $this->data[$this->getStructure()->getAttributeMap()[$matches[2]]['index']];
-                } else {
-                    $this->data[$this->getStructure()->getAttributeMap()[$matches[2]]['index']] = $methodArguments[0];
-                }
-            } else {
-                throw new \BadMethodCallException('No key found in Attribute Mapper for the requested attribute');
-            }*/
         }
     }
 }

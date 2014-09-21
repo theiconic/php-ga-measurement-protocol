@@ -14,6 +14,6 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             ->setDocumentPath('/')
             ->sendPageview();
 
-        $this->assertEquals('OK', $result);
+        $this->assertEquals('200', $result);
     }
 }
