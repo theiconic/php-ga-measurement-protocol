@@ -20,10 +20,6 @@ use Symfony\Component\Finder\Finder;
  */
 class Analytics
 {
-    const ABSTRACT_SUBSTRING = 'Abstract';
-
-    const PHP_EXTENSION = '.php';
-
     private $protocol = 'http';
 
     private $endpoint = '://www.google-analytics.com/collect';
@@ -75,22 +71,20 @@ class Analytics
 
         $finder = new Finder();
 
-        $filter = function (\SplFileInfo $file) {
-            if (strpos($file, static::ABSTRACT_SUBSTRING) !== false) {
-                return false;
-            }
-        };
-
-        $finder->files()->filter($filter)->in(__DIR__ . '/Parameters');
+        $finder->files()->in(__DIR__ . '/Parameters');
 
         foreach ($finder as $file) {
             $categorisedParameter = str_replace(
-                [static::PHP_EXTENSION, '/'],
+                ['.php', '/'],
                 ['', '\\'],
                 $file->getRelativePathname()
             );
             $categorisedParameterArray = explode('\\', $categorisedParameter);
-            $parameterClassNames[$categorisedParameterArray[1]] = $categorisedParameter;
+
+            $validCategorisedParameterCount = 2;
+            if (count($categorisedParameterArray) >= $validCategorisedParameterCount) {
+                $parameterClassNames[$categorisedParameterArray[1]] = $categorisedParameter;
+            }
         }
 
         return $parameterClassNames;
