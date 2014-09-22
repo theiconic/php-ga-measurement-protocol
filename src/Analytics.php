@@ -127,8 +127,15 @@ class Analytics
 
     public function __call($methodName, array $methodArguments)
     {
-        if (preg_match('/(set)(\w+)/', $methodName, $matches)) {
+        if (preg_match('/^(setProductActionTo)(\w+)/', $methodName, $matches)) {
+            $action = strtoupper(substr($methodName, 18));
+            $actionConstant =
+                constant("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\ProductAction::PRODUCT_ACTION_$action");
+            $this->setProductAction($actionConstant);
+            return $this;
+        }
 
+        if (preg_match('/^(set)(\w+)/', $methodName, $matches)) {
             $parameterClass = substr($methodName, 3);
 
             $fullParameterClass =
