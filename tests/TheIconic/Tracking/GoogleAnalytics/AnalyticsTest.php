@@ -17,7 +17,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('200', $result);
     }
 
-/*    public function testPurchaseTracking()
+    public function testPurchaseTracking()
     {
         $analytics = new Analytics();
 
@@ -26,8 +26,9 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             ->setClientId('555')
             ->setUserId('666')
             ->setDocumentHostName('alice.core.au')
-            ->setDocumentPath('/')
-            ->setTransactionId('12345')
+            ->setDocumentPath('/');
+
+        $analytics->setTransactionId('12345')
             ->setAffiliation('THE ICONIC')
             ->setRevenue(100.50)
             ->setTax(10.0)
@@ -40,19 +41,20 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             'brand' => 'Test Brand',
             'category' => 'Test Category 1/Test Category 2',
             'variant' => 'blue',
-            'price' => 85,
+            'price' => 85.00,
             'quantity' => 2,
             'coupon_code' => 'TEST',
             'position' => 4
         ];
 
-        $product = new Parameters\EnhancedEcommerce\Product($productData);
+        $analytics->addProduct($productData);
 
-        $analytics->addProduct($product)
-            ->setProductActionPurchase();
+        $analytics->setProductActionToPurchase();
 
-        $analytics->setEventCategory('')
+        $result = $analytics->setEventCategory('Checkout')
+            ->setEventAction('Purchase')
+            ->sendEvent();
 
         $this->assertEquals('200', $result);
-    }*/
+    }
 }
