@@ -12,6 +12,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProtocolVersion($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTrackingId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setClientId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentHostName($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
