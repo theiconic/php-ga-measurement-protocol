@@ -30,7 +30,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
 
         $analytics->setTransactionId('12345')
             ->setAffiliation('THE ICONIC')
-            ->setRevenue(100.50)
+            ->setRevenue(150.50)
             ->setTax(10.0)
             ->setShipping(15.5)
             ->setCouponCode('TEST');
@@ -45,6 +45,20 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             'quantity' => 2,
             'coupon_code' => 'TEST',
             'position' => 4
+        ];
+
+        $analytics->addProduct($productData);
+
+        $productData = [
+            'sku' => 'AAAA-6666',
+            'name' => 'Test Product 2',
+            'brand' => 'Test Brand 2',
+            'category' => 'Test Category 3/Test Category 4',
+            'variant' => 'yellow',
+            'price' => 50.00,
+            'quantity' => 1,
+            'coupon_code' => 'TEST 2',
+            'position' => 2
         ];
 
         $analytics->addProduct($productData);

@@ -8,6 +8,11 @@ abstract class CompoundParameter
 
     protected $parameters = [];
 
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
     protected function saveCompoundParameterData(array $productData)
     {
         foreach ($productData as $name => $value) {
