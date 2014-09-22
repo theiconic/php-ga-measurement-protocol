@@ -2,6 +2,7 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use GuzzleHttp\Client;
 
 class HttpClient
@@ -41,6 +42,7 @@ class HttpClient
     {
         $postData = [];
 
+        /** @var SingleParameter $parameterObj */
         foreach ($parameters as $parameterObj) {
             $postData[$parameterObj->getName()] = $parameterObj->getValue();
         }

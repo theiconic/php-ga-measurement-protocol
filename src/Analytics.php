@@ -2,8 +2,8 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType;
-
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -118,6 +118,7 @@ class Analytics
             $fullParameterClass =
                 '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
 
+            /** @var SingleParameter $parameterObject */
             $parameterObject = new $fullParameterClass();
 
             $parameterObject->setValue($methodArguments[0]);
