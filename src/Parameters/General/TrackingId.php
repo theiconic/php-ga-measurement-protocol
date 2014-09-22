@@ -2,9 +2,9 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters\General;
 
-use TheIconic\Tracking\GoogleAnalytics\Parameters\AbstractParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 
-class TrackingId extends AbstractParameter
+class TrackingId extends SingleParameter
 {
     protected $name = 'tid';
 }

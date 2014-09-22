@@ -2,9 +2,9 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters\ContentInformation;
 
-use TheIconic\Tracking\GoogleAnalytics\Parameters\AbstractParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 
-class DocumentHostName extends AbstractParameter
+class DocumentHostName extends SingleParameter
 {
     protected $name = 'dh';
 }

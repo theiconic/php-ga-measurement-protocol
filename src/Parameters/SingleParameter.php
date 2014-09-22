@@ -2,7 +2,7 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 
-abstract class AbstractParameter
+abstract class SingleParameter
 {
     protected $name = '';
 

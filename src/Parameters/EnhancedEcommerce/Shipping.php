@@ -2,9 +2,9 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce;
 
-use TheIconic\Tracking\GoogleAnalytics\Parameters\AbstractParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 
-class Shipping extends AbstractParameter
+class Shipping extends SingleParameter
 {
     protected $name = 'ts';
 }
