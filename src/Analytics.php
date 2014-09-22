@@ -15,6 +15,12 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentHostName($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTransactionId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAffiliation($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setRevenue($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTax($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setShipping($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCouponCode($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
  *
  * @package TheIconic\Tracking\GoogleAnalytics
