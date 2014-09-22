@@ -1,22 +1,22 @@
 <?php
 
-namespace JorgeBorges\Google\Analytics;
+namespace TheIconic\Tracking\GoogleAnalytics;
 
-use JorgeBorges\Google\Analytics\Parameters\Hit\HitType;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType;
 
 use Symfony\Component\Finder\Finder;
 
 /**
  * Class Analytics
  *
- * @method \JorgeBorges\Google\Analytics\Analytics setProtocolVersion($value)
- * @method \JorgeBorges\Google\Analytics\Analytics setTrackingId($value)
- * @method \JorgeBorges\Google\Analytics\Analytics setClientId($value)
- * @method \JorgeBorges\Google\Analytics\Analytics setDocumentPath($value)
- * @method \JorgeBorges\Google\Analytics\Analytics setDocumentHostName($value)
- * @method \JorgeBorges\Google\Analytics\Analytics setHitType($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProtocolVersion($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTrackingId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setClientId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentHostName($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
  *
- * @package JorgeBorges\Google\Analytics
+ * @package TheIconic\Tracking\GoogleAnalytics
  */
 class Analytics
 {
@@ -109,7 +109,7 @@ class Analytics
             $parameterClass = substr($methodName, 3);
 
             $fullParameterClass =
-                '\\JorgeBorges\\Google\\Analytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+                '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
 
             $parameterObject = new $fullParameterClass();
 

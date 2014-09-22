@@ -1,6 +1,6 @@
 <?php
 
-namespace JorgeBorges\Google\Analytics\Parameters;
+namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 
 abstract class AbstractParameter
 {

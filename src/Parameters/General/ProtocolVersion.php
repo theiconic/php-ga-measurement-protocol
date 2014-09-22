@@ -1,8 +1,8 @@
 <?php
 
-namespace JorgeBorges\Google\Analytics\Parameters\General;
+namespace TheIconic\Tracking\GoogleAnalytics\Parameters\General;
 
-use JorgeBorges\Google\Analytics\Parameters\AbstractParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\AbstractParameter;
 
 class ProtocolVersion extends AbstractParameter
 {

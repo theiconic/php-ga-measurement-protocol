@@ -1,6 +1,6 @@
 <?php
 
-namespace JorgeBorges\Google\Analytics;
+namespace TheIconic\Tracking\GoogleAnalytics;
 
 use GuzzleHttp\Client;
 

@@ -1,12 +1,12 @@
 {
-    "name": "jorgeborges/php-ga-measurement-protocol",
+    "name": "theiconic/php-ga-measurement-protocol",
     "description": "PHP library for sending user interaction data directly to GA servers using Google Analytics Measurement Protocol.",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Jorge A. Borges",
-            "email": "contact@jorgeborges.me"
+            "name": "THE ICONIC ENGINEERING TEAM",
+            "email": "engineering@theiconic.com.au"
         }
     ],
     "require": {
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JorgeBorges\\Google\\Analytics\\": "src/"
+            "TheIconic\\Tracking\\GoogleAnalytics\\": "src/"
         }
     }
 }

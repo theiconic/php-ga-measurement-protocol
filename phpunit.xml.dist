@@ -5,7 +5,7 @@
         >
     <testsuites>
         <testsuite name="PHP GA Measurement Protocol Test Suite">
-            <directory>./tests/JorgeBorges/Google/Analytics/</directory>
+            <directory>./tests/TheIconic/Tracking/GoogleAnalytics/</directory>
         </testsuite>
     </testsuites>
     <filter>

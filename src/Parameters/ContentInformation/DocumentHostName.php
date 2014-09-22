@@ -1,8 +1,8 @@
 <?php
 
-namespace JorgeBorges\Google\Analytics\Parameters\ContentInformation;
+namespace TheIconic\Tracking\GoogleAnalytics\Parameters\ContentInformation;
 
-use JorgeBorges\Google\Analytics\Parameters\AbstractParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\AbstractParameter;
 
 class DocumentHostName extends AbstractParameter
 {

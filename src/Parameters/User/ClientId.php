@@ -1,8 +1,8 @@
 <?php
 
-namespace JorgeBorges\Google\Analytics\Parameters\User;
+namespace TheIconic\Tracking\GoogleAnalytics\Parameters\User;
 
-use JorgeBorges\Google\Analytics\Parameters\AbstractParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\AbstractParameter;
 
 class ClientId extends AbstractParameter
 {
