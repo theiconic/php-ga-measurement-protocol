@@ -3,6 +3,7 @@
 namespace TheIconic\Tracking\GoogleAnalytics;
 
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType;
 use Symfony\Component\Finder\Finder;
 
@@ -22,6 +23,16 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setShipping($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCouponCode($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProduct(array $productData)
+ *
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToDetail()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToClick()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToAdd()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToRemove()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToCheckout()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToCheckoutOption()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToPurchase()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToRefund()
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
@@ -32,6 +43,11 @@ class Analytics
     private $endpoint = '://www.google-analytics.com/collect';
 
     private $parameters = [];
+
+    /**
+     * @var  CompoundParameterCollection[]
+     */
+    private $parametersCollection = [];
 
     private $availableParameters;
 
@@ -128,6 +144,30 @@ class Analytics
             return $this;
         }
 
-        throw new \BadMethodCallException('Method not defined for Analytics class');
+        if (preg_match('/^(add)(\w+)/', $methodName, $matches)) {
+            $parameterClass = substr($methodName, 3);
+
+            $fullParameterClass =
+                '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+
+            $parameterObject = new $fullParameterClass($methodArguments[0]);
+
+            if (isset($this->parametersCollection[$parameterClass])) {
+                $this->parametersCollection[$parameterClass]->add($parameterObject);
+            } else {
+                $fullParameterCollectionClass = $fullParameterClass . 'Collection';
+
+                /** @var CompoundParameterCollection $parameterObjectCollection */
+                $parameterObjectCollection = new $fullParameterCollectionClass();
+
+                $parameterObjectCollection->add($parameterObject);
+
+                $this->parametersCollection[$parameterClass] = $parameterObjectCollection;
+            }
+
+            return $this;
+        }
+
+        throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
     }
 }
