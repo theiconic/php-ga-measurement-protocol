@@ -130,54 +130,69 @@ class Analytics
         return $this->getHttpClient()->post($this->getEndpoint(), $this->parameters);
     }
 
+    private function setProductActionTo($methodName)
+    {
+        $action = strtoupper(substr($methodName, 18));
+        $actionConstant =
+            constant("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\ProductAction::PRODUCT_ACTION_$action");
+        $this->setProductAction($actionConstant);
+        return $this;
+    }
+
+    private function setParameter($methodName, array $methodArguments)
+    {
+        $parameterClass = substr($methodName, 3);
+
+        $fullParameterClass =
+            '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+
+        /** @var SingleParameter $parameterObject */
+        $parameterObject = new $fullParameterClass();
+
+        $parameterObject->setValue($methodArguments[0]);
+
+        $this->parameters[$parameterObject->getName()] = $parameterObject;
+
+        return $this;
+    }
+
+    private function addItem($methodName, array $methodArguments)
+    {
+        $parameterClass = substr($methodName, 3);
+
+        $fullParameterClass =
+            '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+
+        $parameterObject = new $fullParameterClass($methodArguments[0]);
+
+        if (isset($this->parametersCollection[$parameterClass])) {
+            $this->parametersCollection[$parameterClass]->add($parameterObject);
+        } else {
+            $fullParameterCollectionClass = $fullParameterClass . 'Collection';
+
+            /** @var CompoundParameterCollection $parameterObjectCollection */
+            $parameterObjectCollection = new $fullParameterCollectionClass();
+
+            $parameterObjectCollection->add($parameterObject);
+
+            $this->parametersCollection[$parameterClass] = $parameterObjectCollection;
+        }
+
+        return $this;
+    }
+
     public function __call($methodName, array $methodArguments)
     {
         if (preg_match('/^(setProductActionTo)(\w+)/', $methodName, $matches)) {
-            $action = strtoupper(substr($methodName, 18));
-            $actionConstant =
-                constant("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\ProductAction::PRODUCT_ACTION_$action");
-            $this->setProductAction($actionConstant);
-            return $this;
+            return $this->setProductActionTo($methodName);
         }
 
         if (preg_match('/^(set)(\w+)/', $methodName, $matches)) {
-            $parameterClass = substr($methodName, 3);
-
-            $fullParameterClass =
-                '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
-
-            /** @var SingleParameter $parameterObject */
-            $parameterObject = new $fullParameterClass();
-
-            $parameterObject->setValue($methodArguments[0]);
-
-            $this->parameters[$parameterObject->getName()] = $parameterObject;
-
-            return $this;
+            return $this->setParameter($methodName, $methodArguments);
         }
 
         if (preg_match('/^(add)(\w+)/', $methodName, $matches)) {
-            $parameterClass = substr($methodName, 3);
-
-            $fullParameterClass =
-                '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
-
-            $parameterObject = new $fullParameterClass($methodArguments[0]);
-
-            if (isset($this->parametersCollection[$parameterClass])) {
-                $this->parametersCollection[$parameterClass]->add($parameterObject);
-            } else {
-                $fullParameterCollectionClass = $fullParameterClass . 'Collection';
-
-                /** @var CompoundParameterCollection $parameterObjectCollection */
-                $parameterObjectCollection = new $fullParameterCollectionClass();
-
-                $parameterObjectCollection->add($parameterObject);
-
-                $this->parametersCollection[$parameterClass] = $parameterObjectCollection;
-            }
-
-            return $this;
+            return $this->addItem($methodName, $methodArguments);
         }
 
         throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
