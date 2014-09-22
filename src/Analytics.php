@@ -22,7 +22,6 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTax($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setShipping($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCouponCode($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProduct(array $productData)
  *
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventCategory($value)
@@ -38,6 +37,9 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToCheckoutOption()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToPurchase()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToRefund()
+ *
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics sendPageview()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics sendEvent()
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
@@ -123,9 +125,12 @@ class Analytics
         return $this->protocol . $this->endpoint;
     }
 
-    public function sendPageview()
+    private function sendHit($methodName)
     {
-        $this->setHitType(HitType::HIT_TYPE_PAGEVIEW);
+        $hitType = strtoupper(substr($methodName, 4));
+        $actionConstant =
+            constant("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\Hit\\HitType::HIT_TYPE_$hitType");
+        $this->setHitType($actionConstant);
 
         return $this->getHttpClient()->post($this->getEndpoint(), $this->parameters);
     }
@@ -183,6 +188,10 @@ class Analytics
 
     public function __call($methodName, array $methodArguments)
     {
+        if (preg_match('/^(send)(\w+)/', $methodName, $matches)) {
+            return $this->sendHit($methodName);
+        }
+
         if (preg_match('/^(setProductActionTo)(\w+)/', $methodName, $matches)) {
             return $this->setProductActionTo($methodName);
         }
