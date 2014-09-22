@@ -4,7 +4,6 @@ namespace TheIconic\Tracking\GoogleAnalytics;
 
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
-use TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -49,12 +48,12 @@ class Analytics
 
     private $endpoint = '://www.google-analytics.com/collect';
 
-    private $parameters = [];
+    private $singleParameters = [];
 
     /**
      * @var  CompoundParameterCollection[]
      */
-    private $parametersCollection = [];
+    private $compoundParametersCollections = [];
 
     private $availableParameters;
 
@@ -132,7 +131,11 @@ class Analytics
             constant("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\Hit\\HitType::HIT_TYPE_$hitType");
         $this->setHitType($actionConstant);
 
-        return $this->getHttpClient()->post($this->getEndpoint(), $this->parameters);
+        return $this->getHttpClient()->post(
+            $this->getEndpoint(),
+            $this->singleParameters,
+            $this->compoundParametersCollections
+        );
     }
 
     private function setProductActionTo($methodName)
@@ -156,7 +159,7 @@ class Analytics
 
         $parameterObject->setValue($methodArguments[0]);
 
-        $this->parameters[$parameterObject->getName()] = $parameterObject;
+        $this->singleParameters[$parameterObject->getName()] = $parameterObject;
 
         return $this;
     }
@@ -170,8 +173,8 @@ class Analytics
 
         $parameterObject = new $fullParameterClass($methodArguments[0]);
 
-        if (isset($this->parametersCollection[$parameterClass])) {
-            $this->parametersCollection[$parameterClass]->add($parameterObject);
+        if (isset($this->compoundParametersCollections[$parameterClass])) {
+            $this->compoundParametersCollections[$parameterClass]->add($parameterObject);
         } else {
             $fullParameterCollectionClass = $fullParameterClass . 'Collection';
 
@@ -180,7 +183,7 @@ class Analytics
 
             $parameterObjectCollection->add($parameterObject);
 
-            $this->parametersCollection[$parameterClass] = $parameterObjectCollection;
+            $this->compoundParametersCollections[$parameterClass] = $parameterObjectCollection;
         }
 
         return $this;

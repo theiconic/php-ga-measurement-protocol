@@ -31,9 +31,9 @@ class HttpClient
         return $this->client;
     }
 
-    public function post($url, $parameters)
+    public function post($url, $singleParameters, $compoundParametersCollections)
     {
-        $respose = $this->getClient()->post($url, ['body' => $this->getPostBody($parameters)]);
+        $respose = $this->getClient()->post($url, ['body' => $this->getPostBody($singleParameters)]);
 
         return $respose->getStatusCode();
     }
