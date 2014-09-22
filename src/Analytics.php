@@ -126,5 +126,7 @@ class Analytics
 
             return $this;
         }
+
+        throw new \BadMethodCallException('Method not defined for Analytics class');
     }
 }
