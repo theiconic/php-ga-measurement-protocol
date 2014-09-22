@@ -3,7 +3,9 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters\Event;
 
 
-class EventAction
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
+
+class EventAction extends SingleParameter
 {
     protected $name = 'ea';
 }
