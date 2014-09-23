@@ -46,8 +46,8 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToPurchase()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToRefund()
  *
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics sendPageview()
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics sendEvent()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendPageview()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendEvent()
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */

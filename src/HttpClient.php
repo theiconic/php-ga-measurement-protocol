@@ -52,7 +52,7 @@ class HttpClient
      * @param string $url
      * @param array $singleParameters
      * @param array $compoundParameters
-     * @return string
+     * @return AnalyticsResponse
      */
     public function post($url, array $singleParameters, array $compoundParameters)
     {
@@ -62,9 +62,13 @@ class HttpClient
 
         $finalParameters = array_merge($singlesPost, $compoundsPost);
 
-        $respose = $this->getClient()->post($url, ['body' => $finalParameters]);
+        $request = $this->getClient()->createRequest('POST', $url, [
+            'body' => $finalParameters
+        ]);
 
-        return $respose->getStatusCode();
+        $response = $this->getClient()->send($request);
+
+        return new AnalyticsResponse($request, $response);
     }
 
     /**
