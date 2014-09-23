@@ -3,13 +3,26 @@
 namespace TheIconic\Tracking\GoogleAnalytics;
 
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use GuzzleHttp\Client;
 
+/**
+ * Class HttpClient
+ *
+ * @package TheIconic\Tracking\GoogleAnalytics
+ */
 class HttpClient
 {
+    /**
+     * HTTP client.
+     *
+     * @var Client
+     */
     private $client;
 
     /**
+     * Sets HTTP client.
+     *
      * @param Client $client
      */
     public function setClient($client)
@@ -18,6 +31,8 @@ class HttpClient
     }
 
     /**
+     * Gets HTTP client for internal class use.
+     *
      * @return Client
      */
     private function getClient()
@@ -31,6 +46,14 @@ class HttpClient
         return $this->client;
     }
 
+    /**
+     * Sends request to Google Analytics. Returns 200 if communication was succesful.
+     *
+     * @param string $url
+     * @param array $singleParameters
+     * @param array $compoundParameters
+     * @return string
+     */
     public function post($url, array $singleParameters, array $compoundParameters)
     {
         $singlesPost = $this->getSingleParametersPostBody($singleParameters);
@@ -44,11 +67,16 @@ class HttpClient
         return $respose->getStatusCode();
     }
 
+    /**
+     * Prepares all the Single Parameters to be sent to GA.
+     *
+     * @param SingleParameter[] $singleParameters
+     * @return array
+     */
     private function getSingleParametersPostBody(array $singleParameters)
     {
         $postData = [];
 
-        /** @var SingleParameter $parameterObj */
         foreach ($singleParameters as $parameterObj) {
             $postData[$parameterObj->getName()] = $parameterObj->getValue();
         }
@@ -56,6 +84,12 @@ class HttpClient
         return $postData;
     }
 
+    /**
+     * Prepares compound parameters inside collections to be sent to GA.
+     *
+     * @param CompoundParameterCollection[] $compoundParameters
+     * @return array
+     */
     private function getCompoundParametersPostBody(array $compoundParameters)
     {
         $postData = [];
