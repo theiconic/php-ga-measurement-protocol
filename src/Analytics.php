@@ -71,7 +71,7 @@ class Analytics
     public function __construct($isSsl = false)
     {
         if (!is_bool($isSsl)) {
-            throw new \Exception('First constructor argument "isSSL" must be boolean');
+            throw new \InvalidArgumentException('First constructor argument "isSSL" must be boolean');
         }
 
         if ($isSsl) {
