@@ -18,6 +18,10 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setClientId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserId($value)
  *
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSessionControl($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setIpOverride($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserAgentOverride($value)
+ *
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentHostName($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTransactionId($value)
