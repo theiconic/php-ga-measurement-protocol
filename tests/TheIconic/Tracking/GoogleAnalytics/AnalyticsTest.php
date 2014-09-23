@@ -4,17 +4,36 @@ namespace TheIconic\Tracking\GoogleAnalytics;
 
 class AnalyticsTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @var Analytics
+     */
+    private $analytics;
+
+
+    public function setUp()
+    {
+        $this->analytics = new Analytics();
+    }
+
+    /**
+     * @@expectedException \InvalidArgumentException
+     */
+    public function testInvalidArgumentException()
+    {
+        (new Analytics('1'));
+    }
+
     public function testSimplePageview()
     {
-        $analytics = new Analytics();
-
-        $result = $analytics->setProtocolVersion('1')
+        $response = $this->analytics
+            ->setProtocolVersion('1')
             ->setTrackingId('UA-26293724-11')
             ->setClientId('555')
             ->setDocumentPath('/')
             ->sendPageview();
 
-        $this->assertEquals('200', $result);
+        $this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse', $response);
     }
 
     public function testPurchaseTracking()
@@ -65,10 +84,10 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
 
         $analytics->setProductActionToPurchase();
 
-        $result = $analytics->setEventCategory('Checkout')
+        $response = $analytics->setEventCategory('Checkout')
             ->setEventAction('Purchase')
             ->sendEvent();
 
-        $this->assertEquals('200', $result);
+        $this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse', $response);
     }
 }
