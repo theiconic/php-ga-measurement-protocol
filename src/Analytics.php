@@ -11,6 +11,10 @@ use Symfony\Component\Finder\Finder;
  *
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProtocolVersion($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTrackingId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAnonymizeIp($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setQueueTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCacheBuster($value)
+ *
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setClientId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)

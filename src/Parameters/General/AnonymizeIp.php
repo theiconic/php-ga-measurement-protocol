@@ -5,18 +5,18 @@ namespace TheIconic\Tracking\GoogleAnalytics\Parameters\General;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 
 /**
- * Class ProtocolVersion
+ * Class AnonymizeIp
  *
- * @link https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#v
+ * @link https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aip
  *
  * @package TheIconic\Tracking\GoogleAnalytics\Parameters\General
  */
-class ProtocolVersion extends SingleParameter
+class AnonymizeIp extends SingleParameter
 {
     /**
      * @inheritDoc
      *
      * @var string
      */
-    protected $name = 'v';
+    protected $name = 'aip';
 }
