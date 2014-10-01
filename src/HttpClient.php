@@ -63,7 +63,7 @@ class HttpClient
         $finalParameters = array_merge($singlesPost, $compoundsPost);
 
         $request = $this->getClient()->createRequest('POST', $url, [
-            'body' => $finalParameters
+            'query' => $finalParameters
         ]);
 
         $response = $this->getClient()->send($request);
