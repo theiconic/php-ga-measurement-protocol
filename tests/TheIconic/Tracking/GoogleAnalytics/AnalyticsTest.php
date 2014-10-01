@@ -2,6 +2,10 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
+/**
+ * Class AnalyticsTest
+ * @package TheIconic\Tracking\GoogleAnalytics
+ */
 class AnalyticsTest extends \PHPUnit_Framework_TestCase
 {
 
