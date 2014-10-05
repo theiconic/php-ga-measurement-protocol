@@ -85,7 +85,7 @@ class Analytics
     /**
      * @param HttpClient $httpClient
      */
-    public function setHttpClient($httpClient)
+    public function setHttpClient(HttpClient $httpClient)
     {
         $this->httpClient = $httpClient;
     }

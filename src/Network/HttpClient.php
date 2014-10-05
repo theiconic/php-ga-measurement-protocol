@@ -57,9 +57,9 @@ class HttpClient
      */
     public function post($url, array $singleParameters, array $compoundParameters)
     {
-        $singlesPost = $this->getSingleParametersPostBody($singleParameters);
+        $singlesPost = $this->getSingleParametersPayload($singleParameters);
 
-        $compoundsPost = $this->getCompoundParametersPostBody($compoundParameters);
+        $compoundsPost = $this->getCompoundParametersPayload($compoundParameters);
 
         $finalParameters = array_merge($singlesPost, $compoundsPost);
 
@@ -78,7 +78,7 @@ class HttpClient
      * @param SingleParameter[] $singleParameters
      * @return array
      */
-    private function getSingleParametersPostBody(array $singleParameters)
+    private function getSingleParametersPayload(array $singleParameters)
     {
         $postData = [];
 
@@ -95,7 +95,7 @@ class HttpClient
      * @param CompoundParameterCollection[] $compoundParameters
      * @return array
      */
-    private function getCompoundParametersPostBody(array $compoundParameters)
+    private function getCompoundParametersPayload(array $compoundParameters)
     {
         $postData = [];
 
