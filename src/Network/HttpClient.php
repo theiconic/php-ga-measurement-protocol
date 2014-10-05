@@ -22,13 +22,26 @@ class HttpClient
     private $client;
 
     /**
+     * @var array
+     */
+    private $payloadParameters;
+
+    /**
      * Sets HTTP client.
      *
      * @param Client $client
      */
-    public function setClient($client)
+    public function setClient(Client $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPayloadParameters()
+    {
+        return $this->payloadParameters;
     }
 
     /**
@@ -61,10 +74,10 @@ class HttpClient
 
         $compoundsPost = $this->getCompoundParametersPayload($compoundParameters);
 
-        $finalParameters = array_merge($singlesPost, $compoundsPost);
+        $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
 
         $request = $this->getClient()->createRequest('POST', $url, [
-            'query' => $finalParameters
+            'query' => $this->payloadParameters
         ]);
 
         $response = $this->getClient()->send($request);
