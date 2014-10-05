@@ -3,3 +3,6 @@ coverage/*
 composer.phar
 phpunit.xml
 .idea
+Gemfile
+Gemfile.lock
+autotest.rb
