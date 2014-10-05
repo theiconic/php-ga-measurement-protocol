@@ -4,6 +4,7 @@ namespace TheIconic\Tracking\GoogleAnalytics;
 
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
+use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
 use Symfony\Component\Finder\Finder;
 
 /**

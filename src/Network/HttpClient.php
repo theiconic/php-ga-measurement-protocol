@@ -1,7 +1,8 @@
 <?php
 
-namespace TheIconic\Tracking\GoogleAnalytics;
+namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
+use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use GuzzleHttp\Client;
