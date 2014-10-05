@@ -58,6 +58,9 @@ class Analytics
 
     private $endpoint = '://www.google-analytics.com/collect';
 
+    /**
+     * @var SingleParameter[]
+     */
     private $singleParameters = [];
 
     /**
@@ -152,7 +155,10 @@ class Analytics
     {
         $action = strtoupper(substr($methodName, 18));
         $actionConstant =
-            constant("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\ProductAction::PRODUCT_ACTION_$action");
+            constant(
+                "TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\
+                ProductAction::PRODUCT_ACTION_$action"
+            );
         $this->setProductAction($actionConstant);
         return $this;
     }
@@ -161,13 +167,21 @@ class Analytics
     {
         $parameterClass = substr($methodName, 3);
 
-        $fullParameterClass =
-            '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+        if (empty($this->availableParameters[$parameterClass])) {
+            throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
+        } else {
+            $fullParameterClass =
+                '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+        }
 
         /** @var SingleParameter $parameterObject */
         $parameterObject = new $fullParameterClass();
 
-        $parameterObject->setValue($methodArguments[0]);
+        if (!isset($methodArguments[0])) {
+            throw new \InvalidArgumentException('You must specify a value to be set for ' . $methodName);
+        } else {
+            $parameterObject->setValue($methodArguments[0]);
+        }
 
         $this->singleParameters[$parameterObject->getName()] = $parameterObject;
 
