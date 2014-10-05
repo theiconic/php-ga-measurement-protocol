@@ -7,11 +7,14 @@ use TheIconic\Tracking\GoogleAnalytics\Tests\InvalidSingleTestParameter;
 
 class SingleParameterTest extends \PHPUnit_Framework_TestCase
 {
-    private $mockSingleParameter;
+    /**
+     * @var SingleParameter
+     */
+    private $stubSingleParameter;
 
     public function setUp()
     {
-        $this->mockSingleParameter = new SingleTestParameter();
+        $this->stubSingleParameter = new SingleTestParameter();
     }
 
     /**
@@ -24,6 +27,13 @@ class SingleParameterTest extends \PHPUnit_Framework_TestCase
 
     public function testGetName()
     {
-        $this->assertEquals('test', $this->mockSingleParameter->getName());
+        $this->assertEquals('test', $this->stubSingleParameter->getName());
+    }
+
+    public function testValue()
+    {
+        $this->stubSingleParameter->setValue(10);
+
+        $this->assertEquals(10, $this->stubSingleParameter->getValue());
     }
 }

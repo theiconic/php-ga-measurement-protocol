@@ -26,7 +26,7 @@ abstract class SingleParameter
      *
      * @var mixed
      */
-    protected $value = null;
+    protected $value;
 
     /**
      * Constructor. Validates that the child class has declared a non empty name for the parameter.
