@@ -2,6 +2,8 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidSingleParameterException;
+
 /**
  * Class SingleParameter
  *
@@ -32,7 +34,7 @@ abstract class SingleParameter
     public function __construct()
     {
         if (empty($this->name)) {
-            throw new \Exception('For parameter classes $name member variable cannot be empty');
+            throw new InvalidSingleParameterException();
         }
     }
 
