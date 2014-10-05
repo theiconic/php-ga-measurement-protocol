@@ -54,7 +54,7 @@ use Symfony\Component\Finder\Finder;
  */
 class Analytics
 {
-    private $protocol = 'http';
+    private $uriScheme = 'http';
 
     private $endpoint = '://www.google-analytics.com/collect';
 
@@ -76,7 +76,7 @@ class Analytics
         }
 
         if ($isSsl) {
-            $this->protocol .= 's';
+            $this->uriScheme .= 's';
         }
 
         $this->availableParameters = $this->getAvailableParameters();
@@ -131,7 +131,7 @@ class Analytics
 
     private function getEndpoint()
     {
-        return $this->protocol . $this->endpoint;
+        return $this->uriScheme . $this->endpoint;
     }
 
     private function sendHit($methodName)
