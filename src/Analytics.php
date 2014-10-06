@@ -140,9 +140,17 @@ class Analytics
     private function sendHit($methodName)
     {
         $hitType = strtoupper(substr($methodName, 4));
-        $actionConstant =
-            constant("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\Hit\\HitType::HIT_TYPE_$hitType");
-        $this->setHitType($actionConstant);
+
+        if (defined("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\Hit\\HitType::HIT_TYPE_$hitType")) {
+            $hitConstant =
+                constant(
+                    "TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\Hit\\HitType::HIT_TYPE_$hitType"
+                );
+        } else {
+            throw new \BadMethodCallException('Hit type ' . $hitType . ' is not defined, check spelling');
+        }
+
+        $this->setHitType($hitConstant);
 
         return $this->getHttpClient()->post(
             $this->getEndpoint(),
@@ -163,7 +171,6 @@ class Analytics
         } else {
             throw new \BadMethodCallException('Product action ' . $action . ' does not exist, check spelling');
         }
-
 
         $this->setProductAction($actionConstant);
 

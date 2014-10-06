@@ -126,6 +126,31 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics->setProductActionToPurchae();
     }
 
+    public function testSendHit()
+    {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo('http://www.google-analytics.com/collect'),
+                $this->isType('array'),
+                $this->isType('array')
+            );
+
+        $this->analytics->setHttpClient($httpClient);
+
+        $this->analytics->sendPageview();
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     */
+    public function testSetInvalidSendHit()
+    {
+        $this->analytics->sendPageviw();
+    }
+
     /**
      * @expectedException \BadMethodCallException
      */
