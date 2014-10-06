@@ -261,20 +261,20 @@ class Analytics
 
     public function __call($methodName, array $methodArguments)
     {
-        if (preg_match('/^(send)(\w+)/', $methodName, $matches)) {
-            return $this->sendHit($methodName);
-        }
-
-        if (preg_match('/^(setProductActionTo)(\w+)/', $methodName, $matches)) {
-            return $this->setProductActionTo($methodName);
-        }
-
         if (preg_match('/^(set)(\w+)/', $methodName, $matches)) {
             return $this->setParameter($methodName, $methodArguments);
         }
 
         if (preg_match('/^(add)(\w+)/', $methodName, $matches)) {
             return $this->addItem($methodName, $methodArguments);
+        }
+
+        if (preg_match('/^(setProductActionTo)(\w+)/', $methodName, $matches)) {
+            return $this->setProductActionTo($methodName);
+        }
+
+        if (preg_match('/^(send)(\w+)/', $methodName, $matches)) {
+            return $this->sendHit($methodName);
         }
 
         throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
