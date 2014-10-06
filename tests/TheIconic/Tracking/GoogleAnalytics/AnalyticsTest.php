@@ -138,8 +138,21 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
                 $this->isType('array')
             );
 
+        $this->analytics
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666');
+
         $this->analytics->setHttpClient($httpClient);
 
+        $this->analytics->sendPageview();
+    }
+
+    /**
+     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException
+     */
+    public function testMinimumParametersForSendHit()
+    {
         $this->analytics->sendPageview();
     }
 

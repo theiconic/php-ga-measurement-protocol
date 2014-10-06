@@ -5,6 +5,7 @@ namespace TheIconic\Tracking\GoogleAnalytics;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -152,11 +153,33 @@ class Analytics
 
         $this->setHitType($hitConstant);
 
+        if (!$this->hasMinimumRequiredParameters()) {
+            throw new InvalidPayloadDataException();
+        }
+
         return $this->getHttpClient()->post(
             $this->getEndpoint(),
             $this->singleParameters,
             $this->compoundParametersCollections
         );
+    }
+
+    private function hasMinimumRequiredParameters()
+    {
+        $minimumRequiredParameters = [
+            'v' => false,
+            'tid' => false,
+            'cid' => false,
+            't' => false,
+        ];
+
+        foreach ($minimumRequiredParameters as $parameterName => $isParamPresent) {
+            if (in_array($parameterName, array_keys($this->singleParameters))) {
+                $minimumRequiredParameters[$parameterName] = true;
+            }
+        }
+
+        return !in_array(false, $minimumRequiredParameters, true);
     }
 
     private function setProductActionTo($methodName)
