@@ -154,12 +154,19 @@ class Analytics
     private function setProductActionTo($methodName)
     {
         $action = strtoupper(substr($methodName, 18));
-        $actionConstant =
-            constant(
-                "TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\
-                ProductAction::PRODUCT_ACTION_$action"
-            );
+
+        if (defined("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\ProductAction::PRODUCT_ACTION_$action")) {
+            $actionConstant =
+                constant(
+                    "TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\ProductAction::PRODUCT_ACTION_$action"
+                );
+        } else {
+            throw new \BadMethodCallException('Product action ' . $action . ' does not exist, check spelling');
+        }
+
+
         $this->setProductAction($actionConstant);
+
         return $this;
     }
 
@@ -192,10 +199,20 @@ class Analytics
     {
         $parameterClass = substr($methodName, 3);
 
-        $fullParameterClass =
-            '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+        if (empty($this->availableParameters[$parameterClass])) {
+            throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
+        } else {
+            $fullParameterClass =
+                '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+        }
 
-        $parameterObject = new $fullParameterClass($methodArguments[0]);
+        if (!isset($methodArguments[0])) {
+            throw new \InvalidArgumentException(
+                'You must specify a ' . $parameterClass . ' to be add for ' . $methodName
+            );
+        } else {
+            $parameterObject = new $fullParameterClass($methodArguments[0]);
+        }
 
         if (isset($this->compoundParametersCollections[$parameterClass])) {
             $this->compoundParametersCollections[$parameterClass]->add($parameterObject);

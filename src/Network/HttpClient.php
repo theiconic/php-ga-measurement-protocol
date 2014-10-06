@@ -64,8 +64,8 @@ class HttpClient
      * Sends request to Google Analytics. Returns 200 if communication was succesful.
      *
      * @param string $url
-     * @param array $singleParameters
-     * @param array $compoundParameters
+     * @param SingleParameter[] $singleParameters
+     * @param CompoundParameterCollection[] $compoundParameters
      * @return AnalyticsResponse
      */
     public function post($url, array $singleParameters, array $compoundParameters)
