@@ -11,21 +11,33 @@ use Symfony\Component\Finder\Finder;
 /**
  * Class Analytics
  *
+ * General
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProtocolVersion($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTrackingId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAnonymizeIp($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setQueueTime($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCacheBuster($value)
  *
+ * User
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setClientId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserId($value)
  *
+ * Session
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSessionControl($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setIpOverride($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserAgentOverride($value)
  *
+ * Hit
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setNonInteractionHit($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendPageview()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendEvent()
+ *
+ * Content Information
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentHostName($value)
+ *
+ * Enhanced E-Commerce
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTransactionId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAffiliation($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setRevenue($value)
@@ -33,12 +45,6 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setShipping($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCouponCode($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProduct(array $productData)
- *
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventCategory($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventAction($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventLabel($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventValue($value)
- *
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToDetail()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToClick()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToAdd()
@@ -48,8 +54,11 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToPurchase()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToRefund()
  *
- * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendPageview()
- * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendEvent()
+ * Event Tracking
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventCategory($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventAction($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventLabel($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventValue($value)
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
