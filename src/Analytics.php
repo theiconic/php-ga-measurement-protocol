@@ -174,12 +174,7 @@ class Analytics
     {
         $parameterClass = substr($methodName, 3);
 
-        if (empty($this->availableParameters[$parameterClass])) {
-            throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
-        } else {
-            $fullParameterClass =
-                '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
-        }
+        $fullParameterClass = $this->getFullParameterClass($parameterClass, $methodName);
 
         /** @var SingleParameter $parameterObject */
         $parameterObject = new $fullParameterClass();
@@ -199,12 +194,7 @@ class Analytics
     {
         $parameterClass = substr($methodName, 3);
 
-        if (empty($this->availableParameters[$parameterClass])) {
-            throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
-        } else {
-            $fullParameterClass =
-                '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
-        }
+        $fullParameterClass = $this->getFullParameterClass($parameterClass, $methodName);
 
         if (!isset($methodArguments[0])) {
             throw new \InvalidArgumentException(
@@ -228,6 +218,15 @@ class Analytics
         }
 
         return $this;
+    }
+
+    private function getFullParameterClass($parameterClass, $methodName)
+    {
+        if (empty($this->availableParameters[$parameterClass])) {
+            throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
+        } else {
+            return '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+        }
     }
 
     public function __call($methodName, array $methodArguments)
