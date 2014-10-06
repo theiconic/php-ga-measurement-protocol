@@ -45,6 +45,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setShipping($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCouponCode($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProduct(array $productData)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductAction($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToDetail()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToClick()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToAdd()
