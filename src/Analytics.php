@@ -142,14 +142,10 @@ class Analytics
     {
         $hitType = strtoupper(substr($methodName, 4));
 
-        if (defined("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\Hit\\HitType::HIT_TYPE_$hitType")) {
-            $hitConstant =
-                constant(
-                    "TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\Hit\\HitType::HIT_TYPE_$hitType"
-                );
-        } else {
-            throw new \BadMethodCallException('Hit type ' . $hitType . ' is not defined, check spelling');
-        }
+        $hitConstant = $this->getParameterClassConstant(
+            'TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType::HIT_TYPE_' . $hitType,
+            'Hit type ' . $hitType . ' is not defined, check spelling'
+        );
 
         $this->setHitType($hitConstant);
 
@@ -186,18 +182,23 @@ class Analytics
     {
         $action = strtoupper(substr($methodName, 18));
 
-        if (defined("TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\ProductAction::PRODUCT_ACTION_$action")) {
-            $actionConstant =
-                constant(
-                    "TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\EnhancedEcommerce\\ProductAction::PRODUCT_ACTION_$action"
-                );
-        } else {
-            throw new \BadMethodCallException('Product action ' . $action . ' does not exist, check spelling');
-        }
+        $actionConstant = $this->getParameterClassConstant(
+            'TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\ProductAction::PRODUCT_ACTION_' . $action,
+            'Product action ' . $action . ' does not exist, check spelling'
+        );
 
         $this->setProductAction($actionConstant);
 
         return $this;
+    }
+
+    private function getParameterClassConstant($constant, $exceptionMsg)
+    {
+        if (defined($constant)) {
+            return constant($constant);
+        } else {
+            throw new \BadMethodCallException($exceptionMsg);
+        }
     }
 
     private function setParameter($methodName, array $methodArguments)
