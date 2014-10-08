@@ -6,6 +6,8 @@ use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use GuzzleHttp\Client;
+use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * Class HttpClient
@@ -61,7 +63,7 @@ class HttpClient
     }
 
     /**
-     * Sends request to Google Analytics. Returns 200 if communication was succesful.
+     * Sends request to Google Analytics.
      *
      * @param string $url
      * @param SingleParameter[] $singleParameters
@@ -82,6 +84,16 @@ class HttpClient
 
         $response = $this->getClient()->send($request);
 
+        return $this->getAnalyticsResponse($request, $response);
+    }
+
+    /**
+     * @param $request
+     * @param $response
+     * @return AnalyticsResponse
+     */
+    public function getAnalyticsResponse(RequestInterface $request, ResponseInterface $response)
+    {
         return new AnalyticsResponse($request, $response);
     }
 
