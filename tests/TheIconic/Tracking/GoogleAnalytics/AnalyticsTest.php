@@ -2,6 +2,11 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\ProtocolVersion;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\TrackingId;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\User\ClientId;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType;
+
 /**
  * Class AnalyticsTest
  * @package TheIconic\Tracking\GoogleAnalytics
@@ -126,7 +131,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics->setProductActionToPurchae();
     }
 
-    public function testSendHit()
+    public function testSendSimpleHit()
     {
         $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
 
@@ -135,6 +140,35 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->equalTo('http://www.google-analytics.com/collect'),
                 $this->isType('array'),
+                $this->isType('array')
+            );
+
+        $this->analytics
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666');
+
+        $this->analytics->setHttpClient($httpClient);
+
+        $this->analytics->sendPageview();
+    }
+
+    public function testSendComplexHit()
+    {
+        $singleParameters = [
+            'v' => (new ProtocolVersion())->setValue('1'),
+            'tid' => (new TrackingId())->setValue('555'),
+            'cid' => (new ClientId())->setValue('666'),
+            't' => (new HitType())->setValue('pageview'),
+        ];
+
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo('http://www.google-analytics.com/collect'),
+                $this->equalTo($singleParameters),
                 $this->isType('array')
             );
 
