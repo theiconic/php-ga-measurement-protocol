@@ -17,6 +17,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAnonymizeIp($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setQueueTime($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCacheBuster($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCurrencyCode($value)
  *
  * User
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setClientId($value)
