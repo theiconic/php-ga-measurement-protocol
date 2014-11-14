@@ -16,8 +16,8 @@ class Product extends CompoundParameter
         '/^coupon_code$/' => 'cc',
         '/^position$/' => 'ps',
         '/^quantity$/' => 'qt',
-        '/^custom_dimension_\d{1,3}$/' => 'cd',
-        '^custom_metric_\d{1,3}$' => 'cm',
+        '/^custom_dimension_(\d{1,3})$/' => 'cd',
+        '/^custom_metric_(\d{1,3})$/' => 'cm',
     ];
 
     public function __construct(array $productData)
