@@ -23,11 +23,6 @@ class AnalyticsResponse
     protected $requestUrl;
 
     /**
-     * @var array
-     */
-    protected $requestBodyFields;
-
-    /**
      * @param RequestInterface $request
      * @param ResponseInterface $response
      */
@@ -36,8 +31,6 @@ class AnalyticsResponse
         $this->httpStatusCode = $response->getStatusCode();
 
         $this->requestUrl = $request->getUrl();
-
-        $this->requestBodyFields = $request->getBody()->getFields();
     }
 
     /**
@@ -46,14 +39,6 @@ class AnalyticsResponse
     public function getHttpStatusCode()
     {
         return $this->httpStatusCode;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRequestBodyFields()
-    {
-        return $this->requestBodyFields;
     }
 
     /**
