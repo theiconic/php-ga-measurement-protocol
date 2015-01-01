@@ -17,6 +17,11 @@ use GuzzleHttp\Message\ResponseInterface;
 class HttpClient
 {
     /**
+     * User agent for the client.
+     */
+    const PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT = 'THE ICONIC GA Measurement Protocol PHP Client (https://github.com/theiconic/php-ga-measurement-protocol)';
+
+    /**
      * HTTP client.
      *
      * @var Client
@@ -79,7 +84,10 @@ class HttpClient
         $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
 
         $request = $this->getClient()->createRequest('POST', $url, [
-            'query' => $this->payloadParameters
+            'query' => $this->payloadParameters,
+            'headers' => [
+                'User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT,
+            ],
         ]);
 
         $response = $this->getClient()->send($request);
