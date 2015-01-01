@@ -83,7 +83,7 @@ class HttpClient
 
         $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
 
-        $request = $this->getClient()->createRequest('POST', $url, [
+        $request = $this->getClient()->createRequest('GET', $url, [
             'query' => $this->payloadParameters,
             'headers' => [
                 'User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT,
