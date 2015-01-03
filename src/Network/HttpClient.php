@@ -22,6 +22,12 @@ class HttpClient
     const PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT = 'THE ICONIC GA Measurement Protocol PHP Client (https://github.com/theiconic/php-ga-measurement-protocol)';
 
     /**
+     * Timeout in seconds for the request connection and actual request execution.
+     * Using the same value you can find in Google's PHP Client.
+     */
+    const REQUEST_TIMEOUT_SECONDS = 100;
+
+    /**
      * HTTP client.
      *
      * @var Client
@@ -84,6 +90,8 @@ class HttpClient
         $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
 
         $request = $this->getClient()->createRequest('GET', $url, [
+            'timeout' => self::REQUEST_TIMEOUT_SECONDS,
+            'connect_timeout' => self::REQUEST_TIMEOUT_SECONDS,
             'query' => $this->payloadParameters,
             'headers' => [
                 'User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT,
