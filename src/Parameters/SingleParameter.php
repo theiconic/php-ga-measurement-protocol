@@ -15,7 +15,7 @@ abstract class SingleParameter
 {
     /**
      * Name for a parameter in GA Measurement Protocol.
-     * Gets send as the name for a query parameter in the HTTP request.
+     * Its sent as the name for a query parameter in the HTTP request.
      *
      * @var string
      */
