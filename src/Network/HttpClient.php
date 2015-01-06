@@ -19,7 +19,8 @@ class HttpClient
     /**
      * User agent for the client.
      */
-    const PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT = 'THE ICONIC GA Measurement Protocol PHP Client (https://github.com/theiconic/php-ga-measurement-protocol)';
+    const PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT =
+        'THE ICONIC GA Measurement Protocol PHP Client (https://github.com/theiconic/php-ga-measurement-protocol)';
 
     /**
      * Timeout in seconds for the request connection and actual request execution.
@@ -104,11 +105,13 @@ class HttpClient
     }
 
     /**
+     * Creates an analytics response object.
+     *
      * @param $request
      * @param $response
      * @return AnalyticsResponse
      */
-    public function getAnalyticsResponse(RequestInterface $request, ResponseInterface $response)
+    private function getAnalyticsResponse(RequestInterface $request, ResponseInterface $response)
     {
         return new AnalyticsResponse($request, $response);
     }
