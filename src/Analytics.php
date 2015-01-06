@@ -28,6 +28,17 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setIpOverride($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserAgentOverride($value)
  *
+ * Traffic Sources
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentReferrer($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCampaignName($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCampaignSource($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCampaignMedium($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCampaignKeyword($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCampaignContent($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCampaignId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setGoogleAdwordsId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setGoogleDisplayAdsId($value)
+ *
  * Hit
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setNonInteractionHit($value)
