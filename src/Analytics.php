@@ -39,6 +39,15 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setGoogleAdwordsId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setGoogleDisplayAdsId($value)
  *
+ * System Info
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setScreenResolution($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setViewportSize($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentEncoding($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setScreenColors($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserLanguage($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setJavaEnabled($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setFlashVersion($value)
+ *
  * Hit
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setNonInteractionHit($value)
