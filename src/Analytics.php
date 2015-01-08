@@ -52,7 +52,12 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setNonInteractionHit($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendPageview()
- * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendEvent()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendScreenview()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendTransaction()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendItem()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendSocial()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendException()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendTiming()
  *
  * Content Information
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)
