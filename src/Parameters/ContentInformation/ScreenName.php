@@ -5,18 +5,18 @@ namespace TheIconic\Tracking\GoogleAnalytics\Parameters\ContentInformation;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 
 /**
- * Class DocumentLocationUrl
+ * Class ScreenName
  *
- * @link https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#dl
+ * @link https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#cd
  *
  * @package TheIconic\Tracking\GoogleAnalytics\Parameters\ContentInformation
  */
-class DocumentLocationUrl extends SingleParameter
+class ScreenName extends SingleParameter
 {
     /**
      * @inheritDoc
      *
      * @var string
      */
-    protected $name = 'dl';
+    protected $name = 'cd';
 }

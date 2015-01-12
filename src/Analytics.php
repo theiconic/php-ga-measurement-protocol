@@ -60,8 +60,12 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendTiming()
  *
  * Content Information
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentLocationUrl($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentHostName($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentPath($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentTitle($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setScreenName($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setLinkId($value)
  *
  * Enhanced E-Commerce
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTransactionId($value)
