@@ -67,6 +67,12 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setScreenName($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setLinkId($value)
  *
+ * App Tracking
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setApplicationName($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setApplicationId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setApplicationVersion($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setApplicationInstallerId($value)
+ *
  * Enhanced E-Commerce
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTransactionId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAffiliation($value)
