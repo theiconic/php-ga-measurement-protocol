@@ -17,7 +17,6 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAnonymizeIp($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setQueueTime($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCacheBuster($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCurrencyCode($value)
  *
  * User
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setClientId($value)
@@ -73,6 +72,15 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setApplicationVersion($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setApplicationInstallerId($value)
  *
+ * Event Tracking
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventCategory($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventAction($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventLabel($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventValue($value)
+ *
+ * E-commerce
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCurrencyCode($value)
+ *
  * Enhanced E-Commerce
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTransactionId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAffiliation($value)
@@ -93,11 +101,6 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToPurchase()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToRefund()
  *
- * Event Tracking
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventCategory($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventAction($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventLabel($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventValue($value)
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */

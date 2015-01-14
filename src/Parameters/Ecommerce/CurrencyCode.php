@@ -1,6 +1,6 @@
 <?php
 
-namespace TheIconic\Tracking\GoogleAnalytics\Parameters\General;
+namespace TheIconic\Tracking\GoogleAnalytics\Parameters\Ecommerce;
 
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 
@@ -9,7 +9,7 @@ use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
  *
  * @link https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#cu
  *
- * @package TheIconic\Tracking\GoogleAnalytics\Parameters\General
+ * @package TheIconic\Tracking\GoogleAnalytics\Parameters\Ecommerce
  */
 class CurrencyCode extends SingleParameter
 {
