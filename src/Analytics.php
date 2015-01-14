@@ -79,6 +79,11 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setEventValue($value)
  *
  * E-commerce
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setItemName($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setItemPrice($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setItemQuantity($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setItemCode($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setItemCategory($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCurrencyCode($value)
  *
  * Enhanced E-Commerce
