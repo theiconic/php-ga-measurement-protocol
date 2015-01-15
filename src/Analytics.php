@@ -106,6 +106,11 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToPurchase()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToRefund()
  *
+ * Social Interactions
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSocialNetwork($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSocialAction($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSocialActionTarget($value)
+ *
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
