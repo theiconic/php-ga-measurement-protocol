@@ -111,6 +111,20 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSocialAction($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSocialActionTarget($value)
  *
+ * Timing
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTiminCategory($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingVariableName($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingLabel($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPageLoadTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDnsTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPageDownloadTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setRedirectResponseTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTcpConnectTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setServerResponseTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDomInteractiveTime($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setContentLoadTime($value)
+ *
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
