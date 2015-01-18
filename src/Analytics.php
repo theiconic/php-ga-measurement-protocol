@@ -125,6 +125,9 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDomInteractiveTime($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setContentLoadTime($value)
  *
+ * Exceptions
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExceptionDescription($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setIsExceptionFatal($value)
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
