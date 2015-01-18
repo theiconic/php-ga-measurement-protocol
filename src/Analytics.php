@@ -129,6 +129,13 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExceptionDescription($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setIsExceptionFatal($value)
  *
+ * Custom Dimension / Metrics @TODO
+ *
+ * Content Experiments
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentId($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentVariant($value)
+ *
+ *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
 class Analytics
