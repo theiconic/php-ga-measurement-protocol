@@ -29,13 +29,33 @@ abstract class SingleParameter
     protected $value;
 
     /**
-     * Constructor. Validates that the child class has declared a non empty name for the parameter.
+     * Indicates if a single parameter has index (Eg. cm1, cm2, ... etc)
+     *
+     * @var bool
      */
-    public function __construct()
+    protected $isIndexed = false;
+
+    /**
+     * Constructor. Validates that the child class has declared a non empty name for the parameter
+     * and valid index for indexed parameters.
+     *
+     * @throws InvalidSingleParameterException
+     *
+     * @param $index
+     */
+    public function __construct($index = null)
     {
         if (empty($this->name)) {
-            throw new InvalidSingleParameterException();
+            throw new InvalidSingleParameterException('Name attribute not defined for class ' . __CLASS__);
         }
+
+        if ($this->isIndexed && $index === null) {
+            throw new InvalidSingleParameterException(
+                'Parameter class ' . __CLASS__  . ' is indexed, pass index in second argument when setting value'
+            );
+        }
+
+        $this->name = $this->name . $index;
     }
 
     /**

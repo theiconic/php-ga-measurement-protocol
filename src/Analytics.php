@@ -129,7 +129,9 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExceptionDescription($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setIsExceptionFatal($value)
  *
- * Custom Dimension / Metrics @TODO
+ * Custom Dimension / Metrics
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCustomDimension($value, $index)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCustomMetric($value, $index)
  *
  * Content Experiments
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentId($value)
@@ -292,8 +294,13 @@ class Analytics
 
         $fullParameterClass = $this->getFullParameterClass($parameterClass, $methodName);
 
+        $parameterIndex = null;
+        if (isset($methodArguments[1]) && is_numeric($methodArguments[1])) {
+            $parameterIndex = $methodArguments[1];
+        }
+
         /** @var SingleParameter $parameterObject */
-        $parameterObject = new $fullParameterClass();
+        $parameterObject = new $fullParameterClass($parameterIndex);
 
         if (!isset($methodArguments[0])) {
             throw new \InvalidArgumentException('You must specify a value to be set for ' . $methodName);

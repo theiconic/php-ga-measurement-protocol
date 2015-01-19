@@ -12,8 +12,4 @@ namespace TheIconic\Tracking\GoogleAnalytics\Exception;
  */
 class InvalidSingleParameterException extends \Exception
 {
-    /**
-     * @var string
-     */
-    protected $message = 'For parameter classes $name member variable cannot be empty';
 }
