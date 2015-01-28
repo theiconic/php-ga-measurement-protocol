@@ -96,6 +96,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionList($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCheckoutStep($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCheckoutStepOption($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductImpressionListName($value, $index)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProduct(array $productData)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductAction($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToDetail()
