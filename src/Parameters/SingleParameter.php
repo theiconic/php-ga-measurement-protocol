@@ -46,12 +46,12 @@ abstract class SingleParameter
     public function __construct($index = null)
     {
         if (empty($this->name)) {
-            throw new InvalidSingleParameterException('Name attribute not defined for class ' . __CLASS__);
+            throw new InvalidSingleParameterException('Name attribute not defined for class ' . get_class($this));
         }
 
         if ($this->isIndexed && $index === null) {
             throw new InvalidSingleParameterException(
-                'Parameter class ' . __CLASS__  . ' is indexed, pass index in second argument when setting value'
+                'Parameter class ' . get_class($this)  . ' is indexed, pass index in second argument when setting value'
             );
         }
 
