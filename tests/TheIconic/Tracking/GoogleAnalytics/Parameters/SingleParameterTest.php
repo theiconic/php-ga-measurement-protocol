@@ -3,6 +3,7 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 
 use TheIconic\Tracking\GoogleAnalytics\Tests\SingleTestParameter;
+use TheIconic\Tracking\GoogleAnalytics\Tests\SingleTestParameterIndexed;
 use TheIconic\Tracking\GoogleAnalytics\Tests\InvalidSingleTestParameter;
 
 class SingleParameterTest extends \PHPUnit_Framework_TestCase
@@ -12,9 +13,15 @@ class SingleParameterTest extends \PHPUnit_Framework_TestCase
      */
     private $stubSingleParameter;
 
+    /**
+     * @var SingleParameter
+     */
+    private $stubSingleParameterIndexed;
+
     public function setUp()
     {
         $this->stubSingleParameter = new SingleTestParameter();
+        $this->stubSingleParameterIndexed = new SingleTestParameterIndexed(2);
     }
 
     /**
@@ -25,9 +32,22 @@ class SingleParameterTest extends \PHPUnit_Framework_TestCase
         (new InvalidSingleTestParameter);
     }
 
+    /**
+     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidSingleParameterException
+     */
+    public function testInvalidSingleParameterIndexed()
+    {
+        (new SingleTestParameterIndexed());
+    }
+
     public function testGetName()
     {
         $this->assertEquals('test', $this->stubSingleParameter->getName());
+    }
+
+    public function testGetNameIndexed()
+    {
+        $this->assertEquals('testi2', $this->stubSingleParameterIndexed->getName());
     }
 
     public function testValue()

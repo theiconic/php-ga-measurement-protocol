@@ -41,7 +41,7 @@ abstract class SingleParameter
      *
      * @throws InvalidSingleParameterException
      *
-     * @param $index
+     * @param int $index
      */
     public function __construct($index = null)
     {
