@@ -18,7 +18,7 @@ class CustomMetric extends SingleParameter
      *
      * @var string
      */
-    protected $name = 'cm';
+    protected $name = 'cm:i:';
 
     /**
      * @inheritDoc

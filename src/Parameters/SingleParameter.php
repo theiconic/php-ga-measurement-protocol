@@ -14,6 +14,11 @@ use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidSingleParameterException
 abstract class SingleParameter
 {
     /**
+     * Placeholder for the index.
+     */
+    const INDEX_PLACEHOLDER = ':i:';
+
+    /**
      * Name for a parameter in GA Measurement Protocol.
      * Its sent as the name for a query parameter in the HTTP request.
      *
@@ -49,13 +54,22 @@ abstract class SingleParameter
             throw new InvalidSingleParameterException('Name attribute not defined for class ' . get_class($this));
         }
 
+        if ($this->isIndexed && strpos($this->name, self::INDEX_PLACEHOLDER) === false) {
+            throw new InvalidSingleParameterException(
+                'Parameter class ' . get_class($this)  . ' is indexed, you must specify where the index goes with '
+                . self::INDEX_PLACEHOLDER
+            );
+        }
+
         if ($this->isIndexed && $index === null) {
             throw new InvalidSingleParameterException(
                 'Parameter class ' . get_class($this)  . ' is indexed, pass index in second argument when setting value'
             );
         }
 
-        $this->name = $this->name . $index;
+        if ($index !== null) {
+            $this->name = str_replace(self::INDEX_PLACEHOLDER, $index, $this->name);
+        }
     }
 
     /**

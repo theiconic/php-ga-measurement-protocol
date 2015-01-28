@@ -18,7 +18,7 @@ class CustomDimension extends SingleParameter
      *
      * @var string
      */
-    protected $name = 'cd';
+    protected $name = 'cd:i:';
 
     /**
      * @inheritDoc
