@@ -13,9 +13,9 @@ abstract class CompoundParameter
         return $this->parameters;
     }
 
-    protected function saveCompoundParameterData(array $CompoundData)
+    protected function saveCompoundParameterData(array $compoundData)
     {
-        foreach ($CompoundData as $name => $value) {
+        foreach ($compoundData as $name => $value) {
             $matchExists = false;
             foreach ($this->parameterNameMapper as $regex => $parameterName) {
                 if (preg_match($regex, $name, $matches) === 1) {
