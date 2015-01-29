@@ -33,7 +33,7 @@ class SingleParameterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidSingleParameterException
+     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidIndexException
      */
     public function testInvalidSingleParameterIndexed()
     {

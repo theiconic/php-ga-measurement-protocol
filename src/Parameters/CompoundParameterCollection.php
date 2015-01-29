@@ -2,19 +2,27 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 
+use TheIconic\Tracking\GoogleAnalytics\Traits\Indexable;
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidCompoundParameterException;
 use IteratorAggregate;
 
 abstract class CompoundParameterCollection implements IteratorAggregate
 {
+    use Indexable;
+
     protected $collectionPrefix = '';
 
     protected $items = [];
 
     public function __construct($index = '')
     {
-        if ($index !== '') {
-            $this->collectionPrefix = str_replace(':i:', $index, $this->collectionPrefix);
+        if (empty($this->collectionPrefix)) {
+            throw new InvalidCompoundParameterException(
+                'Collection prefix attribute not defined for class ' . get_class($this)
+            );
         }
+
+        $this->collectionPrefix = $this->addIndex($this->collectionPrefix, $index);
     }
 
     public function add(CompoundParameter $compoundParameter)

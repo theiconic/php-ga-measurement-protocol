@@ -2,6 +2,7 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 
+use TheIconic\Tracking\GoogleAnalytics\Traits\Indexable;
 use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidSingleParameterException;
 
 /**
@@ -13,10 +14,7 @@ use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidSingleParameterException
  */
 abstract class SingleParameter
 {
-    /**
-     * Placeholder for the index.
-     */
-    const INDEX_PLACEHOLDER = ':i:';
+    use Indexable;
 
     /**
      * Name for a parameter in GA Measurement Protocol.
@@ -47,16 +45,7 @@ abstract class SingleParameter
             throw new InvalidSingleParameterException('Name attribute not defined for class ' . get_class($this));
         }
 
-        if (strpos($this->name, self::INDEX_PLACEHOLDER) !== false) {
-            if ($index === '') {
-                throw new InvalidSingleParameterException(
-                    'Parameter class ' . get_class($this)
-                    . ' is indexed, pass index in second argument when setting value'
-                );
-            }
-
-            $this->name = str_replace(self::INDEX_PLACEHOLDER, $index, $this->name);
-        }
+        $this->name = $this->addIndex($this->name, $index);
     }
 
     /**
