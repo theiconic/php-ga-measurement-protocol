@@ -19,14 +19,14 @@ abstract class CompoundParameter
             $matchExists = false;
             foreach ($this->parameterNameMapper as $regex => $parameterName) {
                 if (preg_match($regex, $name, $matches) === 1) {
-                    $dynamicName = '';
+                    $parameterLastIndex = '';
 
                     if (isset($matches[1])) {
-                        $dynamicName = $matches[1];
+                        $parameterLastIndex = $matches[1];
                     }
 
                     $matchExists = true;
-                    $this->parameters[$parameterName . $dynamicName] = $value;
+                    $this->parameters[$parameterName . $parameterLastIndex] = $value;
 
                     break;
                 }
