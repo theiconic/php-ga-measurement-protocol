@@ -49,6 +49,18 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\Analytics', $response);
     }
 
+    public function testSetIndexedParameter()
+    {
+        $response = $this->analytics
+            ->setProtocolVersion('1')
+            ->setTrackingId('UA-26293724-11')
+            ->setClientId('555')
+            ->setDocumentPath('/')
+            ->setProductImpressionListName('list name', 1);
+
+        $this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\Analytics', $response);
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */
