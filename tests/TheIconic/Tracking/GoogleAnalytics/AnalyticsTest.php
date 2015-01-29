@@ -120,7 +120,20 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
 
     public function testSetProductAction()
     {
+        $this->analytics->setProductActionToCheckout();
+        $this->analytics->setProductActionToCheckoutOption();
         $this->analytics->setProductActionToPurchase();
+        $this->analytics->setProductActionToAdd();
+        $this->analytics->setProductActionToClick();
+        $this->analytics->setProductActionToDetail();
+        $this->analytics->setProductActionToRefund();
+        $this->analytics->setProductActionToRemove();
+    }
+
+    public function testSetPromotionAction()
+    {
+        $this->analytics->setPromotionActionToClick();
+        $this->analytics->setPromotionActionToView();
     }
 
     /**

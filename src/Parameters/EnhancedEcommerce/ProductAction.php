@@ -41,7 +41,7 @@ class ProductAction extends SingleParameter
     /**
      *
      */
-    const PRODUCT_ACTION_CHECKOUT_OPTION = 'checkout_option';
+    const PRODUCT_ACTION_CHECKOUTOPTION = 'checkout_option';
 
     /**
      *
