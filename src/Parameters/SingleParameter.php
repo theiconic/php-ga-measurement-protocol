@@ -47,13 +47,14 @@ abstract class SingleParameter
             throw new InvalidSingleParameterException('Name attribute not defined for class ' . get_class($this));
         }
 
-        if (strpos($this->name, self::INDEX_PLACEHOLDER) !== false && $index === '') {
-            throw new InvalidSingleParameterException(
-                'Parameter class ' . get_class($this)  . ' is indexed, pass index in second argument when setting value'
-            );
-        }
+        if (strpos($this->name, self::INDEX_PLACEHOLDER) !== false) {
+            if ($index === '') {
+                throw new InvalidSingleParameterException(
+                    'Parameter class ' . get_class($this)
+                    . ' is indexed, pass index in second argument when setting value'
+                );
+            }
 
-        if ($index !== '') {
             $this->name = str_replace(self::INDEX_PLACEHOLDER, $index, $this->name);
         }
     }
