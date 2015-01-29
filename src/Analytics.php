@@ -96,9 +96,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionList($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCheckoutStep($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCheckoutStepOption($value)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductImpressionListName($value, $index)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProduct(array $productData)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProductImpression(array $productData, $index)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductAction($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToDetail()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToClick()
@@ -108,6 +106,12 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToCheckoutOption()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToPurchase()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToRefund()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductImpressionListName($value, $index)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProductImpression(array $productData, $index)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addPromotion(array $promotionData)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPromotionAction()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPromotionActionToClick()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPromotionActionToView()
  *
  * Social Interactions
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSocialNetwork($value)
@@ -282,6 +286,20 @@ class Analytics
         return $this;
     }
 
+    private function setPromotionActionTo($methodName)
+    {
+        $action = strtoupper(substr($methodName, 20));
+
+        $actionConstant = $this->getParameterClassConstant(
+            'TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\PromotionAction::PROMO_ACTION_' . $action,
+            'Promotion action ' . $action . ' does not exist, check spelling'
+        );
+
+        $this->setPromotionAction($actionConstant);
+
+        return $this;
+    }
+
     private function getParameterClassConstant($constant, $exceptionMsg)
     {
         if (defined($constant)) {
@@ -368,6 +386,10 @@ class Analytics
     {
         if (preg_match('/^(setProductActionTo)(\w+)/', $methodName, $matches)) {
             return $this->setProductActionTo($methodName);
+        }
+
+        if (preg_match('/^(setPromotionActionTo)(\w+)/', $methodName, $matches)) {
+            return $this->setPromotionActionTo($methodName);
         }
 
         if (preg_match('/^(set)(\w+)/', $methodName, $matches)) {
