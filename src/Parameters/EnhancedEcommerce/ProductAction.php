@@ -16,42 +16,42 @@ class ProductAction extends SingleParameter
     /**
      * Value for product action detail.
      */
-    const PRODUCT_ACTION_DETAIL = 'detail';
+    const ACTION_DETAIL = 'detail';
 
     /**
      * Value for product action click.
      */
-    const PRODUCT_ACTION_CLICK = 'click';
+    const ACTION_CLICK = 'click';
 
     /**
      * Value for product action add.
      */
-    const PRODUCT_ACTION_ADD = 'add';
+    const ACTION_ADD = 'add';
 
     /**
      * Value for product action remove.
      */
-    const PRODUCT_ACTION_REMOVE = 'remove';
+    const ACTION_REMOVE = 'remove';
 
     /**
      * Value for product action checkout.
      */
-    const PRODUCT_ACTION_CHECKOUT = 'checkout';
+    const ACTION_CHECKOUT = 'checkout';
 
     /**
      * Value for product action checkout option.
      */
-    const PRODUCT_ACTION_CHECKOUTOPTION = 'checkout_option';
+    const ACTION_CHECKOUTOPTION = 'checkout_option';
 
     /**
      * Value for product action purchase.
      */
-    const PRODUCT_ACTION_PURCHASE = 'purchase';
+    const ACTION_PURCHASE = 'purchase';
 
     /**
      * Value for product action refund.
      */
-    const PRODUCT_ACTION_REFUND = 'refund';
+    const ACTION_REFUND = 'refund';
 
     /**
      * @inheritDoc

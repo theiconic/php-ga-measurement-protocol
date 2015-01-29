@@ -16,12 +16,12 @@ class PromotionAction extends SingleParameter
     /**
      * Value for click action.
      */
-    const PROMO_ACTION_CLICK = 'click';
+    const ACTION_CLICK = 'click';
 
     /**
      * Value for view action.
      */
-    const PROMO_ACTION_VIEW = 'view';
+    const ACTION_VIEW = 'view';
 
     /**
      * @inheritDoc

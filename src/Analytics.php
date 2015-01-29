@@ -272,30 +272,17 @@ class Analytics
         return !in_array(false, $minimumRequiredParameters, true);
     }
 
-    private function setProductActionTo($methodName)
+    private function setParameterActionTo($parameter, $action)
     {
-        $action = strtoupper(substr($methodName, 18));
-
         $actionConstant = $this->getParameterClassConstant(
-            'TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\ProductAction::PRODUCT_ACTION_' . $action,
-            'Product action ' . $action . ' does not exist, check spelling'
+            'TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\\'
+            . $parameter . 'Action::ACTION_' . strtoupper($action),
+            $parameter . ' action ' . $action . ' does not exist, check spelling'
         );
 
-        $this->setProductAction($actionConstant);
+        $function = 'set' . $parameter . 'Action';
 
-        return $this;
-    }
-
-    private function setPromotionActionTo($methodName)
-    {
-        $action = strtoupper(substr($methodName, 20));
-
-        $actionConstant = $this->getParameterClassConstant(
-            'TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\PromotionAction::PROMO_ACTION_' . $action,
-            'Promotion action ' . $action . ' does not exist, check spelling'
-        );
-
-        $this->setPromotionAction($actionConstant);
+        $this->$function($actionConstant);
 
         return $this;
     }
@@ -384,12 +371,8 @@ class Analytics
 
     public function __call($methodName, array $methodArguments)
     {
-        if (preg_match('/^(setProductActionTo)(\w+)/', $methodName, $matches)) {
-            return $this->setProductActionTo($methodName);
-        }
-
-        if (preg_match('/^(setPromotionActionTo)(\w+)/', $methodName, $matches)) {
-            return $this->setPromotionActionTo($methodName);
+        if (preg_match('/^set(Product|Promotion)ActionTo(\w+)/', $methodName, $matches)) {
+            return $this->setParameterActionTo($matches[1], $matches[2]);
         }
 
         if (preg_match('/^(set)(\w+)/', $methodName, $matches)) {
