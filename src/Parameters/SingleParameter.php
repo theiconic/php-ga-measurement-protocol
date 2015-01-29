@@ -34,19 +34,12 @@ abstract class SingleParameter
     protected $value;
 
     /**
-     * Indicates if a single parameter has index (Eg. cm1, cm2, ... etc)
-     *
-     * @var bool
-     */
-    protected $isIndexed = false;
-
-    /**
      * Constructor. Validates that the child class has declared a non empty name for the parameter
      * and valid index for indexed parameters.
      *
      * @throws InvalidSingleParameterException
      *
-     * @param int $index
+     * @param $index
      */
     public function __construct($index = '')
     {
@@ -54,14 +47,7 @@ abstract class SingleParameter
             throw new InvalidSingleParameterException('Name attribute not defined for class ' . get_class($this));
         }
 
-        if ($this->isIndexed && strpos($this->name, self::INDEX_PLACEHOLDER) === false) {
-            throw new InvalidSingleParameterException(
-                'Parameter class ' . get_class($this)  . ' is indexed, you must specify where the index goes with '
-                . self::INDEX_PLACEHOLDER
-            );
-        }
-
-        if ($this->isIndexed && $index === '') {
+        if (strpos($this->name, self::INDEX_PLACEHOLDER) !== false && $index === '') {
             throw new InvalidSingleParameterException(
                 'Parameter class ' . get_class($this)  . ' is indexed, pass index in second argument when setting value'
             );
