@@ -33,19 +33,9 @@ class ProductImpression extends CompoundParameter
     ];
 
     /**
-     * Validates the product impression. SKU and name are required.
-     * Translates and saves the product fields to be sent later in case they are valid.
+     * @inheritDoc
      *
-     * @throws \InvalidArgumentException
-     *
-     * @param array $productData
+     * @var array
      */
-    public function __construct(array $productData)
-    {
-        if (empty($productData['sku']) && empty($productData['name'])) {
-            throw new \InvalidArgumentException('Either SKU or Name must be set for a product impression');
-        }
-
-        $this->saveCompoundParameterData($productData);
-    }
+    protected $requiredParameters = ['sku', 'name'];
 }
