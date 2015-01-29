@@ -10,6 +10,13 @@ abstract class CompoundParameterCollection implements IteratorAggregate
 
     protected $items = [];
 
+    public function __construct($index = '')
+    {
+        if ($index !== '') {
+            $this->collectionPrefix = str_replace(':i:', $index, $this->collectionPrefix);
+        }
+    }
+
     public function add(CompoundParameter $compoundParameter)
     {
         $this->items[] = $compoundParameter;

@@ -48,7 +48,7 @@ abstract class SingleParameter
      *
      * @param int $index
      */
-    public function __construct($index = null)
+    public function __construct($index = '')
     {
         if (empty($this->name)) {
             throw new InvalidSingleParameterException('Name attribute not defined for class ' . get_class($this));
@@ -61,13 +61,13 @@ abstract class SingleParameter
             );
         }
 
-        if ($this->isIndexed && $index === null) {
+        if ($this->isIndexed && $index === '') {
             throw new InvalidSingleParameterException(
                 'Parameter class ' . get_class($this)  . ' is indexed, pass index in second argument when setting value'
             );
         }
 
-        if ($index !== null) {
+        if ($index !== '') {
             $this->name = str_replace(self::INDEX_PLACEHOLDER, $index, $this->name);
         }
     }

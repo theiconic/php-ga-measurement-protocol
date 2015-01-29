@@ -98,6 +98,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCheckoutStepOption($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductImpressionListName($value, $index)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProduct(array $productData)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProductImpression(array $productData, $index)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductAction($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToDetail()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductActionToClick()
@@ -296,10 +297,7 @@ class Analytics
 
         $fullParameterClass = $this->getFullParameterClass($parameterClass, $methodName);
 
-        $parameterIndex = null;
-        if (isset($methodArguments[1]) && is_numeric($methodArguments[1])) {
-            $parameterIndex = $methodArguments[1];
-        }
+        $parameterIndex = $this->getIndexFromArguments($methodArguments);
 
         /** @var SingleParameter $parameterObject */
         $parameterObject = new $fullParameterClass($parameterIndex);
@@ -329,20 +327,32 @@ class Analytics
             $parameterObject = new $fullParameterClass($methodArguments[0]);
         }
 
-        if (isset($this->compoundParametersCollections[$parameterClass])) {
-            $this->compoundParametersCollections[$parameterClass]->add($parameterObject);
+        $collectionIndex = $this->getIndexFromArguments($methodArguments);
+
+        if (isset($this->compoundParametersCollections[$parameterClass . $collectionIndex])) {
+            $this->compoundParametersCollections[$parameterClass . $collectionIndex]->add($parameterObject);
         } else {
             $fullParameterCollectionClass = $fullParameterClass . 'Collection';
 
             /** @var CompoundParameterCollection $parameterObjectCollection */
-            $parameterObjectCollection = new $fullParameterCollectionClass();
+            $parameterObjectCollection = new $fullParameterCollectionClass($collectionIndex);
 
             $parameterObjectCollection->add($parameterObject);
 
-            $this->compoundParametersCollections[$parameterClass] = $parameterObjectCollection;
+            $this->compoundParametersCollections[$parameterClass . $collectionIndex] = $parameterObjectCollection;
         }
 
         return $this;
+    }
+
+    private function getIndexFromArguments($methodArguments)
+    {
+        $index = '';
+        if (isset($methodArguments[1]) && is_numeric($methodArguments[1])) {
+            $index = $methodArguments[1];
+        }
+
+        return $index;
     }
 
     private function getFullParameterClass($parameterClass, $methodName)
