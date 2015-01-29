@@ -109,7 +109,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProductImpressionListName($value, $index)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addProductImpression(array $productData, $index)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics addPromotion(array $promotionData)
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPromotionAction()
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPromotionAction($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPromotionActionToClick()
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setPromotionActionToView()
  *
