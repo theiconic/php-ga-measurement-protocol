@@ -60,6 +60,7 @@ Use Composer to install this package.
 ## Contributors
 
 * Jorge A. Borges - Lead Developer ([http://jorgeborges.me](http://jorgeborges.me))
+* Juan Falcón - [arcticfalcon](https://github.com/arcticfalcon)
 
 ## License
 
