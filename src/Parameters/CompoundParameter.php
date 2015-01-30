@@ -7,26 +7,47 @@ use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidCompoundParameterExcepti
 /**
  * Class CompoundParameter
  *
+ * A compound parameter represents a set of parameters that are part of a collection.
+ * There is a parameter name mapper that maps a human readable name that is used for passing the data
+ * into the real name that goes in the payload.
+ *
  * @package TheIconic\Tracking\GoogleAnalytics\Parameters
  */
-abstract class CompoundParameter
+abstract class CompoundParameter implements CompoundParameterInterface
 {
     /**
+     * Maps a human readable name used when initializing the compound parameter into
+     * the real name used in the payload.
+     *
      * @var array
      */
     protected $parameterNameMapper = [];
 
     /**
+     * Contains the required parameters for the compound parameters.
+     * They are in the same human readable name as in the mapper above.
+     *
      * @var array
      */
     protected $requiredParameters = [];
 
     /**
+     * After translating the human readable names into the payload ones, this collections
+     * contains the map for the payload names and the values to be sent.
+     *
      * @var array
      */
     protected $parameters = [];
 
 
+    /**
+     * Validates the required parameters are passed, then translates using the mapper to later save
+     * along with the values.
+     *
+     * @param array $compoundData
+     *
+     * @throws InvalidCompoundParameterException
+     */
     public function __construct(array $compoundData)
     {
         foreach ($this->requiredParameters as $requiredParameter) {
@@ -41,7 +62,7 @@ abstract class CompoundParameter
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function getParameters()
     {
@@ -49,6 +70,8 @@ abstract class CompoundParameter
     }
 
     /**
+     * Translates the human readable names into the payload ones and saves them along with the values.
+     *
      * @param array $compoundData
      * @throws \InvalidArgumentException
      */

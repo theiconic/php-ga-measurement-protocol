@@ -5,8 +5,7 @@ namespace TheIconic\Tracking\GoogleAnalytics\Exception;
 /**
  * Class InvalidSingleParameterException
  *
- * Thrown when an invalid single parameter is tried to be instantiated.
- * To be considered valid, a single parameter must have a name attribute.
+ * Thrown when an invalid name for a parameter is validated.
  *
  * @package TheIconic\Tracking\GoogleAnalytics\Exception
  */

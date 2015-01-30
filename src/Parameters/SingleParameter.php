@@ -11,7 +11,7 @@ use TheIconic\Tracking\GoogleAnalytics\Traits\Indexable;
  *
  * @package TheIconic\Tracking\GoogleAnalytics\Parameters
  */
-abstract class SingleParameter
+abstract class SingleParameter implements SingleParameterInterface
 {
     use Indexable;
 
@@ -31,8 +31,7 @@ abstract class SingleParameter
     protected $value;
 
     /**
-     * Constructor. Validates that the child class has declared a non empty name for the parameter
-     * and valid index for indexed parameters.
+     * Indexes the name when necessary.
      *
      * @param $index
      */
@@ -42,9 +41,7 @@ abstract class SingleParameter
     }
 
     /**
-     * Gets the name for the parameter.
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getName()
     {
@@ -52,10 +49,7 @@ abstract class SingleParameter
     }
 
     /**
-     * Sets a value for the parameter.
-     *
-     * @param $value
-     * @return $this
+     * @inheritDoc
      */
     public function setValue($value)
     {
@@ -65,9 +59,7 @@ abstract class SingleParameter
     }
 
     /**
-     * Gets the value for the parameter.
-     *
-     * @return mixed
+     * @inheritDoc
      */
     public function getValue()
     {

@@ -8,21 +8,29 @@ use GuzzleHttp\Message\ResponseInterface;
 /**
  * Class AnalyticsResponse
  *
+ * Represents the response got from GA.
+ *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
 class AnalyticsResponse
 {
     /**
+     * HTTP status code for the response.
+     *
      * @var string
      */
     protected $httpStatusCode;
 
     /**
+     * Request URI that was used to send the hit.
+     *
      * @var string
      */
     protected $requestUrl;
 
     /**
+     * Gets the relevant data from the Guzzle clients.
+     *
      * @param RequestInterface $request
      * @param ResponseInterface $response
      */
@@ -34,6 +42,8 @@ class AnalyticsResponse
     }
 
     /**
+     * Gets the HTTP status code.
+     *
      * @return string
      */
     public function getHttpStatusCode()
@@ -42,6 +52,8 @@ class AnalyticsResponse
     }
 
     /**
+     * Gets the request URI used to get the response.
+     *
      * @return string
      */
     public function getRequestUrl()

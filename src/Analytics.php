@@ -11,6 +11,9 @@ use Symfony\Component\Finder\Finder;
 /**
  * Class Analytics
  *
+ * The main interface for the clients, it relies heavily in magic methods exposing
+ * an interface with method tags.
+ *
  * General
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProtocolVersion($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTrackingId($value)
@@ -149,24 +152,55 @@ use Symfony\Component\Finder\Finder;
  */
 class Analytics
 {
+    /**
+     * URI scheme for the GA API.
+     *
+     * @var string
+     */
     private $uriScheme = 'http';
 
+    /**
+     * Endpoint to connect to when sending data to GA.
+     *
+     * @var string
+     */
     private $endpoint = '://www.google-analytics.com/collect';
 
     /**
+     * Holds the single parameters added to the hit.
+     *
      * @var SingleParameter[]
      */
     private $singleParameters = [];
 
     /**
+     * Holds the compound parameters collections added to the hit.
+     *
      * @var  CompoundParameterCollection[]
      */
     private $compoundParametersCollections = [];
 
+    /**
+     * Initializes to a list of all the available parameters to be sent in a hit.
+     *
+     * @var array
+     */
     private $availableParameters;
 
+    /**
+     * Holds the HTTP client used to connect to GA.
+     *
+     * @var HttpClient
+     */
     private $httpClient;
 
+    /**
+     * When passed with an argument of TRUE, it will send the hit using HTTPS instead of plain HTTP.
+     * It parses the available parameters.
+     *
+     * @param bool $isSsl
+     * @throws \InvalidArgumentException
+     */
     public function __construct($isSsl = false)
     {
         if (!is_bool($isSsl)) {
@@ -181,6 +215,8 @@ class Analytics
     }
 
     /**
+     * Sets the HtppClient.
+     *
      * @param HttpClient $httpClient
      */
     public function setHttpClient(HttpClient $httpClient)
@@ -189,6 +225,8 @@ class Analytics
     }
 
     /**
+     * Gets the HttpClient.
+     *
      * @return HttpClient
      */
     private function getHttpClient()
@@ -202,6 +240,11 @@ class Analytics
         return $this->httpClient;
     }
 
+    /**
+     * Returns an array containing all the available parameters that can be sent in the hit.
+     *
+     * @return array
+     */
     private function getAvailableParameters()
     {
         $parameterClassNames = [];
@@ -227,11 +270,23 @@ class Analytics
         return $parameterClassNames;
     }
 
+    /**
+     * Gets the full endpoint to GA.
+     *
+     * @return string
+     */
     private function getEndpoint()
     {
         return $this->uriScheme . $this->endpoint;
     }
 
+    /**
+     * Sends a hit to GA. The hit will contain in the payload all the parameters added before.
+     *
+     * @param $methodName
+     * @return AnalyticsResponse
+     * @throws Exception\InvalidPayloadDataException
+     */
     private function sendHit($methodName)
     {
         $hitType = strtoupper(substr($methodName, 4));
@@ -254,6 +309,11 @@ class Analytics
         );
     }
 
+    /**
+     * Validates the minimum required parameters for every GA hit are being sent.
+     *
+     * @return bool
+     */
     private function hasMinimumRequiredParameters()
     {
         $minimumRequiredParameters = [
@@ -272,6 +332,13 @@ class Analytics
         return !in_array(false, $minimumRequiredParameters, true);
     }
 
+    /**
+     * Sets a parameter action to the value specified by the method call.
+     *
+     * @param $parameter
+     * @param $action
+     * @return $this
+     */
     private function setParameterActionTo($parameter, $action)
     {
         $actionConstant = $this->getParameterClassConstant(
@@ -287,6 +354,14 @@ class Analytics
         return $this;
     }
 
+    /**
+     * Gets a contant from a class dynamically.
+     *
+     * @param $constant
+     * @param $exceptionMsg
+     * @return mixed
+     * @throws \BadMethodCallException
+     */
     private function getParameterClassConstant($constant, $exceptionMsg)
     {
         if (defined($constant)) {
@@ -296,6 +371,14 @@ class Analytics
         }
     }
 
+    /**
+     * Sets the value for a parameter.
+     *
+     * @param $methodName
+     * @param array $methodArguments
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
     private function setParameter($methodName, array $methodArguments)
     {
         $parameterClass = substr($methodName, 3);
@@ -318,6 +401,14 @@ class Analytics
         return $this;
     }
 
+    /**
+     * Adds an item to a compund parameter collection.
+     *
+     * @param $methodName
+     * @param array $methodArguments
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
     private function addItem($methodName, array $methodArguments)
     {
         $parameterClass = substr($methodName, 3);
@@ -350,6 +441,12 @@ class Analytics
         return $this;
     }
 
+    /**
+     * Gets the index value from the arguments.
+     *
+     * @param $methodArguments
+     * @return string
+     */
     private function getIndexFromArguments($methodArguments)
     {
         $index = '';
@@ -360,6 +457,14 @@ class Analytics
         return $index;
     }
 
+    /**
+     * Gets the fully qualified name for a parameter.
+     *
+     * @param $parameterClass
+     * @param $methodName
+     * @return string
+     * @throws \BadMethodCallException
+     */
     private function getFullParameterClass($parameterClass, $methodName)
     {
         if (empty($this->availableParameters[$parameterClass])) {
@@ -369,6 +474,14 @@ class Analytics
         }
     }
 
+    /**
+     * Routes the method call to the adequate private method.
+     *
+     * @param $methodName
+     * @param array $methodArguments
+     * @return $this|AnalyticsResponse
+     * @throws \BadMethodCallException
+     */
     public function __call($methodName, array $methodArguments)
     {
         if (preg_match('/^set(Product|Promotion)ActionTo(\w+)/', $methodName, $matches)) {
