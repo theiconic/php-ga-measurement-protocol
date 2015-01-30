@@ -45,6 +45,18 @@ The hit should have arrived to the GA property UA-26293728-11. You may verify th
 
 The library is 100% done, full documentation is a work in progress.
 
+## Installation
+
+Use Composer to install this package.
+
+```json
+{
+    "require": {
+        "theiconic/php-ga-measurement-protocol": "~1.0"
+    }
+}
+```
+
 ## Contributors
 
 * Jorge A. Borges - Lead Developer ([http://jorgeborges.me](http://jorgeborges.me))
