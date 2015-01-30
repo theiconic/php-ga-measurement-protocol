@@ -3,7 +3,6 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 
 use TheIconic\Tracking\GoogleAnalytics\Traits\Indexable;
-use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidSingleParameterException;
 
 /**
  * Class SingleParameter
@@ -35,16 +34,10 @@ abstract class SingleParameter
      * Constructor. Validates that the child class has declared a non empty name for the parameter
      * and valid index for indexed parameters.
      *
-     * @throws InvalidSingleParameterException
-     *
      * @param $index
      */
     public function __construct($index = '')
     {
-        if (empty($this->name)) {
-            throw new InvalidSingleParameterException('Name attribute not defined for class ' . get_class($this));
-        }
-
         $this->name = $this->addIndex($this->name, $index);
     }
 

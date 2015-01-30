@@ -3,6 +3,7 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Traits;
 
 use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidIndexException;
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidNameException;
 
 /**
  * Class Indexable
@@ -37,9 +38,14 @@ trait Indexable
      * @param int $index
      * @return string
      * @throws \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidIndexException
+     * @throws \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidNameException
      */
     protected function addIndex($string, $index)
     {
+        if (empty($string)) {
+            throw new InvalidNameException('Name attribute not defined for class ' . get_class($this));
+        }
+
         if (strpos($string, $this->indexPlaceholder) !== false) {
             if (!is_numeric($index) || $index < $this->minIndex || $index > $this->maxIndex) {
                 throw new InvalidIndexException(

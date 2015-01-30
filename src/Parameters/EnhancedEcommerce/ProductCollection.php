@@ -20,5 +20,5 @@ class ProductCollection extends CompoundParameterCollection
      *
      * @var string
      */
-    protected $collectionPrefix = 'pr';
+    protected $name = 'pr';
 }

@@ -10,6 +10,6 @@ namespace TheIconic\Tracking\GoogleAnalytics\Exception;
  *
  * @package TheIconic\Tracking\GoogleAnalytics\Exception
  */
-class InvalidSingleParameterException extends \Exception
+class InvalidNameException extends \Exception
 {
 }

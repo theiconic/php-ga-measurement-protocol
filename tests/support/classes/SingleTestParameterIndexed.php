@@ -7,6 +7,4 @@ use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 class SingleTestParameterIndexed extends SingleParameter
 {
     protected $name = 'testi:i:';
-
-    protected $isIndexed = true;
 }

@@ -20,7 +20,7 @@ class CompoundParameterCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidCompoundParameterException
+     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidNameException
      */
     public function testInvalidCompoundParameterCollection()
     {

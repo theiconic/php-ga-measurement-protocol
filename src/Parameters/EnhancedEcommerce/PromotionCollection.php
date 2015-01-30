@@ -18,5 +18,5 @@ class PromotionCollection extends CompoundParameterCollection
      *
      * @var string
      */
-    protected $collectionPrefix = 'promo';
+    protected $name = 'promo';
 }

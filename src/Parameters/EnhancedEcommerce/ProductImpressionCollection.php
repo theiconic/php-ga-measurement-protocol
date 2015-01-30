@@ -20,5 +20,5 @@ class ProductImpressionCollection extends CompoundParameterCollection
      *
      * @var string
      */
-    protected $collectionPrefix = 'il:i:pi';
+    protected $name = 'il:i:pi';
 }
