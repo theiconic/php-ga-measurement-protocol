@@ -54,6 +54,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setHitType($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setNonInteractionHit($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendPageview()
+ * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendEvent()
  * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendScreenview()
  * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendTransaction()
  * @method \TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse sendItem()
@@ -391,7 +392,9 @@ class Analytics
         $parameterObject = new $fullParameterClass($parameterIndex);
 
         if (!isset($methodArguments[0])) {
-            throw new \InvalidArgumentException('You must specify a value to be set for ' . $methodName);
+            throw new \InvalidArgumentException(
+                'For Analytics object, you must specify a value to be set for ' . $methodName
+            );
         } else {
             $parameterObject->setValue($methodArguments[0]);
         }
