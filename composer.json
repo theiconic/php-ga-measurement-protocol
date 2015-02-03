@@ -1,6 +1,6 @@
 {
     "name": "theiconic/php-ga-measurement-protocol",
-    "description": "PHP library for sending user interaction data directly to GA servers using Google Analytics Measurement Protocol.",
+    "description": "Send data to Google Analytics from the server using PHP. This library fully implements GA measurement protocol.",
     "type": "library",
     "license": "MIT",
     "authors": [

@@ -1,4 +1,8 @@
+### 1.0.1 (2015-02-03)
+ * Minor bug fixes
+
 ### 1.0.0 (2015-01-30)
+
  * First stable release
  * Full implementation of GA measurement protocol (AFAIK, feel free to open issue/pull request)
  * 100% code coverage for unit tests
