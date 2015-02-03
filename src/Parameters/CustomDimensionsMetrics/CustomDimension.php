@@ -19,11 +19,4 @@ class CustomDimension extends SingleParameter
      * @var string
      */
     protected $name = 'cd:i:';
-
-    /**
-     * @inheritDoc
-     *
-     * @var bool
-     */
-    protected $isIndexed = true;
 }

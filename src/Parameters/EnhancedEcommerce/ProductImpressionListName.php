@@ -19,11 +19,4 @@ class ProductImpressionListName extends SingleParameter
      * @var string
      */
     protected $name = 'il:i:nm';
-
-    /**
-     * @inheritDoc
-     *
-     * @var bool
-     */
-    protected $isIndexed = true;
 }

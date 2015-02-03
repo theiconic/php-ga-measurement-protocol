@@ -19,11 +19,4 @@ class CustomMetric extends SingleParameter
      * @var string
      */
     protected $name = 'cm:i:';
-
-    /**
-     * @inheritDoc
-     *
-     * @var bool
-     */
-    protected $isIndexed = true;
 }
