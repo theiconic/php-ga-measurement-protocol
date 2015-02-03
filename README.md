@@ -60,7 +60,8 @@ Use Composer to install this package.
 ## Contributors
 
 * Jorge A. Borges - Lead Developer ([http://jorgeborges.me](http://jorgeborges.me))
+* Juan Falcón - [arcticfalcon](https://github.com/arcticfalcon)
 
 ## License
 
-THE ICONIC Database Fixtures is released under the MIT License.
+THE ICONIC Google Analytics Measurement Protocol library for PHP is released under the MIT License.
