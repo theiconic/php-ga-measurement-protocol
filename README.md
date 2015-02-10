@@ -22,6 +22,18 @@ Send data to Google Analytics from the server using PHP. This library fully impl
 * Custom Dimensions / Metrics
 * Content Experiments
 
+## Installation
+
+Use Composer to install this package.
+
+```json
+{
+    "require": {
+        "theiconic/php-ga-measurement-protocol": "~1.0"
+    }
+}
+```
+
 ## Usage
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
@@ -31,7 +43,7 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
 $analytics = new Analytics(true);
 
 // Build the GA hit using the Analytics class methods
-// they should autocomplete if you use a PHP IDE
+// they should Autocomplete if you use a PHP IDE
 $analytics
     ->setProtocolVersion('1')
     ->setTrackingId('UA-26293728-11')
@@ -45,16 +57,66 @@ The hit should have arrived to the GA property UA-26293728-11. You may verify th
 
 The library is 100% done, full documentation is a work in progress.
 
-## Installation
+## Use Cases
+### Order Tracking with Enhanced E-commerce
 
-Use Composer to install this package.
+```php
+use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
-```json
-{
-    "require": {
-        "theiconic/php-ga-measurement-protocol": "~1.0"
-    }
-}
+$analytics = new Analytics();
+
+// Build the order data programatically, including each order product in the payload
+// First, general and required hit data
+$analytics->setProtocolVersion('1')
+    ->setTrackingId('UA-26293624-12')
+    ->setClientId('12345678')
+    ->setUserId('123');
+    
+// Then, include the transaction data 
+$analytics->setTransactionId('7778922')
+    ->setAffiliation('THE ICONIC')
+    ->setRevenue(250.0)
+    ->setTax(25.0)
+    ->setShipping(15.0)
+    ->setCouponCode('MY_COUPON');
+    
+// Include a product
+$productData1 = [
+    'sku' => 'AAAA-6666',
+    'name' => 'Test Product 2',
+    'brand' => 'Test Brand 2',
+    'category' => 'Test Category 3/Test Category 4',
+    'variant' => 'yellow',
+    'price' => 50.00,
+    'quantity' => 1,
+    'coupon_code' => 'TEST 2',
+    'position' => 2
+];
+
+$this->analytics->addProduct($productData1);
+
+// You can inlcude as many products as you need this way
+$productData2 = [
+    'sku' => 'AAAA-5555',
+    'name' => 'Test Product',
+    'brand' => 'Test Brand',
+    'category' => 'Test Category 1/Test Category 2',
+    'variant' => 'blue',
+    'price' => 85.00,
+    'quantity' => 2,
+    'coupon_code' => 'TEST',
+    'position' => 4
+];
+
+$this->analytics->addProduct($productData2);
+
+// Don't forget set the product action, in this case to PURCHASE
+$analytics->setProductActionToPurchase();
+
+// Finally, you must send a hit, in this case we send an Event
+$analytics->setEventCategory('Checkout')
+    ->setEventAction('Purchase')
+    ->sendEvent();
 ```
 
 ## Contributors
