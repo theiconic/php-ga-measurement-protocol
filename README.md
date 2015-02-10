@@ -53,9 +53,9 @@ $analytics
 // When you finish bulding the payload send a hit (such as an pageview or event)
 $analytics->sendPageview();
 ```
-The hit should have arrived to the GA property UA-26293728-11. You may verify this in your Real Time dashboard.
+The hit should have arrived to the GA property UA-26293728-11. You can verify this in your Real Time dashboard.
 
-The library is 100% done, full documentation is a work in progress.
+The library is 100% done, full documentation is a work in progress, but basically all parameters can be set the same way.
 
 ## Use Cases
 ### Order Tracking with Enhanced E-commerce
@@ -95,7 +95,7 @@ $productData1 = [
 
 $analytics->addProduct($productData1);
 
-// You can inlcude as many products as you need this way
+// You can include as many products as you need this way
 $productData2 = [
     'sku' => 'AAAA-5555',
     'name' => 'Test Product',
@@ -110,7 +110,7 @@ $productData2 = [
 
 $analytics->addProduct($productData2);
 
-// Don't forget set the product action, in this case to PURCHASE
+// Don't forget to set the product action, in this case to PURCHASE
 $analytics->setProductActionToPurchase();
 
 // Finally, you must send a hit, in this case we send an Event
