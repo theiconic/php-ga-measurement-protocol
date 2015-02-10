@@ -93,7 +93,7 @@ $productData1 = [
     'position' => 2
 ];
 
-$this->analytics->addProduct($productData1);
+$analytics->addProduct($productData1);
 
 // You can inlcude as many products as you need this way
 $productData2 = [
@@ -108,7 +108,7 @@ $productData2 = [
     'position' => 4
 ];
 
-$this->analytics->addProduct($productData2);
+$analytics->addProduct($productData2);
 
 // Don't forget set the product action, in this case to PURCHASE
 $analytics->setProductActionToPurchase();
