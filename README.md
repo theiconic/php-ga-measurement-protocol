@@ -35,6 +35,7 @@ Use Composer to install this package.
 ```
 
 ## Usage
+The required paramters for all hits are Protocol Version, Tracking ID and Client ID. Some optional ones like IP Overrride are recommended if you don't want all hits to seem like coming from your servers.
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
@@ -48,7 +49,8 @@ $analytics
     ->setProtocolVersion('1')
     ->setTrackingId('UA-26293728-11')
     ->setClientId('12345678')
-    ->setDocumentPath('/mypage');
+    ->setDocumentPath('/mypage')
+    ->setIpOverride("202.126.106.175");
 
 // When you finish bulding the payload send a hit (such as an pageview or event)
 $analytics->sendPageview();
