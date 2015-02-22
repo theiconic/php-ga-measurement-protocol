@@ -35,7 +35,7 @@ Use Composer to install this package.
 ```
 
 ## Usage
-The required paramters for all hits are Protocol Version, Tracking ID and Client ID. Some optional ones like IP Overrride are recommended if you don't want all hits to seem like coming from your servers.
+The required parameters for all hits are Protocol Version, Tracking ID and Client ID. Some optional ones like IP Override are recommended if you don't want all hits to seem like coming from your servers.
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
@@ -67,7 +67,7 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 $analytics = new Analytics();
 
-// Build the order data programatically, including each order product in the payload
+// Build the order data programmatically, including each order product in the payload
 // First, general and required hit data
 $analytics->setProtocolVersion('1')
     ->setTrackingId('UA-26293624-12')
