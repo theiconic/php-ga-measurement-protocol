@@ -4,6 +4,7 @@ namespace TheIconic\Tracking\GoogleAnalytics;
 
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Message\FutureResponse;
 
 /**
  * Class AnalyticsResponse
@@ -17,7 +18,7 @@ class AnalyticsResponse
     /**
      * HTTP status code for the response.
      *
-     * @var string
+     * @var null|string
      */
     protected $httpStatusCode;
 
@@ -36,15 +37,20 @@ class AnalyticsResponse
      */
     public function __construct(RequestInterface $request, ResponseInterface $response)
     {
-        $this->httpStatusCode = $response->getStatusCode();
+        if ($response instanceof FutureResponse) {
+            $this->httpStatusCode = null;
+        } else {
+            $this->httpStatusCode = $response->getStatusCode();
+        }
 
         $this->requestUrl = $request->getUrl();
     }
 
     /**
      * Gets the HTTP status code.
+     * It return NULL if the request was asynchronous since we are not waiting for the response.
      *
-     * @return string
+     * @return null|string
      */
     public function getHttpStatusCode()
     {

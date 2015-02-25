@@ -9,6 +9,11 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
      */
     private $analyticsResponse;
 
+    /**
+     * @var AnalyticsResponse
+     */
+    private $analyticsResponseAsync;
+
     public function setUp()
     {
         $mockResponse = $this->getMockBuilder('GuzzleHttp\Message\Response')
@@ -30,15 +35,23 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('http://test-collector/hello'));
 
         $this->analyticsResponse = new AnalyticsResponse($mockRequest, $mockResponse);
+
+        $mockResponseAsync = $this->getMockBuilder('GuzzleHttp\Message\FutureResponse')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->analyticsResponseAsync = new AnalyticsResponse($mockRequest, $mockResponseAsync);
     }
 
     public function testStatusCode()
     {
         $this->assertEquals('200', $this->analyticsResponse->getHttpStatusCode());
+        $this->assertEquals(null, $this->analyticsResponseAsync->getHttpStatusCode());
     }
 
     public function testGetUrl()
     {
         $this->assertEquals('http://test-collector/hello', $this->analyticsResponse->getRequestUrl());
+        $this->assertEquals('http://test-collector/hello', $this->analyticsResponseAsync->getRequestUrl());
     }
 }

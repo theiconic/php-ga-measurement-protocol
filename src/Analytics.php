@@ -161,6 +161,13 @@ class Analytics
     private $uriScheme = 'http';
 
     /**
+     * Indicates if the request to GA will be asynchronous (non-blocking).
+     *
+     * @var boolean
+     */
+    private $isNonBlocking;
+
+    /**
      * Endpoint to connect to when sending data to GA.
      *
      * @var string
@@ -212,17 +219,34 @@ class Analytics
             $this->uriScheme .= 's';
         }
 
+        $this->isNonBlocking = false;
+
         $this->availableParameters = $this->getAvailableParameters();
+    }
+
+    /**
+     * Makes the request to GA asynchronous (non-blocking).
+     *
+     * @return $this
+     */
+    public function makeNonBlocking()
+    {
+        $this->isNonBlocking = true;
+
+        return $this;
     }
 
     /**
      * Sets the HtppClient.
      *
      * @param HttpClient $httpClient
+     * @return $this
      */
     public function setHttpClient(HttpClient $httpClient)
     {
         $this->httpClient = $httpClient;
+
+        return $this;
     }
 
     /**
@@ -306,7 +330,8 @@ class Analytics
         return $this->getHttpClient()->post(
             $this->getEndpoint(),
             $this->singleParameters,
-            $this->compoundParametersCollections
+            $this->compoundParametersCollections,
+            $this->isNonBlocking
         );
     }
 

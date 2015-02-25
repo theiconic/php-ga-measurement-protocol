@@ -42,7 +42,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->analytics
             ->setProtocolVersion('1')
-            ->setTrackingId('UA-26293724-11')
+            ->setTrackingId('UA-26293424-11')
             ->setClientId('555')
             ->setDocumentPath('/');
 
@@ -53,7 +53,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->analytics
             ->setProtocolVersion('1')
-            ->setTrackingId('UA-26293724-11')
+            ->setTrackingId('UA-26563724-11')
             ->setClientId('555')
             ->setDocumentPath('/')
             ->setProductImpressionListName('list name', 1);
@@ -198,6 +198,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->analytics
+            ->makeNonBlocking()
             ->setProtocolVersion('1')
             ->setTrackingId('555')
             ->setClientId('666');

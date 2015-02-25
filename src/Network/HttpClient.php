@@ -80,9 +80,10 @@ class HttpClient
      * @param string $url
      * @param SingleParameter[] $singleParameters
      * @param CompoundParameterCollection[] $compoundParameters
+     * @param boolean $nonBlocking
      * @return AnalyticsResponse
      */
-    public function post($url, array $singleParameters, array $compoundParameters)
+    public function post($url, array $singleParameters, array $compoundParameters, $nonBlocking = false)
     {
         $singlesPost = $this->getSingleParametersPayload($singleParameters);
 
@@ -91,6 +92,7 @@ class HttpClient
         $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
 
         $request = $this->getClient()->createRequest('GET', $url, [
+            'future' => $nonBlocking,
             'timeout' => self::REQUEST_TIMEOUT_SECONDS,
             'connect_timeout' => self::REQUEST_TIMEOUT_SECONDS,
             'query' => $this->payloadParameters,
