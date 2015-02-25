@@ -18,7 +18,7 @@ class AnalyticsResponse
     /**
      * HTTP status code for the response.
      *
-     * @var null|string
+     * @var null|int
      */
     protected $httpStatusCode;
 
@@ -50,7 +50,7 @@ class AnalyticsResponse
      * Gets the HTTP status code.
      * It return NULL if the request was asynchronous since we are not waiting for the response.
      *
-     * @return null|string
+     * @return null|int
      */
     public function getHttpStatusCode()
     {
