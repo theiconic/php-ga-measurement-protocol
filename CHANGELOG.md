@@ -1,3 +1,6 @@
+### 1.1.0 (2015-02-25)
+ * Adding the capability of sending hits to GA in an asynchronous way (non-blocking)
+
 ### 1.0.1 (2015-02-03)
  * Minor bug fixes
 
