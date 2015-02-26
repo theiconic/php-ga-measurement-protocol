@@ -217,6 +217,7 @@ class Analytics
 
         if ($isSsl) {
             $this->uriScheme .= 's';
+            $this->endpoint = str_replace('www', 'ssl', $this->endpoint);
         }
 
         $this->isNonBlocking = false;

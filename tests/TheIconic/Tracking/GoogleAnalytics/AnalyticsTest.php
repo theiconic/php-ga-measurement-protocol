@@ -18,10 +18,16 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
      */
     private $analytics;
 
+    /**
+     * @var Analytics
+     */
+    private $analyticsSsl;
+
 
     public function setUp()
     {
         $this->analytics = new Analytics();
+        $this->analyticsSsl = new Analytics(true);
     }
 
     /**
@@ -171,11 +177,35 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics
             ->setProtocolVersion('1')
             ->setTrackingId('555')
-            ->setClientId('666');
+            ->setClientId('666')
+            ->setDocumentPath('\thepage');
 
         $this->analytics->setHttpClient($httpClient);
 
         $this->analytics->sendPageview();
+    }
+
+    public function testSendSimpleSslHit()
+    {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo('https://ssl.google-analytics.com/collect'),
+                $this->isType('array'),
+                $this->isType('array')
+            );
+
+        $this->analyticsSsl
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\mypage');
+
+        $this->analyticsSsl->setHttpClient($httpClient);
+
+        $this->analyticsSsl->sendPageview();
     }
 
     public function testSendComplexHit()
