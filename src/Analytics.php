@@ -18,6 +18,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProtocolVersion($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTrackingId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setAnonymizeIp($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDataSource($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setQueueTime($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCacheBuster($value)
  *
