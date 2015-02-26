@@ -1,3 +1,8 @@
+### 1.1.1 (2015-02-26)
+ * Changing HTTPS endpoint to official one in Google documentation
+ * Adding Data Source parameter
+ * Adding Geographical Override parameter
+
 ### 1.1.0 (2015-02-25)
  * Adding the capability of sending hits to GA in an asynchronous way (non-blocking)
 
