@@ -62,7 +62,7 @@ The library is 100% done, full documentation is a work in progress, but basicall
 ```php
 // Look at the parameter names in Google official docs at
 // https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
-$analytics->set<ParameterName>();
+$analytics->set<ParameterName>('my_value');
 ```
 
 ## Use Cases
