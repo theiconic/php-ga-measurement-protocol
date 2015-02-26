@@ -30,6 +30,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSessionControl($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setIpOverride($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserAgentOverride($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setGeographicalOverride($value)
  *
  * Traffic Sources
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setDocumentReferrer($value)
