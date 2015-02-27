@@ -34,6 +34,10 @@ Use Composer to install this package.
 }
 ```
 
+## Integrations
+You can use this package on its own, or use a convenient framework integration:
+* Laravel 5 - https://github.com/irazasyed/laravel-gamp
+
 ## Usage
 The required parameters for all hits are Protocol Version, Tracking ID and Client ID. Some optional ones like IP Override are recommended if you don't want all hits to seem like coming from your servers.
 ```php
@@ -138,6 +142,7 @@ $analytics->setEventCategory('Checkout')
 
 * Jorge A. Borges - Lead Developer ([http://jorgeborges.me](http://jorgeborges.me))
 * Juan Falcón - [arcticfalcon](https://github.com/arcticfalcon)
+* Syed Irfaq R. - [irazasyed](https://github.com/irazasyed)
 
 ## License
 
