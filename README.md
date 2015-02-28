@@ -71,6 +71,7 @@ $analytics->set<ParameterName>('my_value');
 
 ## Use Cases
 ### Asynchronous Requests (Non-Blocking)
+By default, sending a hit to GA will be a synchronous request, and block the execution of the script until it gets a response from the server or timeouts after 100 secs (throwing a Guzzle exception). However, an asynchronous non-blocking hit can be sent as follow:
 ```php
 // When building the Analytics hit, just make a call to the makeNonBlocking method
 // now sending the hit won't block the execution of the script
