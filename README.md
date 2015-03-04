@@ -68,6 +68,7 @@ The library is 100% done, full documentation is a work in progress, but basicall
 // https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
 $analytics->set<ParameterName>('my_value');
 ```
+All methods for setting parameters should **Autocomplete** if you use an IDE such as PHPStorm, which makes building the Analytics object very easy.
 
 ## Use Cases
 ### Asynchronous Requests (Non-Blocking)
