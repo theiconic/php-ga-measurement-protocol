@@ -167,7 +167,7 @@ class Analytics
      *
      * @var boolean
      */
-    private $isNonBlocking;
+    private $isAsyncRequest = false;
 
     /**
      * Endpoint to connect to when sending data to GA.
@@ -222,19 +222,32 @@ class Analytics
             $this->endpoint = str_replace('www', 'ssl', $this->endpoint);
         }
 
-        $this->isNonBlocking = false;
-
         $this->availableParameters = $this->getAvailableParameters();
+    }
+
+    /**
+     * Sets a request to be either synchronous or asynchronous (non-blocking).
+     *
+     * @param boolean $isAsyncRequest
+     * @return $this
+     */
+    public function setAsyncRequest($isAsyncRequest)
+    {
+        $this->isAsyncRequest = $isAsyncRequest;
+
+        return $this;
     }
 
     /**
      * Makes the request to GA asynchronous (non-blocking).
      *
+     * @deprecated Use setAsyncRequest(boolean $isAsyncRequest) instead. To be removed in the major version.
+     *
      * @return $this
      */
     public function makeNonBlocking()
     {
-        $this->isNonBlocking = true;
+        $this->isAsyncRequest = true;
 
         return $this;
     }
@@ -334,7 +347,7 @@ class Analytics
             $this->getEndpoint(),
             $this->singleParameters,
             $this->compoundParametersCollections,
-            $this->isNonBlocking
+            $this->isAsyncRequest
         );
     }
 

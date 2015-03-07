@@ -198,6 +198,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->analyticsSsl
+            ->setAsyncRequest(true)
             ->setProtocolVersion('1')
             ->setTrackingId('555')
             ->setClientId('666')
