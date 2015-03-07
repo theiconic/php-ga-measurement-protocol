@@ -1,3 +1,7 @@
+### 1.1.2 (2015-03-07)
+ * Creating setAsyncRequest(boolean $isAsyncRequest) method to be used instead of makeNonBlocking(). Its more flexible.
+ * makeNonBlocking() is now deprecated, use setAsyncRequest() instead. To be removed in next major release.
+
 ### 1.1.1 (2015-02-26)
  * Changing HTTPS endpoint to official one in Google documentation
  * Adding Data Source parameter

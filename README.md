@@ -1,6 +1,6 @@
 Google Analytics Measurement Protocol library for PHP
 ===========================
-[![Build Status](https://travis-ci.org/theiconic/php-ga-measurement-protocol.svg?branch=v1.1.1)](https://travis-ci.org/theiconic/php-ga-measurement-protocol) [![Coverage Status](https://img.shields.io/coveralls/theiconic/php-ga-measurement-protocol.svg)](https://coveralls.io/r/theiconic/php-ga-measurement-protocol?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/?branch=master) [![Latest Stable Version](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/v/stable.svg)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Total Downloads](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/downloads.svg)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![License](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/license.svg)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Documentation Status](https://readthedocs.org/projects/php-ga-measurement-protocol/badge/?version=latest)](http://php-ga-measurement-protocol.readthedocs.org/en/latest/) [![Dependency Status](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068)
+[![Build Status](https://travis-ci.org/theiconic/php-ga-measurement-protocol.svg?branch=v1.1.2)](https://travis-ci.org/theiconic/php-ga-measurement-protocol) [![Coverage Status](https://img.shields.io/coveralls/theiconic/php-ga-measurement-protocol.svg)](https://coveralls.io/r/theiconic/php-ga-measurement-protocol?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/theiconic/php-ga-measurement-protocol/?branch=master) [![Latest Stable Version](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/v/stable.svg)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Total Downloads](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/downloads.svg)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![License](https://poser.pugx.org/theiconic/php-ga-measurement-protocol/license.svg)](https://packagist.org/packages/theiconic/php-ga-measurement-protocol) [![Documentation Status](https://readthedocs.org/projects/php-ga-measurement-protocol/badge/?version=latest)](http://php-ga-measurement-protocol.readthedocs.org/en/latest/) [![Dependency Status](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54fa7f46fcd47acff1000068)
 
 ## Description
 
@@ -74,9 +74,9 @@ All methods for setting parameters should **Autocomplete** if you use an IDE suc
 ### Asynchronous Requests (Non-Blocking)
 By default, sending a hit to GA will be a synchronous request, and block the execution of the script until it gets a response from the server or timeouts after 100 secs (throwing a Guzzle exception). However, an asynchronous non-blocking hit can be sent as follow:
 ```php
-// When building the Analytics hit, just make a call to the makeNonBlocking method
+// When building the Analytics hit, just make a call to the setAsyncRequest method passing true
 // now sending the hit won't block the execution of the script
-$analytics->makeNonBlocking();
+$analytics->setAsyncRequest(true);
 ```
 This means that we are sending the request and not waiting for a response. The AnalyticsResponse object that you will get back has NULL for HTTP status code.
 ### Order Tracking with Enhanced E-commerce
