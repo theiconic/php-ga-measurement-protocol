@@ -241,7 +241,7 @@ class Analytics
     /**
      * Makes the request to GA asynchronous (non-blocking).
      *
-     * @deprecated Use setAsyncRequest(boolean $isAsyncRequest) instead. To be removed in the major version.
+     * @deprecated Use setAsyncRequest(boolean $isAsyncRequest) instead. To be removed in next major version.
      *
      * @return $this
      */
