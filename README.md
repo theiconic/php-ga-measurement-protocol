@@ -29,7 +29,7 @@ Use Composer to install this package.
 ```json
 {
     "require": {
-        "theiconic/php-ga-measurement-protocol": "~1.1"
+        "theiconic/php-ga-measurement-protocol": "^1.1"
     }
 }
 ```
