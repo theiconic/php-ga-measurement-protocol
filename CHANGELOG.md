@@ -1,3 +1,7 @@
+### 1.1.3 (2015-03-17)
+ * Updating dependencies
+ * Using caret for declaring dependencies in Composer, as per author's recommendation
+
 ### 1.1.2 (2015-03-07)
  * Creating setAsyncRequest(boolean $isAsyncRequest) method to be used instead of makeNonBlocking(). Its more flexible.
  * makeNonBlocking() is now deprecated, use setAsyncRequest() instead. To be removed in next major release.
