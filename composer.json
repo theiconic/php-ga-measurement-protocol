@@ -15,7 +15,7 @@
         "symfony/finder": "^2.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.5.*",
+        "phpunit/phpunit": "4.6.*",
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
