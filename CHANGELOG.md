@@ -1,3 +1,8 @@
+### 1.1.4 (2015-04-18)
+ * Updating dependencies
+ * Including Yii 2 integration by @baibaratsky
+ * Placing project in CI with PHP 5.6 and 7
+
 ### 1.1.3 (2015-03-17)
  * Updating dependencies
  * Using caret for declaring dependencies in Composer, as per author's recommendation
