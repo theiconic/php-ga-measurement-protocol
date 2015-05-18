@@ -2,8 +2,24 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\Affiliation;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\CouponCode;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\Product;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\ProductAction;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\ProductCollection;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\Revenue;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\Shipping;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\Tax;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\TransactionId;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\AnonymizeIp;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\CacheBuster;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\DataSource;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\General\ProtocolVersion;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\QueueTime;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\General\TrackingId;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\NonInteractionHit;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\Session\IpOverride;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\TrafficSources\GoogleDisplayAdsId;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\User\ClientId;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType;
 
@@ -237,6 +253,103 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics->setHttpClient($httpClient);
 
         $this->analytics->sendPageview();
+    }
+
+    public function testSendMegaHit()
+    {
+        $singleParameters = [
+            'v' => (new ProtocolVersion())->setValue('1'),
+            'tid' => (new TrackingId())->setValue('555'),
+            'cid' => (new ClientId())->setValue('666'),
+            't' => (new HitType())->setValue('event'),
+            'aip' => (new AnonymizeIp())->setValue('1'),
+            'z' => (new CacheBuster())->setValue('289372387623'),
+            'ds' => (new DataSource())->setValue('call center'),
+            'qt' => (new QueueTime())->setValue('560'),
+            'ni' => (new NonInteractionHit())->setValue('1'),
+            'dclid' => (new GoogleDisplayAdsId())->setValue('d_click_id'),
+            'uip' => (new IpOverride())->setValue('202.126.106.175'),
+            'ti' => (new TransactionId())->setValue('7778922'),
+            'ta' => (new Affiliation())->setValue('THE ICONIC'),
+            'tr' => (new Revenue())->setValue(250),
+            'tt' => (new Tax())->setValue(25),
+            'ts' => (new Shipping())->setValue(15),
+            'tcc' => (new CouponCode())->setValue('MY_COUPON'),
+            'pa' => (new ProductAction())->setValue('purchase')
+        ];
+
+        $this->analytics
+            ->setAsyncRequest(true)
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setAnonymizeIp('1')
+            ->setCacheBuster('289372387623')
+            ->setDataSource('call center')
+            ->setQueueTime('560')
+            ->setNonInteractionHit('1')
+            ->setGoogleDisplayAdsId('d_click_id')
+            ->setIpOverride("202.126.106.175");
+
+        $this->analytics->setTransactionId('7778922')
+            ->setAffiliation('THE ICONIC')
+            ->setRevenue(250.0)
+            ->setTax(25.0)
+            ->setShipping(15.0)
+            ->setCouponCode('MY_COUPON');
+
+
+        $productData1 = [
+            'sku' => 'AAAA-6666',
+            'name' => 'Test Product 2',
+            'brand' => 'Test Brand 2',
+            'category' => 'Test Category 3/Test Category 4',
+            'variant' => 'yellow',
+            'price' => 50.00,
+            'quantity' => 1,
+            'coupon_code' => 'TEST 2',
+            'position' => 2
+        ];
+
+        $this->analytics->addProduct($productData1);
+
+        $productData2 = [
+            'sku' => 'AAAA-5555',
+            'name' => 'Test Product',
+            'brand' => 'Test Brand',
+            'category' => 'Test Category 1/Test Category 2',
+            'variant' => 'blue',
+            'price' => 85.00,
+            'quantity' => 2,
+            'coupon_code' => 'TEST',
+            'position' => 4
+        ];
+
+        $this->analytics->addProduct($productData2);
+
+        $products = new ProductCollection();
+        $products->add(new Product($productData1));
+        $products->add(new Product($productData2));
+
+        $compoundParameters = [
+            'Product' => $products,
+        ];
+
+        $this->analytics->setProductActionToPurchase();
+
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo('http://www.google-analytics.com/collect'),
+                $this->equalTo($singleParameters),
+                $this->equalTo($compoundParameters)
+            );
+
+        $this->analytics->setHttpClient($httpClient);
+
+        $this->analytics->sendEvent();
     }
 
     /**
