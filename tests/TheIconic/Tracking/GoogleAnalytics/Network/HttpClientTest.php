@@ -53,8 +53,10 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $singles = [$singleParameter, $singleParameterIdx];
 
         $compoundCollection = new CompoundParameterTestCollection(6);
-        $compoundParameter =  new CompoundTestParameter(['sku' => 555, 'name' => 'cathy']);
+        $compoundParameter = new CompoundTestParameter(['sku' => 555, 'name' => 'cathy']);
         $compoundCollection->add($compoundParameter);
+        $compoundParameter2 = new CompoundTestParameter(['sku' => 666, 'name' => 'isa']);
+        $compoundCollection->add($compoundParameter2);
         $compounds = [$compoundCollection];
 
         $response = $this->httpClient->post('http://test-collector.com', $singles, $compounds);
@@ -68,6 +70,8 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             'testi4' => 9,
             'cp6t1id' => 555,
             'cp6t1nm' => 'cathy',
+            'cp6t2id' => 666,
+            'cp6t2nm' => 'isa',
         ];
 
         $this->assertEquals($expect, $payload);
