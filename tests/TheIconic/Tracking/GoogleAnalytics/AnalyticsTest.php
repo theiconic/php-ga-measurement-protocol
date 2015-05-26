@@ -245,7 +245,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->analytics
-            ->setAsyncRequest(true)
+            ->makeNonBlocking()
             ->setProtocolVersion('1')
             ->setTrackingId('555')
             ->setClientId('666');
