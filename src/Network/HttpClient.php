@@ -7,6 +7,7 @@ use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -41,6 +42,17 @@ class HttpClient
      * @var array
      */
     private $payloadParameters;
+
+    /**
+     * @var PromiseInterface[]
+     */
+    private static $promises = [];
+
+    public function __destruct()
+    {
+        // We have to unwrap all promises at the end
+        Promise\unwrap(self::$promises);
+    }
 
     /**
      * Sets HTTP client.
@@ -93,16 +105,21 @@ class HttpClient
 
         $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
 
-        $request = new Request('GET', $url, ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT]);
+        $request = new Request(
+            'GET',
+            $url . '?' . http_build_query($this->payloadParameters),
+            ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT]
+        );
 
         $response = $this->getClient()->sendAsync($request, [
             'synchronous' => !$nonBlocking,
             'timeout' => self::REQUEST_TIMEOUT_SECONDS,
             'connect_timeout' => self::REQUEST_TIMEOUT_SECONDS,
-            'query' => $this->payloadParameters,
         ]);
 
-        if (!$nonBlocking) {
+        if ($nonBlocking) {
+            self::$promises[] = $response;
+        } else {
             $response = $response->wait();
         }
 
