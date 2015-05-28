@@ -6,8 +6,10 @@ use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class HttpClient
@@ -91,17 +93,18 @@ class HttpClient
 
         $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
 
-        $request = $this->getClient()->createRequest('GET', $url, [
-            'future' => $nonBlocking,
+        $request = new Request('GET', $url, ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT]);
+
+        $response = $this->getClient()->sendAsync($request, [
+            'synchronous' => !$nonBlocking,
             'timeout' => self::REQUEST_TIMEOUT_SECONDS,
             'connect_timeout' => self::REQUEST_TIMEOUT_SECONDS,
             'query' => $this->payloadParameters,
-            'headers' => [
-                'User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT,
-            ],
         ]);
 
-        $response = $this->getClient()->send($request);
+        if (!$nonBlocking) {
+            $response = $response->wait();
+        }
 
         return $this->getAnalyticsResponse($request, $response);
     }
@@ -109,11 +112,11 @@ class HttpClient
     /**
      * Creates an analytics response object.
      *
-     * @param $request
-     * @param $response
+     * @param RequestInterface $request
+     * @param ResponseInterface|PromiseInterface $response
      * @return AnalyticsResponse
      */
-    private function getAnalyticsResponse(RequestInterface $request, ResponseInterface $response)
+    protected function getAnalyticsResponse(RequestInterface $request, $response)
     {
         return new AnalyticsResponse($request, $response);
     }
