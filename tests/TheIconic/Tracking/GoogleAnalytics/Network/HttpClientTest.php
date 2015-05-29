@@ -31,7 +31,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $mockPromise->expects($this->atLeast(1))
+        $mockPromise->expects($this->exactly(3))
             ->method('wait')
             ->will($this->returnValue($mockResponse));
 
@@ -99,5 +99,10 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expect, $payload);
+
+
+        // Promises should be unwrapped on the object destruction
+        $this->httpClient = null;
+        $this->mockHttpClient = null;
     }
 }
