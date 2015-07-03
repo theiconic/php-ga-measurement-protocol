@@ -44,13 +44,17 @@ class HttpClient
     private $payloadParameters;
 
     /**
+     * Holds the promises (async responses).
+     *
      * @var PromiseInterface[]
      */
     private static $promises = [];
 
+    /**
+     * We have to unwrap and send all promises at the end before analytics objects is destroyed.
+     */
     public function __destruct()
     {
-        // We have to unwrap all promises at the end
         Promise\unwrap(self::$promises);
     }
 
