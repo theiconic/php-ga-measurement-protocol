@@ -1,3 +1,7 @@
+### 1.1.5 (2015-07-03)
+ * Updating dependencies
+ * Creating separate branches to maintain v1 and v2 apart
+
 ### 1.1.4 (2015-04-18)
  * Updating dependencies
  * Including Yii 2 integration by @baibaratsky
