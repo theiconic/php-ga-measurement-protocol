@@ -26,10 +26,22 @@ Send data to Google Analytics from the server using PHP. This library fully impl
 
 Use Composer to install this package.
 
+If you are using ```PHP 5.5 or above``` and ```Guzzle 6``` then:
+
 ```json
 {
     "require": {
         "theiconic/php-ga-measurement-protocol": "^2.0"
+    }
+}
+```
+
+Or if you are using ```PHP 5.4 or above``` and ```Guzzle 5``` then:
+
+```json
+{
+    "require": {
+        "theiconic/php-ga-measurement-protocol": "^1.1"
     }
 }
 ```
