@@ -2,6 +2,7 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
+use TheIconic\Tracking\GoogleAnalytics\Parameters\ContentGrouping\ContentGroup;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\Affiliation;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\CouponCode;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\Product;
@@ -253,6 +254,47 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics->setHttpClient($httpClient);
 
         $this->analytics->sendPageview();
+    }
+
+    public function testContentGroupingHit()
+    {
+        $singleParameters = [
+            'v' => (new ProtocolVersion())->setValue('1'),
+            'tid' => (new TrackingId())->setValue('555'),
+            'cid' => (new ClientId())->setValue('666'),
+            't' => (new HitType())->setValue('pageview'),
+            'cg1' => (new ContentGroup(1))->setValue('group'),
+        ];
+
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo('http://www.google-analytics.com/collect'),
+                $this->equalTo($singleParameters),
+                $this->isType('array')
+            );
+
+        $this->analytics
+            ->makeNonBlocking()
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setContentGroup('group', 1);
+
+        $this->analytics->setHttpClient($httpClient);
+
+        $this->analytics->sendPageview();
+    }
+
+    /**
+     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidIndexException
+     */
+    public function testInvalidContentGroupIndex()
+    {
+        $this->analytics
+            ->setContentGroup('group', 6);
     }
 
     public function testSendMegaHit()

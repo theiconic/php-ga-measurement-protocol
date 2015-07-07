@@ -20,16 +20,20 @@ trait Indexable
     private $indexPlaceholder = ':i:';
 
     /**
-     * Maximum value index can take in GA.
-     * @var int
+     * Minimum value index can take in GA.
+     * @return int
      */
-    private $maxIndex = 200;
+    protected function minIndex() {
+        return 1;
+    }
 
     /**
-     * Minimum value index can take in GA.
-     * @var int
+     * Maximum value index can take in GA.
+     * @return int
      */
-    private $minIndex = 1;
+    protected function maxIndex() {
+        return 200;
+    }
 
     /**
      * Replaces a placeholder for the index passed.
@@ -47,7 +51,7 @@ trait Indexable
         }
 
         if (strpos($string, $this->indexPlaceholder) !== false) {
-            if (!is_numeric($index) || $index < $this->minIndex || $index > $this->maxIndex) {
+            if (!is_numeric($index) || $index < $this->minIndex() || $index > $this->maxIndex()) {
                 throw new InvalidIndexException(
                     'When setting parameter ' . get_class($this)
                     . ' a numeric index between 1 - 200 must be passed for the second argument'
