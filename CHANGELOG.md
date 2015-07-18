@@ -1,9 +1,17 @@
 ## Version 2
+### 2.1.0 (2015-07-19)
+ * Updating dependencies
+ * Adding Content Grouping support by @lombo
+
 ### 2.0.0 (2015-07-03)
  * Upgrading to Guzzle 6
  * Removing support for PHP 5.4 (use version 1 for that)
 
 ## Version 1
+### 1.2.0 (2015-07-19)
+ * Updating dependencies
+ * Adding Content Grouping support by @lombo
+
 ### 1.1.5 (2015-07-03)
  * Updating dependencies
  * Creating separate branches to maintain v1 and v2 apart
