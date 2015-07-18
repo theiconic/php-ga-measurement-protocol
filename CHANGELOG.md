@@ -1,3 +1,7 @@
+### 1.2.0 (2015-07-19)
+ * Updating dependencies
+ * Adding Content Grouping support by @lombo
+
 ### 1.1.5 (2015-07-03)
  * Updating dependencies
  * Creating separate branches to maintain v1 and v2 apart
