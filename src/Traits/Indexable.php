@@ -21,17 +21,21 @@ trait Indexable
 
     /**
      * Minimum value index can take in GA.
+     *
      * @return int
      */
-    protected function minIndex() {
+    protected function minIndex()
+    {
         return 1;
     }
 
     /**
      * Maximum value index can take in GA.
+     *
      * @return int
      */
-    protected function maxIndex() {
+    protected function maxIndex()
+    {
         return 200;
     }
 
