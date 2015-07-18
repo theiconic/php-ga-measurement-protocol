@@ -146,6 +146,9 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCustomDimension($value, $index)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setCustomMetric($value, $index)
  *
+ * Content Grouping
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setContentGroup($value, $index)
+ *
  * Content Experiments
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentVariant($value)

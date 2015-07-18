@@ -21,6 +21,7 @@ Send data to Google Analytics from the server using PHP. This library fully impl
 * Exceptions
 * Custom Dimensions / Metrics
 * Content Experiments
+* Content Grouping
 
 ## Installation
 
