@@ -164,6 +164,7 @@ $analytics->setEventCategory('Checkout')
 * Juan Falcón - [arcticfalcon](https://github.com/arcticfalcon)
 * Syed Irfaq R. - [irazasyed](https://github.com/irazasyed)
 * Andrei Baibaratsky - [baibaratsky](https://github.com/baibaratsky)
+* Martín Palombo - [lombo](https://github.com/lombo)
 
 ## License
 
