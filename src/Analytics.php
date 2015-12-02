@@ -256,7 +256,7 @@ class Analytics
     }
 
     /**
-     * Sets the HtppClient.
+     * Sets the HttpClient.
      *
      * @param HttpClient $httpClient
      * @return $this
