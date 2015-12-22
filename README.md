@@ -111,15 +111,15 @@ $analytics->setProtocolVersion('1')
     ->setTrackingId('UA-26293624-12')
     ->setClientId('12345678')
     ->setUserId('123');
-    
-// Then, include the transaction data 
+
+// Then, include the transaction data
 $analytics->setTransactionId('7778922')
     ->setAffiliation('THE ICONIC')
     ->setRevenue(250.0)
     ->setTax(25.0)
     ->setShipping(15.0)
     ->setCouponCode('MY_COUPON');
-    
+
 // Include a product, only required fields are SKU and Name
 $productData1 = [
     'sku' => 'AAAA-6666',
@@ -158,6 +158,23 @@ $analytics->setEventCategory('Checkout')
     ->setEventAction('Purchase')
     ->sendEvent();
 ```
+
+### Validating Hits
+
+```php
+$debug = true;
+
+//make sure you setAsyncRequest to false
+$response = $analytics
+              ->setAsyncRequest(false)
+              ->setDebug($debug)
+              ->sendPageview();
+
+if ($debug) {
+  echo $response->getResponseBody();
+}
+```
+Read ([here](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits)) to understand how to interpret response.
 
 ## Contributors
 
