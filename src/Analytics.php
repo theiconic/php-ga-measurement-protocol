@@ -125,7 +125,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSocialActionTarget($value)
  *
  * Timing
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTiminCategory($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingCategory($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingVariableName($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingTime($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingLabel($value)
@@ -531,6 +531,8 @@ class Analytics
      */
     public function __call($methodName, array $methodArguments)
     {
+        $methodName = $this->fixTypos($methodName);
+
         if (preg_match('/^set(Product|Promotion)ActionTo(\w+)/', $methodName, $matches)) {
             return $this->setParameterActionTo($matches[1], $matches[2]);
         }
@@ -548,5 +550,21 @@ class Analytics
         }
 
         throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
+    }
+
+    /**
+     * Fix typos that went into releases, this way we ensure we don't break scripts in production.
+     *
+     * @param string $methodName
+     * @return string
+     */
+    private function fixTypos($methodName)
+    {
+        // deprecated in v2, to be removed in v3
+        if ($methodName === 'setUserTiminCategory') {
+            $methodName = 'setUserTimingCategory';
+        }
+
+        return $methodName;
     }
 }
