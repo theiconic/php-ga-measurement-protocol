@@ -30,6 +30,13 @@ class AnalyticsResponse
     protected $requestUrl;
 
     /**
+     * Response body.
+     *
+     * @var string
+     */
+    protected $responseBody;
+
+    /**
      * Gets the relevant data from the Guzzle clients.
      *
      * @param RequestInterface $request
@@ -39,8 +46,10 @@ class AnalyticsResponse
     {
         if ($response instanceof ResponseInterface) {
             $this->httpStatusCode = $response->getStatusCode();
+            $this->responseBody = $response->getBody()->getContents();
         } elseif ($response instanceof PromiseInterface) {
             $this->httpStatusCode = null;
+            $this->responseBody = null;
         } else {
             throw new \InvalidArgumentException(
                 'Second constructor argument "response" must be instance of ResponseInterface or PromiseInterface'
@@ -69,5 +78,15 @@ class AnalyticsResponse
     public function getRequestUrl()
     {
         return $this->requestUrl;
+    }
+
+    /**
+     * Gets the response body.
+     *
+     * @return string
+     */
+    public function getResponseBody()
+    {
+        return $this->responseBody;
     }
 }

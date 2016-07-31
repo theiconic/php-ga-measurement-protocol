@@ -179,6 +179,21 @@ class Analytics
     private $endpoint = '://www.google-analytics.com/collect';
 
     /**
+     * Endpoint to connect to when validating hits.
+     * @link https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits
+     *
+     * @var string
+     */
+    private $debugEndpoint = '://www.google-analytics.com/debug/collect';
+
+    /**
+     * Indicates if the request is in debug mode(validating hits).
+     *
+     * @var boolean
+     */
+    private $isDebug = false;
+
+    /**
      * Holds the single parameters added to the hit.
      *
      * @var SingleParameter[]
@@ -379,9 +394,18 @@ class Analytics
      */
     private function getEndpoint()
     {
-        return $this->uriScheme . $this->endpoint;
+        return ($this->isDebug)?$this->uriScheme . $this->debugEndpoint:$this->uriScheme . $this->endpoint;
     }
 
+    /**
+    * Set debug mode true or false
+    *
+    */
+    public function setDebug($value) {
+      $this->isDebug = $value;
+      return $this;
+    }
+    
     /**
      * Sends a hit to GA. The hit will contain in the payload all the parameters added before.
      *
