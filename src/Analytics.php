@@ -6,7 +6,6 @@ use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
 use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Class Analytics
@@ -125,7 +124,7 @@ use Symfony\Component\Finder\Finder;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setSocialActionTarget($value)
  *
  * Timing
- * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTiminCategory($value)
+ * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingCategory($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingVariableName($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingTime($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setUserTimingLabel($value)
@@ -194,18 +193,109 @@ class Analytics
     private $compoundParametersCollections = [];
 
     /**
-     * Initializes to a list of all the available parameters to be sent in a hit.
-     *
-     * @var array
-     */
-    private $availableParameters;
-
-    /**
      * Holds the HTTP client used to connect to GA.
      *
      * @var HttpClient
      */
     private $httpClient;
+
+    /**
+     * Initializes to a list of all the available parameters to be sent in a hit.
+     *
+     * @var array
+     */
+    private $availableParameters = [
+        'ApplicationId' => 'AppTracking\\ApplicationId',
+        'ApplicationInstallerId' => 'AppTracking\\ApplicationInstallerId',
+        'ApplicationName' => 'AppTracking\\ApplicationName',
+        'ApplicationVersion' => 'AppTracking\\ApplicationVersion',
+        'ExperimentId' => 'ContentExperiments\\ExperimentId',
+        'ExperimentVariant' => 'ContentExperiments\\ExperimentVariant',
+        'ContentGroup' => 'ContentGrouping\\ContentGroup',
+        'DocumentHostName' => 'ContentInformation\\DocumentHostName',
+        'DocumentLocationUrl' => 'ContentInformation\\DocumentLocationUrl',
+        'DocumentPath' => 'ContentInformation\\DocumentPath',
+        'DocumentTitle' => 'ContentInformation\\DocumentTitle',
+        'LinkId' => 'ContentInformation\\LinkId',
+        'ScreenName' => 'ContentInformation\\ScreenName',
+        'CustomDimension' => 'CustomDimensionsMetrics\\CustomDimension',
+        'CustomMetric' => 'CustomDimensionsMetrics\\CustomMetric',
+        'CurrencyCode' => 'Ecommerce\\CurrencyCode',
+        'ItemCategory' => 'Ecommerce\\ItemCategory',
+        'ItemCode' => 'Ecommerce\\ItemCode',
+        'ItemName' => 'Ecommerce\\ItemName',
+        'ItemPrice' => 'Ecommerce\\ItemPrice',
+        'ItemQuantity' => 'Ecommerce\\ItemQuantity',
+        'Affiliation' => 'EnhancedEcommerce\\Affiliation',
+        'CheckoutStep' => 'EnhancedEcommerce\\CheckoutStep',
+        'CheckoutStepOption' => 'EnhancedEcommerce\\CheckoutStepOption',
+        'CouponCode' => 'EnhancedEcommerce\\CouponCode',
+        'Product' => 'EnhancedEcommerce\\Product',
+        'ProductAction' => 'EnhancedEcommerce\\ProductAction',
+        'ProductActionList' => 'EnhancedEcommerce\\ProductActionList',
+        'ProductCollection' => 'EnhancedEcommerce\\ProductCollection',
+        'ProductImpression' => 'EnhancedEcommerce\\ProductImpression',
+        'ProductImpressionCollection' => 'EnhancedEcommerce\\ProductImpressionCollection',
+        'ProductImpressionListName' => 'EnhancedEcommerce\\ProductImpressionListName',
+        'Promotion' => 'EnhancedEcommerce\\Promotion',
+        'PromotionAction' => 'EnhancedEcommerce\\PromotionAction',
+        'PromotionCollection' => 'EnhancedEcommerce\\PromotionCollection',
+        'Revenue' => 'EnhancedEcommerce\\Revenue',
+        'Shipping' => 'EnhancedEcommerce\\Shipping',
+        'Tax' => 'EnhancedEcommerce\\Tax',
+        'TransactionId' => 'EnhancedEcommerce\\TransactionId',
+        'EventAction' => 'Event\\EventAction',
+        'EventCategory' => 'Event\\EventCategory',
+        'EventLabel' => 'Event\\EventLabel',
+        'EventValue' => 'Event\\EventValue',
+        'ExceptionDescription' => 'Exceptions\\ExceptionDescription',
+        'IsExceptionFatal' => 'Exceptions\\IsExceptionFatal',
+        'AnonymizeIp' => 'General\\AnonymizeIp',
+        'CacheBuster' => 'General\\CacheBuster',
+        'DataSource' => 'General\\DataSource',
+        'ProtocolVersion' => 'General\\ProtocolVersion',
+        'QueueTime' => 'General\\QueueTime',
+        'TrackingId' => 'General\\TrackingId',
+        'HitType' => 'Hit\\HitType',
+        'NonInteractionHit' => 'Hit\\NonInteractionHit',
+        'GeographicalOverride' => 'Session\\GeographicalOverride',
+        'IpOverride' => 'Session\\IpOverride',
+        'SessionControl' => 'Session\\SessionControl',
+        'UserAgentOverride' => 'Session\\UserAgentOverride',
+        'SocialAction' => 'SocialInteractions\\SocialAction',
+        'SocialActionTarget' => 'SocialInteractions\\SocialActionTarget',
+        'SocialNetwork' => 'SocialInteractions\\SocialNetwork',
+        'DocumentEncoding' => 'SystemInfo\\DocumentEncoding',
+        'FlashVersion' => 'SystemInfo\\FlashVersion',
+        'JavaEnabled' => 'SystemInfo\\JavaEnabled',
+        'ScreenColors' => 'SystemInfo\\ScreenColors',
+        'ScreenResolution' => 'SystemInfo\\ScreenResolution',
+        'UserLanguage' => 'SystemInfo\\UserLanguage',
+        'ViewportSize' => 'SystemInfo\\ViewportSize',
+        'ContentLoadTime' => 'Timing\\ContentLoadTime',
+        'DnsTime' => 'Timing\\DnsTime',
+        'DomInteractiveTime' => 'Timing\\DomInteractiveTime',
+        'PageDownloadTime' => 'Timing\\PageDownloadTime',
+        'PageLoadTime' => 'Timing\\PageLoadTime',
+        'RedirectResponseTime' => 'Timing\\RedirectResponseTime',
+        'ServerResponseTime' => 'Timing\\ServerResponseTime',
+        'TcpConnectTime' => 'Timing\\TcpConnectTime',
+        'UserTimingCategory' => 'Timing\\UserTimingCategory',
+        'UserTimingLabel' => 'Timing\\UserTimingLabel',
+        'UserTimingTime' => 'Timing\\UserTimingTime',
+        'UserTimingVariableName' => 'Timing\\UserTimingVariableName',
+        'CampaignContent' => 'TrafficSources\\CampaignContent',
+        'CampaignId' => 'TrafficSources\\CampaignId',
+        'CampaignKeyword' => 'TrafficSources\\CampaignKeyword',
+        'CampaignMedium' => 'TrafficSources\\CampaignMedium',
+        'CampaignName' => 'TrafficSources\\CampaignName',
+        'CampaignSource' => 'TrafficSources\\CampaignSource',
+        'DocumentReferrer' => 'TrafficSources\\DocumentReferrer',
+        'GoogleAdwordsId' => 'TrafficSources\\GoogleAdwordsId',
+        'GoogleDisplayAdsId' => 'TrafficSources\\GoogleDisplayAdsId',
+        'ClientId' => 'User\\ClientId',
+        'UserId' => 'User\\UserId',
+    ];
 
     /**
      * When passed with an argument of TRUE, it will send the hit using HTTPS instead of plain HTTP.
@@ -224,8 +314,6 @@ class Analytics
             $this->uriScheme .= 's';
             $this->endpoint = str_replace('www', 'ssl', $this->endpoint);
         }
-
-        $this->availableParameters = $this->getAvailableParameters();
     }
 
     /**
@@ -285,36 +373,6 @@ class Analytics
     }
 
     /**
-     * Returns an array containing all the available parameters that can be sent in the hit.
-     *
-     * @return array
-     */
-    private function getAvailableParameters()
-    {
-        $parameterClassNames = [];
-
-        $finder = new Finder();
-
-        $finder->files()->in(__DIR__ . '/Parameters');
-
-        foreach ($finder as $file) {
-            $categorisedParameter = str_replace(
-                ['.php', '/'],
-                ['', '\\'],
-                $file->getRelativePathname()
-            );
-            $categorisedParameterArray = explode('\\', $categorisedParameter);
-
-            $validCategorisedParameterCount = 2;
-            if (count($categorisedParameterArray) >= $validCategorisedParameterCount) {
-                $parameterClassNames[$categorisedParameterArray[1]] = $categorisedParameter;
-            }
-        }
-
-        return $parameterClassNames;
-    }
-
-    /**
      * Gets the full endpoint to GA.
      *
      * @return string
@@ -356,6 +414,8 @@ class Analytics
 
     /**
      * Validates the minimum required parameters for every GA hit are being sent.
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
      *
      * @return bool
      */
@@ -451,6 +511,8 @@ class Analytics
     /**
      * Adds an item to a compund parameter collection.
      *
+     * @SuppressWarnings(PHPMD.LongVariable)
+     *
      * @param $methodName
      * @param array $methodArguments
      * @return $this
@@ -531,6 +593,8 @@ class Analytics
      */
     public function __call($methodName, array $methodArguments)
     {
+        $methodName = $this->fixTypos($methodName);
+
         if (preg_match('/^set(Product|Promotion)ActionTo(\w+)/', $methodName, $matches)) {
             return $this->setParameterActionTo($matches[1], $matches[2]);
         }
@@ -548,5 +612,21 @@ class Analytics
         }
 
         throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
+    }
+
+    /**
+     * Fix typos that went into releases, this way we ensure we don't break scripts in production.
+     *
+     * @param string $methodName
+     * @return string
+     */
+    private function fixTypos($methodName)
+    {
+        // deprecated in v2, to be removed in v3
+        if ($methodName === 'setUserTiminCategory') {
+            $methodName = 'setUserTimingCategory';
+        }
+
+        return $methodName;
     }
 }
