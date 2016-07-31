@@ -1,4 +1,10 @@
 ## Version 2
+### 2.2.0 (2016-07-31)
+ * Adding Debug feature for validating hits, in part contributed by @amit0rana (I had to fix the unit tests)
+ * Removing dependency to Symfony Finder, now the lib is much faster since it doesn't read from disk
+ * Fixing typo for setUserTimingCategory (a method to allow backward compatibility was added, it will be removed in V3)
+ * Fixing issue #21 for cache buster param
+
 ### 2.1.0 (2015-07-19)
  * Updating dependencies
  * Adding Content Grouping support by @lombo
