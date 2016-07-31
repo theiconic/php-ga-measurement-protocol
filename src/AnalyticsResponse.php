@@ -91,6 +91,7 @@ class AnalyticsResponse
 
         if (!empty($this->responseBody)) {
             $debugResponse = json_decode($this->responseBody, true);
+            $debugResponse = (is_array($debugResponse)) ? $debugResponse : [];
         }
 
         return $debugResponse;

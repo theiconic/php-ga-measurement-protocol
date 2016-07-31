@@ -30,13 +30,25 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $mockResponse = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
-            ->setMethods(['getStatusCode'])
+            ->setMethods(['getStatusCode', 'getBody'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $mockResponse->expects($this->atLeast(1))
             ->method('getStatusCode')
             ->will($this->returnValue('200'));
+
+        $invalidBodyMock = $this->getMockBuilder('Psr\Http\Message\StreamInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $invalidBodyMock->expects($this->any())
+            ->method('getContents')
+            ->will($this->returnValue('asldkjaslkdjsadlkj'));
+
+        $mockResponse->expects($this->any())
+            ->method('getBody')
+            ->will($this->returnValue($invalidBodyMock));
 
         $this->mockRequest = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
             ->setMethods(['getUri'])
