@@ -56,7 +56,7 @@ class AnalyticsResponse
             );
         }
 
-        $this->requestUrl = (string)$request->getUri();
+        $this->requestUrl = (string) $request->getUri();
     }
 
     /**
@@ -81,12 +81,18 @@ class AnalyticsResponse
     }
 
     /**
-     * Gets the response body.
+     * Gets the debug response. Returns empty array if no response found.
      *
-     * @return string
+     * @return array
      */
-    public function getResponseBody()
+    public function getDebugResponse()
     {
-        return $this->responseBody;
+        $debugResponse = [];
+
+        if ($this->responseBody !== null) {
+            $debugResponse = json_decode($this->responseBody, true);
+        }
+
+        return $debugResponse;
     }
 }

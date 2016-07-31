@@ -394,16 +394,20 @@ class Analytics
      */
     private function getEndpoint()
     {
-        return ($this->isDebug)?$this->uriScheme . $this->debugEndpoint:$this->uriScheme . $this->endpoint;
+        return ($this->isDebug) ? $this->uriScheme . $this->debugEndpoint : $this->uriScheme . $this->endpoint;
     }
 
     /**
-    * Set debug mode true or false
-    *
-    */
-    public function setDebug($value) {
-      $this->isDebug = $value;
-      return $this;
+     * Sets debug mode to true or false.
+     *
+     * @param bool $value
+     * @return \TheIconic\Tracking\GoogleAnalytics\Analytics
+     */
+    public function setDebug($value)
+    {
+        $this->isDebug = $value;
+
+        return $this;
     }
     
     /**
