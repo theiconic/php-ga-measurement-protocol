@@ -183,6 +183,7 @@ Read ([here](https://developers.google.com/analytics/devguides/collection/protoc
 * Syed Irfaq R. - [irazasyed](https://github.com/irazasyed)
 * Andrei Baibaratsky - [baibaratsky](https://github.com/baibaratsky)
 * Martín Palombo - [lombo](https://github.com/lombo)
+* Amit Rana - [amit0rana](https://github.com/amit0rana)
 
 ## License
 
