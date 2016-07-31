@@ -2,6 +2,7 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\CacheBuster;
 use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundParameterTestCollection;
 use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundTestParameter;
 use TheIconic\Tracking\GoogleAnalytics\Tests\SingleTestParameter;
@@ -65,7 +66,9 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $singleParameter->setValue('hey');
         $singleParameterIdx = new SingleTestParameterIndexed(4);
         $singleParameterIdx->setValue(9);
-        $singles = [$singleParameter, $singleParameterIdx];
+        $cacheBuster = new CacheBuster();
+        $cacheBuster->setValue('123');
+        $singles = [$singleParameter, $cacheBuster, $singleParameterIdx];
 
         $compoundCollection = new CompoundParameterTestCollection(6);
         $compoundParameter = new CompoundTestParameter(['sku' => 555, 'name' => 'cathy']);
@@ -94,9 +97,21 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             'cp6t1nm' => 'cathy',
             'cp6t2id' => 666,
             'cp6t2nm' => 'isa',
+            'z' => '123'
         ];
 
         $this->assertEquals($expect, $payload);
+
+        // assets cache buster is last element
+        $count = 1;
+        foreach ($payload as $key => $value) {
+            if ($count === 7) {
+                $this->assertEquals('z', $key);
+                $this->assertEquals('123', $value);
+            }
+
+            $count++;
+        }
 
         // Promises should be unwrapped on the object destruction
         $this->httpClient = null;

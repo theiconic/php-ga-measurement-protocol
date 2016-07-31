@@ -3,6 +3,7 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
 use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\General\CacheBuster;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use GuzzleHttp\Client;
@@ -42,6 +43,11 @@ class HttpClient
      * @var array
      */
     private $payloadParameters;
+
+    /**
+     * @var string
+     */
+    private $cacheBuster = '';
 
     /**
      * Holds the promises (async responses).
@@ -109,6 +115,10 @@ class HttpClient
 
         $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
 
+        if (!empty($this->cacheBuster)) {
+            $this->payloadParameters['z'] = $this->cacheBuster;
+        }
+
         $request = new Request(
             'GET',
             $url . '?' . http_build_query($this->payloadParameters),
@@ -151,8 +161,14 @@ class HttpClient
     private function getSingleParametersPayload(array $singleParameters)
     {
         $postData = [];
+        $cacheBuster = new CacheBuster();
 
         foreach ($singleParameters as $parameterObj) {
+            if ($parameterObj->getName() === $cacheBuster->getName()) {
+                $this->cacheBuster = $parameterObj->getValue();
+                continue;
+            }
+
             $postData[$parameterObj->getName()] = $parameterObj->getValue();
         }
 
