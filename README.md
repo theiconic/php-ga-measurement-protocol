@@ -47,6 +47,8 @@ Or if you are using ```PHP 5.4 or above``` and ```Guzzle 5``` then:
 }
 ```
 
+Take notice v1 won't receive more updates, you are encourage to update to v2.
+
 ## Integrations
 You can use this package on its own, or use a convenient framework integration:
 * Laravel 4/5 - https://github.com/irazasyed/laravel-gamp
