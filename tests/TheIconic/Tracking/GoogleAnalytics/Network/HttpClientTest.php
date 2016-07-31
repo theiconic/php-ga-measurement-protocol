@@ -24,6 +24,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $this->httpClient = new HttpClient();
 
         $mockResponse = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
+            ->setMethods(['getStatusCode'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -34,7 +35,6 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $mockPromise->expects($this->exactly(3))
             ->method('wait')
             ->will($this->returnValue($mockResponse));
-
 
         $guzzleClient = $this->getMockBuilder('GuzzleHttp\Client')
             ->setMethods(['sendAsync'])
@@ -47,7 +47,6 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($mockPromise));
 
         $this->httpClient->setClient($guzzleClient);
-
 
         $this->mockHttpClient = $this->getMockBuilder('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient')
             ->setMethods(['getAnalyticsResponse'])
@@ -82,7 +81,6 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $responseAsync = $this->mockHttpClient->post('http://test-collector.com', $singles, $compounds, true);
         $this->assertInstanceOf('GuzzleHttp\Promise\PromiseInterface', $responseAsync);
 
-
         $response = $this->httpClient->post('http://test-collector.com', $singles, $compounds);
 
         $this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse', $response);
@@ -99,7 +97,6 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expect, $payload);
-
 
         // Promises should be unwrapped on the object destruction
         $this->httpClient = null;

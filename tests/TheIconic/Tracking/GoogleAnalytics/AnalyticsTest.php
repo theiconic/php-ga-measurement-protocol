@@ -226,6 +226,54 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analyticsSsl->sendPageview();
     }
 
+    public function testSendSimpleDebugHit()
+    {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo('http://www.google-analytics.com/debug/collect'),
+                $this->isType('array'),
+                $this->isType('array')
+            );
+
+        $this->analytics
+            ->setDebug(true)
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\mypage');
+
+        $this->analytics->setHttpClient($httpClient);
+
+        $this->analytics->sendPageview();
+    }
+
+    public function testFixTypos()
+    {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo('https://ssl.google-analytics.com/collect'),
+                $this->isType('array'),
+                $this->isType('array')
+            );
+
+        $this->analyticsSsl
+            ->setUserTiminCategory('hehe')
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\mypage');
+
+        $this->analyticsSsl->setHttpClient($httpClient);
+
+        $this->analyticsSsl->sendPageview();
+    }
+
     public function testSendComplexHit()
     {
         $singleParameters = [

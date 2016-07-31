@@ -89,7 +89,7 @@ class AnalyticsResponse
     {
         $debugResponse = [];
 
-        if ($this->responseBody !== null) {
+        if (!empty($this->responseBody)) {
             $debugResponse = json_decode($this->responseBody, true);
         }
 

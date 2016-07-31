@@ -18,6 +18,11 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
     private $analyticsResponseAsync;
 
     /**
+     * @var AnalyticsResponse
+     */
+    private $analyticsDebugResponse;
+
+    /**
      * @var RequestInterface
      */
     private $mockRequest;
@@ -44,11 +49,36 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->analyticsResponse = new AnalyticsResponse($this->mockRequest, $mockResponse);
 
+
         $mockResponseAsync = $this->getMockBuilder('GuzzleHttp\Promise\Promise')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->analyticsResponseAsync = new AnalyticsResponse($this->mockRequest, $mockResponseAsync);
+
+
+        $mockDebugResponse = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
+            ->setMethods(['getStatusCode', 'getBody'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockDebugResponse->expects($this->atLeast(1))
+            ->method('getStatusCode')
+            ->will($this->returnValue('200'));
+
+        $bodyMock = $this->getMockBuilder('Psr\Http\Message\StreamInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $bodyMock->expects($this->atLeast(1))
+            ->method('getContents')
+            ->will($this->returnValue('{"salutation":"hello world"}'));
+
+        $mockDebugResponse->expects($this->atLeast(1))
+            ->method('getBody')
+            ->will($this->returnValue($bodyMock));
+
+        $this->analyticsDebugResponse = new AnalyticsResponse($this->mockRequest, $mockDebugResponse);
     }
 
     /**
@@ -69,5 +99,11 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('http://test-collector/hello', $this->analyticsResponse->getRequestUrl());
         $this->assertEquals('http://test-collector/hello', $this->analyticsResponseAsync->getRequestUrl());
+    }
+
+    public function testDebugResponse()
+    {
+        $this->assertEquals(['salutation' => 'hello world'], $this->analyticsDebugResponse->getDebugResponse());
+        $this->assertEquals([], $this->analyticsResponse->getDebugResponse());
     }
 }
