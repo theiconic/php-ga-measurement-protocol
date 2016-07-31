@@ -161,20 +161,25 @@ $analytics->setEventCategory('Checkout')
 
 ### Validating Hits
 
-```php
-$debug = true;
+From Google Developer Guide:
 
-//make sure you setAsyncRequest to false
+> The Google Analytics Measurement Protocol does not return HTTP error codes, even if a Measurement Protocol hit is malformed or missing required parameters. To ensure that your hits are correctly formatted and contain all required parameters, you can test them against the validation server before deploying them to production.
+
+To send a validation hit, turn on debug mode like this
+
+```php
+// Make sure AsyncRequest is set to false (it defaults to false)
 $response = $analytics
-              ->setAsyncRequest(false)
               ->setDebug($debug)
               ->sendPageview();
 
-if ($debug) {
-  echo $response->getResponseBody();
-}
+$debugResponse = $response->getDebugResponse();
+
+// The debug response is an associative array, you could use print_r to view its contents
+print_r($debugResponse);
 ```
-Read ([here](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits)) to understand how to interpret response.
+
+GA actually returns a JSON that is parsed into an associative array. Read ([here](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits)) to understand how to interpret response.
 
 ## Contributors
 
