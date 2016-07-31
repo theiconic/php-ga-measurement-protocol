@@ -415,6 +415,8 @@ class Analytics
     /**
      * Validates the minimum required parameters for every GA hit are being sent.
      *
+     * @SuppressWarnings(PHPMD.LongVariable)
+     *
      * @return bool
      */
     private function hasMinimumRequiredParameters()
@@ -508,6 +510,8 @@ class Analytics
 
     /**
      * Adds an item to a compund parameter collection.
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
      *
      * @param $methodName
      * @param array $methodArguments
