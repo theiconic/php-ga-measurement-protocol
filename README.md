@@ -78,7 +78,7 @@ $analytics
 // When you finish bulding the payload send a hit (such as an pageview or event)
 $analytics->sendPageview();
 ```
-The hit should have arrived to the GA property UA-26293728-11. You can verify this in your Real Time dashboard.
+The hit should have arrived to the GA property UA-26293728-11. You can verify this in your Real Time dashboard. Take notice, if you need GA reports to tie this event with previous user actions you must get and set the ClientId to be same as the GA Cookie. Read ([here](https://developers.google.com/analytics/devguides/collection/analyticsjs/cookies-user-id#getting_the_client_id_from_the_cookie)).
 
 The library is 100% done, full documentation is a work in progress, but basically all parameters can be set the same way.
 
@@ -108,10 +108,12 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
 $analytics = new Analytics();
 
 // Build the order data programmatically, including each order product in the payload
+// Take notice, if you want GA reports to tie this event with previous user actions
+// you must get and set the same ClientId from the GA Cookie
 // First, general and required hit data
 $analytics->setProtocolVersion('1')
     ->setTrackingId('UA-26293624-12')
-    ->setClientId('2133506694.1448249699') // Take notice, if you want GA reports to tie this event with previous user actions, you must parse and get the ClientId from the GA Cookie
+    ->setClientId('2133506694.1448249699')
     ->setUserId('123');
 
 // Then, include the transaction data
