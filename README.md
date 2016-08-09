@@ -111,7 +111,7 @@ $analytics = new Analytics();
 // First, general and required hit data
 $analytics->setProtocolVersion('1')
     ->setTrackingId('UA-26293624-12')
-    ->setClientId('12345678')
+    ->setClientId('2133506694.1448249699') // Take notice, if you want GA reports to tie this event with previous user actions, you must parse and get the ClientId from the GA Cookie
     ->setUserId('123');
 
 // Then, include the transaction data
