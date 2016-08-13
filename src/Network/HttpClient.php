@@ -3,7 +3,6 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
 use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
-use TheIconic\Tracking\GoogleAnalytics\Parameters\General\CacheBuster;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use GuzzleHttp\Client;
@@ -40,16 +39,6 @@ class HttpClient
     private $client;
 
     /**
-     * @var array
-     */
-    private $payloadParameters;
-
-    /**
-     * @var string
-     */
-    private $cacheBuster = '';
-
-    /**
      * Holds the promises (async responses).
      *
      * @var PromiseInterface[]
@@ -75,14 +64,6 @@ class HttpClient
     }
 
     /**
-     * @return array
-     */
-    public function getPayloadParameters()
-    {
-        return $this->payloadParameters;
-    }
-
-    /**
      * Gets HTTP client for internal class use.
      *
      * @return Client
@@ -102,26 +83,14 @@ class HttpClient
      * Sends request to Google Analytics.
      *
      * @param string $url
-     * @param SingleParameter[] $singleParameters
-     * @param CompoundParameterCollection[] $compoundParameters
      * @param boolean $nonBlocking
      * @return AnalyticsResponse
      */
-    public function post($url, array $singleParameters, array $compoundParameters, $nonBlocking = false)
+    public function post($url, $nonBlocking = false)
     {
-        $singlesPost = $this->getSingleParametersPayload($singleParameters);
-
-        $compoundsPost = $this->getCompoundParametersPayload($compoundParameters);
-
-        $this->payloadParameters = array_merge($singlesPost, $compoundsPost);
-
-        if (!empty($this->cacheBuster)) {
-            $this->payloadParameters['z'] = $this->cacheBuster;
-        }
-
         $request = new Request(
             'GET',
-            $url . '?' . http_build_query($this->payloadParameters),
+            $url,
             ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT]
         );
 
@@ -150,46 +119,5 @@ class HttpClient
     protected function getAnalyticsResponse(RequestInterface $request, $response)
     {
         return new AnalyticsResponse($request, $response);
-    }
-
-    /**
-     * Prepares all the Single Parameters to be sent to GA.
-     *
-     * @param SingleParameter[] $singleParameters
-     * @return array
-     */
-    private function getSingleParametersPayload(array $singleParameters)
-    {
-        $postData = [];
-        $cacheBuster = new CacheBuster();
-
-        foreach ($singleParameters as $parameterObj) {
-            if ($parameterObj->getName() === $cacheBuster->getName()) {
-                $this->cacheBuster = $parameterObj->getValue();
-                continue;
-            }
-
-            $postData[$parameterObj->getName()] = $parameterObj->getValue();
-        }
-
-        return $postData;
-    }
-
-    /**
-     * Prepares compound parameters inside collections to be sent to GA.
-     *
-     * @param CompoundParameterCollection[] $compoundParameters
-     * @return array
-     */
-    private function getCompoundParametersPayload(array $compoundParameters)
-    {
-        $postData = [];
-
-        foreach ($compoundParameters as $compoundCollection) {
-            $parameterArray = $compoundCollection->getParametersArray();
-            $postData = array_merge($postData, $parameterArray);
-        }
-
-        return $postData;
     }
 }
