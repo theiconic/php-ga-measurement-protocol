@@ -174,7 +174,7 @@ To send a validation hit, turn on debug mode like this
 ```php
 // Make sure AsyncRequest is set to false (it defaults to false)
 $response = $analytics
-              ->setDebug($debug)
+              ->setDebug(true)
               ->sendPageview();
 
 $debugResponse = $response->getDebugResponse();
