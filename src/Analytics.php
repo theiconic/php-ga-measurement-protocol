@@ -5,6 +5,7 @@ namespace TheIconic\Tracking\GoogleAnalytics;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
+use TheIconic\Tracking\GoogleAnalytics\Network\PrepareUrl;
 use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
 
 /**
@@ -433,10 +434,24 @@ class Analytics
         }
 
         return $this->getHttpClient()->post(
+            $this->getUrl(),
+            $this->isAsyncRequest
+        );
+    }
+
+    /**
+     * Build URL used to send to Google Analytics
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        $prepareUrl = new PrepareUrl;
+
+        return $prepareUrl->build(
             $this->getEndpoint(),
             $this->singleParameters,
-            $this->compoundParametersCollections,
-            $this->isAsyncRequest
+            $this->compoundParametersCollections
         );
     }
 
