@@ -1,4 +1,7 @@
 ## Version 2
+### 2.3.0 (2016-08-20)
+ * Adding getting URL method by @stefanzweifel
+
 ### 2.2.0 (2016-07-31)
  * Adding Debug feature for validating hits, in part contributed by @amit0rana (I had to fix the unit tests)
  * Removing dependency to Symfony Finder, now the lib is much faster since it doesn't read from disk
