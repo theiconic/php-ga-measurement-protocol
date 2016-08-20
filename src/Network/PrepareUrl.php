@@ -3,9 +3,13 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
 use TheIconic\Tracking\GoogleAnalytics\Parameters\General\CacheBuster;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 
 /**
  * Class PrepareUrl
+ *
+ * Builds the URL.
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */

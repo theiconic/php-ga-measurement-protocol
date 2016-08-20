@@ -440,7 +440,7 @@ class Analytics
     }
 
     /**
-     * Build URL used to send to Google Analytics
+     * Build and returns URL used to send to Google Analytics.
      *
      * @return string
      */
