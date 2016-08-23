@@ -71,6 +71,30 @@ abstract class CompoundParameterCollection implements IteratorAggregate
     }
 
     /**
+     * Gets the items for the parameter.
+     *
+     * @return Array
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * Gets the human readable items for the parameter.
+     *
+     * @return Array
+     */
+    public function getReadableItems()
+    {
+        $readablesItems = array();
+        foreach ($this->items as $key => $item) {
+            array_push($readablesItems, $item->getReadableParameters());
+        }
+        return $readablesItems;
+    }
+
+    /**
      * @inheritDoc
      */
     public function getIterator()

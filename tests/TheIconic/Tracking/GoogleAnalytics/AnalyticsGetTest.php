@@ -176,8 +176,22 @@ class AnalyticsGetTest extends \PHPUnit_Framework_TestCase
         ];
 
         $response = $this->analytics->addProduct($productData);
-        var_dump($response->getProduct()); die();
-        //$this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\Analytics', $response);
+
+        $this->assertEquals('AAAA-6666', $response->getProduct()[0]['sku']);
+        $this->assertEquals('AAAA-5555', $response->getProduct()[1]['sku']);
+        $this->assertEquals('Test Product', $response->getProduct()[1]['name']);
+        $this->assertEquals('Test Brand', $response->getProduct()[1]['brand']);
+        $this->assertEquals('Test Category 1/Test Category 2', $response->getProduct()[1]['category']);
+        $this->assertEquals('blue', $response->getProduct()[1]['variant']);
+        $this->assertEquals(85.00, $response->getProduct()[1]['price']);
+        $this->assertEquals(2, $response->getProduct()[1]['quantity']);
+        $this->assertEquals('TEST', $response->getProduct()[1]['coupon_code']);
+        $this->assertEquals(4, $response->getProduct()[1]['position']);
+    }
+
+    public function testGetNullItems()
+    {
+        $this->assertEquals(null, $this->analytics->getProduct());
     }
 
 

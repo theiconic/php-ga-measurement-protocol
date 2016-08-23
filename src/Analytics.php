@@ -604,14 +604,27 @@ class Analytics
     private function getParameter($methodName, array $methodArguments)
     {
         $parameterClass = substr($methodName, 3);
-        //var_dump($parameterClass);
 
         $fullParameterClass = $this->getFullParameterClass($parameterClass, $methodName);
-        //var_dump($fullParameterClass);
 
+        // Handle index arguments
         $parameterIndex = '';
         if (isset($methodArguments[0]) && is_numeric($methodArguments[0])) {
             $parameterIndex = $methodArguments[0];
+        }
+
+        // Handle compoundParametersCollections
+        if (isset($this->compoundParametersCollections[$parameterClass . $parameterIndex])) {
+            // If compoundParametersCollections contains our Objects, return them well-formatted
+            return $this->compoundParametersCollections[$parameterClass . $parameterIndex]->getReadableItems();
+        } else {
+            $fullParameterCollectionClass = $fullParameterClass . 'Collection';
+
+            // Test if the class Collection exist
+            if(class_exists($fullParameterCollectionClass)){
+                return null;
+            }
+            // If not, it's a SingleParameter Object, continue the magic
         }
 
         /** @var SingleParameter $parameterObject */
@@ -621,7 +634,7 @@ class Analytics
             return null;
         }
         $currentParameterObject = $this->singleParameters[$parameterObject->getName()];
-        //var_dump($currentParameterObject);
+
         return $currentParameterObject->getValue();
 
     }
