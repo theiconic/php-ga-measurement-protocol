@@ -410,7 +410,7 @@ class Analytics
 
         return $this;
     }
-    
+
     /**
      * Sends a hit to GA. The hit will contain in the payload all the parameters added before.
      *
@@ -594,6 +594,52 @@ class Analytics
     }
 
     /**
+     * Gets the value for a parameter.
+     *
+     * @param $methodName
+     * @param array $methodArguments
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    private function getParameter($methodName, array $methodArguments)
+    {
+        $parameterClass = substr($methodName, 3);
+
+        $fullParameterClass = $this->getFullParameterClass($parameterClass, $methodName);
+
+        // Handle index arguments
+        $parameterIndex = '';
+        if (isset($methodArguments[0]) && is_numeric($methodArguments[0])) {
+            $parameterIndex = $methodArguments[0];
+        }
+
+        // Handle compoundParametersCollections
+        if (isset($this->compoundParametersCollections[$parameterClass . $parameterIndex])) {
+            // If compoundParametersCollections contains our Objects, return them well-formatted
+            return $this->compoundParametersCollections[$parameterClass . $parameterIndex]->getReadableItems();
+        } else {
+            $fullParameterCollectionClass = $fullParameterClass . 'Collection';
+
+            // Test if the class Collection exist
+            if(class_exists($fullParameterCollectionClass)){
+                return null;
+            }
+            // If not, it's a SingleParameter Object, continue the magic
+        }
+
+        /** @var SingleParameter $parameterObject */
+        $parameterObject = new $fullParameterClass($parameterIndex);
+
+        if(!array_key_exists($parameterObject->getName(), $this->singleParameters)){
+            return null;
+        }
+        $currentParameterObject = $this->singleParameters[$parameterObject->getName()];
+
+        return $currentParameterObject->getValue();
+
+    }
+
+    /**
      * Gets the index value from the arguments.
      *
      * @param $methodArguments
@@ -652,6 +698,11 @@ class Analytics
 
         if (preg_match('/^(send)(\w+)/', $methodName, $matches)) {
             return $this->sendHit($methodName);
+        }
+
+        // Get Parameters
+        if (preg_match('/^(get)(\w+)/', $methodName, $matches)) {
+            return $this->getParameter($methodName, $methodArguments);
         }
 
         throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');

@@ -87,6 +87,14 @@ The library is 100% done, full documentation is a work in progress, but basicall
 // https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
 $analytics->set<ParameterName>('my_value');
 ```
+
+```php
+// Get any parameter by its name
+// Look at the parameter names in Google official docs at
+// https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
+$analytics->get<ParameterName>();
+```
+
 All methods for setting parameters should **Autocomplete** if you use an IDE such as PHPStorm, which makes building the Analytics object very easy.
 
 ## Use Cases
@@ -194,6 +202,7 @@ GA actually returns a JSON that is parsed into an associative array. Read ([here
 * Martín Palombo - [lombo](https://github.com/lombo)
 * Amit Rana - [amit0rana](https://github.com/amit0rana)
 * Stefan Zweifel - [stefanzweifel](https://github.com/stefanzweifel)
+* Titouan BENOIT - [nightbr](https://github.com/Nightbr)
 
 ## License
 

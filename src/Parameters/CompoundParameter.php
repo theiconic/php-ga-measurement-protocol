@@ -39,6 +39,14 @@ abstract class CompoundParameter implements CompoundParameterInterface
      */
     protected $parameters = [];
 
+    /**
+     * After translating the human readable names into the payload ones, this collections
+     * contains the map for the payload names and the values to be sent.
+     *
+     * @var array
+     */
+    protected $readableParameters = [];
+
 
     /**
      * Validates the required parameters are passed, then translates using the mapper to later save
@@ -59,6 +67,7 @@ abstract class CompoundParameter implements CompoundParameterInterface
         }
 
         $this->saveCompoundParameterData($compoundData);
+        $this->readableParameters = $compoundData;
     }
 
     /**
@@ -67,6 +76,14 @@ abstract class CompoundParameter implements CompoundParameterInterface
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getReadableParameters()
+    {
+        return $this->readableParameters;
     }
 
     /**
