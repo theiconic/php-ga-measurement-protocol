@@ -596,9 +596,11 @@ class Analytics
     /**
      * Gets the value for a parameter.
      *
+     * @SuppressWarnings(PHPMD.LongVariable)
+     *
      * @param $methodName
      * @param array $methodArguments
-     * @return $this
+     * @return string
      * @throws \InvalidArgumentException
      */
     private function getParameter($methodName, array $methodArguments)
@@ -621,7 +623,7 @@ class Analytics
             $fullParameterCollectionClass = $fullParameterClass . 'Collection';
 
             // Test if the class Collection exist
-            if(class_exists($fullParameterCollectionClass)){
+            if (class_exists($fullParameterCollectionClass)) {
                 return null;
             }
             // If not, it's a SingleParameter Object, continue the magic
@@ -630,9 +632,10 @@ class Analytics
         /** @var SingleParameter $parameterObject */
         $parameterObject = new $fullParameterClass($parameterIndex);
 
-        if(!array_key_exists($parameterObject->getName(), $this->singleParameters)){
+        if (!array_key_exists($parameterObject->getName(), $this->singleParameters)) {
             return null;
         }
+
         $currentParameterObject = $this->singleParameters[$parameterObject->getName()];
 
         return $currentParameterObject->getValue();
