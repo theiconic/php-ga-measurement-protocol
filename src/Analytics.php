@@ -14,6 +14,7 @@ use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
  * The main interface for the clients, it relies heavily in magic methods exposing
  * an interface with method tags.
  *
+ * ==== GETTERS ====
  * General
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProtocolVersion($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTrackingId($value)
@@ -153,6 +154,137 @@ use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentVariant($value)
  *
+ * ==== SETTERS ====
+ * General
+ * @method string|int|null getProtocolVersion()
+ * @method string|int|null getTrackingId()
+ * @method string|int|null getAnonymizeIp()
+ * @method string|int|null getDataSource()
+ * @method string|int|null getQueueTime()
+ * @method string|int|null getCacheBuster()
+ *
+ * User
+ * @method string|int|null getClientId()
+ * @method string|int|null getUserId()
+ *
+ * Session
+ * @method string|int|null getSessionControl()
+ * @method string|int|null getIpOverride()
+ * @method string|int|null getUserAgentOverride()
+ * @method string|int|null getGeographicalOverride()
+ *
+ * Traffic Sources
+ * @method string|int|null getDocumentReferrer()
+ * @method string|int|null getCampaignName()
+ * @method string|int|null getCampaignSource()
+ * @method string|int|null getCampaignMedium()
+ * @method string|int|null getCampaignKeyword()
+ * @method string|int|null getCampaignContent()
+ * @method string|int|null getCampaignId()
+ * @method string|int|null getGoogleAdwordsId()
+ * @method string|int|null getGoogleDisplayAdsId()
+ *
+ * System Info
+ * @method string|int|null getScreenResolution()
+ * @method string|int|null getViewportSize()
+ * @method string|int|null getDocumentEncoding()
+ * @method string|int|null getScreenColors()
+ * @method string|int|null getUserLanguage()
+ * @method string|int|null getJavaEnabled()
+ * @method string|int|null getFlashVersion()
+ *
+ * Hit
+ * @method string|int|null getHitType()
+ * @method string|int|null getNonInteractionHit()
+ *
+ * Content Information
+ * @method string|int|null getDocumentLocationUrl()
+ * @method string|int|null getDocumentHostName()
+ * @method string|int|null getDocumentPath()
+ * @method string|int|null getDocumentTitle()
+ * @method string|int|null getScreenName()
+ * @method string|int|null getLinkId()
+ *
+ * App Tracking
+ * @method string|int|null getApplicationName()
+ * @method string|int|null getApplicationId()
+ * @method string|int|null getApplicationVersion()
+ * @method string|int|null getApplicationInstallerId()
+ *
+ * Event Tracking
+ * @method string|int|null getEventCategory()
+ * @method string|int|null getEventAction()
+ * @method string|int|null getEventLabel()
+ * @method string|int|null getEventValue()
+ *
+ * E-commerce
+ * @method string|int|null getItemName()
+ * @method string|int|null getItemPrice()
+ * @method string|int|null getItemQuantity()
+ * @method string|int|null getItemCode()
+ * @method string|int|null getItemCategory()
+ * @method string|int|null getCurrencyCode()
+ *
+ * Enhanced E-Commerce
+ * @method string|int|null getTransactionId()
+ * @method string|int|null getAffiliation()
+ * @method string|int|null getRevenue()
+ * @method string|int|null getTax()
+ * @method string|int|null getShipping()
+ * @method string|int|null getCouponCode()
+ * @method string|int|null getProductActionList()
+ * @method string|int|null getCheckoutStep()
+ * @method string|int|null getCheckoutStepOption()
+ * @method string|int|null getProduct($index)
+ * @method string|int|null getProductAction()
+ * @method string|int|null getProductActionToDetail()
+ * @method string|int|null getProductActionToClick()
+ * @method string|int|null getProductActionToAdd()
+ * @method string|int|null getProductActionToRemove()
+ * @method string|int|null getProductActionToCheckout()
+ * @method string|int|null getProductActionToCheckoutOption()
+ * @method string|int|null getProductActionToPurchase()
+ * @method string|int|null getProductActionToRefund()
+ * @method string|int|null getProductImpressionListName($index)
+ * @method string|int|null getProductImpression($productIndex, $listIndex)
+ * @method string|int|null getPromotion($index)
+ * @method string|int|null getPromotionAction()
+ * @method string|int|null getPromotionActionToClick()
+ * @method string|int|null getPromotionActionToView()
+ *
+ * Social Interactions
+ * @method string|int|null getSocialNetwork()
+ * @method string|int|null getSocialAction()
+ * @method string|int|null getSocialActionTarget()
+ *
+ * Timing
+ * @method string|int|null getUserTimingCategory()
+ * @method string|int|null getUserTimingVariableName()
+ * @method string|int|null getUserTimingTime()
+ * @method string|int|null getUserTimingLabel()
+ * @method string|int|null getPageLoadTime()
+ * @method string|int|null getDnsTime()
+ * @method string|int|null getPageDownloadTime()
+ * @method string|int|null getRedirectResponseTime()
+ * @method string|int|null getTcpConnectTime()
+ * @method string|int|null getServerResponseTime()
+ * @method string|int|null getDomInteractiveTime()
+ * @method string|int|null getContentLoadTime()
+ *
+ * Exceptions
+ * @method string|int|null getExceptionDescription()
+ * @method string|int|null getIsExceptionFatal()
+ *
+ * Custom Dimension / Metrics
+ * @method string|int|null getCustomDimension($index)
+ * @method string|int|null getCustomMetric($index)
+ *
+ * Content Grouping
+ * @method string|int|null getContentGroup($index)
+ *
+ * Content Experiments
+ * @method string|int|null getExperimentId()
+ * @method string|int|null getExperimentVariant()
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
