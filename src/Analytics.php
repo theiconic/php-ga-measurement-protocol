@@ -680,7 +680,7 @@ class Analytics
      *
      * @param $methodName
      * @param array $methodArguments
-     * @return $this|AnalyticsResponse
+     * @return mixed
      * @throws \BadMethodCallException
      */
     public function __call($methodName, array $methodArguments)
@@ -719,7 +719,7 @@ class Analytics
      */
     private function fixTypos($methodName)
     {
-        // deprecated in v2, to be removed in v3
+        // @TODO deprecated in v2, to be removed in v3
         if ($methodName === 'setUserTiminCategory') {
             $methodName = 'setUserTimingCategory';
         }
