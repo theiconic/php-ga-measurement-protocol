@@ -247,7 +247,7 @@ use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
  * @method string|int|null getProductActionToRefund()
  * @method string|int|null getProductImpressionListName($index)
  * @method string|int|null getProductImpression($listIndex)
- * @method string|int|null getPromotion($index)
+ * @method string|int|null getPromotion()
  * @method string|int|null getPromotionAction()
  * @method string|int|null getPromotionActionToClick()
  * @method string|int|null getPromotionActionToView()
