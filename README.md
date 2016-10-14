@@ -137,8 +137,8 @@ foreach ($cartProducts as $cartProduct) {
         ->setItemName($cartProduct->name) // required
         ->setItemCode($cartProduct->code) // SKU or id
         ->setItemCategory($cartProduct->category) // item variation: category, size, color etc.
-        ->setItemPrice($pos->price)
-        ->setItemQuantity($pos->qty)
+        ->setItemPrice($cartProduct->price)
+        ->setItemQuantity($cartProduct->qty)
         // make the 'item' hit
         ->sendItem();
 }
