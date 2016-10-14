@@ -51,6 +51,7 @@ abstract class CompoundParameterCollection implements IteratorAggregate
     }
 
     /**
+     * @internal
      * @inheritDoc
      */
     public function getParametersArray()
@@ -73,6 +74,7 @@ abstract class CompoundParameterCollection implements IteratorAggregate
     /**
      * Gets the human readable items for the parameter.
      *
+     * @internal
      * @return array
      */
     public function getReadableItems()
@@ -87,6 +89,7 @@ abstract class CompoundParameterCollection implements IteratorAggregate
     }
 
     /**
+     * @internal
      * @inheritDoc
      */
     public function getIterator()

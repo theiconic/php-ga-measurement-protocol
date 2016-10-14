@@ -28,6 +28,7 @@ class PrepareUrl
     /**
      * Build URL which is sent to Google Analytics
      *
+     * @internal
      * @param string $url
      * @param SingleParameter[] $singleParameters
      * @param CompoundParameterCollection[] $compoundParameters
@@ -49,6 +50,7 @@ class PrepareUrl
     }
 
     /**
+     * @internal
      * @return array
      */
     public function getPayloadParameters()

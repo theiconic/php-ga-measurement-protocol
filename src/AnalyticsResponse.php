@@ -63,6 +63,7 @@ class AnalyticsResponse
      * Gets the HTTP status code.
      * It return NULL if the request was asynchronous since we are not waiting for the response.
      *
+     * @api
      * @return null|int
      */
     public function getHttpStatusCode()
@@ -73,6 +74,7 @@ class AnalyticsResponse
     /**
      * Gets the request URI used to get the response.
      *
+     * @api
      * @return string
      */
     public function getRequestUrl()
@@ -83,6 +85,7 @@ class AnalyticsResponse
     /**
      * Gets the debug response. Returns empty array if no response found.
      *
+     * @api
      * @return array
      */
     public function getDebugResponse()

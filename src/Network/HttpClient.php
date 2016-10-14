@@ -54,6 +54,7 @@ class HttpClient
     /**
      * Sets HTTP client.
      *
+     * @internal
      * @param Client $client
      */
     public function setClient(Client $client)
@@ -80,6 +81,7 @@ class HttpClient
     /**
      * Sends request to Google Analytics.
      *
+     * @internal
      * @param string $url
      * @param boolean $nonBlocking
      * @return AnalyticsResponse

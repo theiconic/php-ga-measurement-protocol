@@ -11,6 +11,7 @@ interface SingleParameterInterface
     /**
      * Gets the name for the parameter.
      *
+     * @internal
      * @return string
      */
     public function getName();
@@ -18,6 +19,7 @@ interface SingleParameterInterface
     /**
      * Sets a value for the parameter.
      *
+     * @internal
      * @param $value
      * @return $this
      */
@@ -26,6 +28,7 @@ interface SingleParameterInterface
     /**
      * Gets the value for the parameter.
      *
+     * @internal
      * @return mixed
      */
     public function getValue();

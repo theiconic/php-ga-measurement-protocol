@@ -467,6 +467,7 @@ class Analytics
     /**
      * Sets a request to be either synchronous or asynchronous (non-blocking).
      *
+     * @api
      * @param boolean $isAsyncRequest
      * @return $this
      */
@@ -494,6 +495,7 @@ class Analytics
     /**
      * Sets the HttpClient.
      *
+     * @internal
      * @param HttpClient $httpClient
      * @return $this
      */
@@ -533,6 +535,7 @@ class Analytics
     /**
      * Sets debug mode to true or false.
      *
+     * @api
      * @param bool $value
      * @return \TheIconic\Tracking\GoogleAnalytics\Analytics
      */
@@ -574,6 +577,7 @@ class Analytics
     /**
      * Build and returns URL used to send to Google Analytics.
      *
+     * @api
      * @return string
      */
     public function getUrl()
