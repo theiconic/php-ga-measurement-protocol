@@ -108,6 +108,42 @@ $analytics
     ->sendPageview();
 ```
 This means that we are sending the request and not waiting for a response. The AnalyticsResponse object that you will get back has NULL for HTTP status code.
+### Order Tracking with simple E-commerce
+```php
+use TheIconic\Tracking\GoogleAnalytics\Analytics;
+
+$analytics = new Analytics();
+
+// Build the order data programmatically, including each order product in the payload
+// Take notice, if you want GA reports to tie this event with previous user actions
+// you must get and set the same ClientId from the GA Cookie
+// First, general and required hit data
+$analytics->setProtocolVersion('1')
+    ->setTrackingId('UA-26293624-12')
+    ->setClientId('2133506694.1448249699');
+
+// To report an order we need to make single hit of type 'transaction' and a hit of
+// type 'item' for every item purchased. Just like analytics.js would do when
+// tracking e-commerce from JavaScript
+$analytics->setTransactionId(1667) // transaction id. required
+    ->setRevenue(65.00)
+    ->setShipping(5.00)
+    ->setTax(10.83)
+    // make the 'transaction' hit
+    ->sendTransaction();
+
+foreach ($cartProducts as $cartProduct) {
+    $response = $analytics->setTransactionId(1667) // transaction id. required, same value as above
+        ->setItemName($cartProduct->name) // required
+        ->setItemCode($cartProduct->code) // SKU or id
+        ->setItemCategory($cartProduct->category) // item variation: category, size, color etc.
+        ->setItemPrice($pos->price)
+        ->setItemQuantity($pos->qty)
+        // make the 'item' hit
+        ->sendItem();
+}
+
+```
 ### Order Tracking with Enhanced E-commerce
 
 ```php
