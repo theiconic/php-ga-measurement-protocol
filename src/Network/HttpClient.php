@@ -2,13 +2,14 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
-use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
+use Http\Client\HttpAsyncClient;
+use Http\Discovery\HttpAsyncClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Message\RequestFactory;
+use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
 
 /**
  * Class HttpClient
@@ -24,40 +25,33 @@ class HttpClient
         'THE ICONIC GA Measurement Protocol PHP Client (https://github.com/theiconic/php-ga-measurement-protocol)';
 
     /**
-     * Timeout in seconds for the request connection and actual request execution.
-     * Using the same value you can find in Google's PHP Client.
-     */
-    const REQUEST_TIMEOUT_SECONDS = 100;
-
-    /**
      * HTTP client.
      *
-     * @var Client
+     * @var HttpAsyncClient
      */
     private $client;
 
     /**
-     * Holds the promises (async responses).
+     * HTTP request factory.
      *
-     * @var PromiseInterface[]
+     * @var RequestFactory
      */
-    private static $promises = [];
+    private $requestFactory = null;
 
     /**
-     * We have to unwrap and send all promises at the end before analytics objects is destroyed.
+     * Holds the promises (async responses).
+     *
+     * @var Promise[]
      */
-    public function __destruct()
-    {
-        Promise\unwrap(self::$promises);
-    }
+    private static $promises = [];
 
     /**
      * Sets HTTP client.
      *
      * @internal
-     * @param Client $client
+     * @param HttpAsyncClient $client
      */
-    public function setClient(Client $client)
+    public function setClient(HttpAsyncClient $client)
     {
         $this->client = $client;
     }
@@ -65,17 +59,47 @@ class HttpClient
     /**
      * Gets HTTP client for internal class use.
      *
-     * @return Client
+     * @return HttpAsyncClient
+     *
+     * @throws \Http\Discovery\Exception\NotFoundException
      */
     private function getClient()
     {
         if ($this->client === null) {
             // @codeCoverageIgnoreStart
-            $this->setClient(new Client());
+            $this->setClient(HttpAsyncClientDiscovery::find());
         }
         // @codeCoverageIgnoreEnd
 
         return $this->client;
+    }
+
+    /**
+     * Sets HTTP request factory.
+     *
+     * @param RequestFactory $factory
+     *
+     * @internal
+     */
+    public function setRequestFactory(RequestFactory $factory)
+    {
+        $this->requestFactory = $factory;
+    }
+
+    /**
+     * Gets HTTP request factory for internal class use.
+     *
+     * @return RequestFactory
+     *
+     * @throws \Http\Discovery\Exception\NotFoundException
+     */
+    private function getRequestFactory()
+    {
+        if (null === $this->requestFactory) {
+            $this->setRequestFactory(MessageFactoryDiscovery::find());
+        }
+
+        return $this->requestFactory;
     }
 
     /**
@@ -85,20 +109,19 @@ class HttpClient
      * @param string $url
      * @param boolean $nonBlocking
      * @return AnalyticsResponse
+     *
+     * @throws \Exception If processing the request is impossible (eg. bad configuration).
+     * @throws \Http\Discovery\Exception\NotFoundException
      */
     public function post($url, $nonBlocking = false)
     {
-        $request = new Request(
+        $request = $this->getRequestFactory()->createRequest(
             'GET',
             $url,
             ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT]
         );
 
-        $response = $this->getClient()->sendAsync($request, [
-            'synchronous' => !$nonBlocking,
-            'timeout' => self::REQUEST_TIMEOUT_SECONDS,
-            'connect_timeout' => self::REQUEST_TIMEOUT_SECONDS,
-        ]);
+        $response = $this->getClient()->sendAsyncRequest($request);
 
         if ($nonBlocking) {
             self::$promises[] = $response;
@@ -113,7 +136,7 @@ class HttpClient
      * Creates an analytics response object.
      *
      * @param RequestInterface $request
-     * @param ResponseInterface|PromiseInterface $response
+     * @param ResponseInterface|Promise $response
      * @return AnalyticsResponse
      */
     protected function getAnalyticsResponse(RequestInterface $request, $response)
