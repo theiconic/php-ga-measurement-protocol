@@ -1,4 +1,10 @@
 ## Version 2
+### 2.4.1 (2017-01-19)
+ * Fixing URL encoding for Japanese characters by using RFC3986, by @ryo88c
+
+### 2.4.0 (2017-10-14)
+ * Adding get params methods by @Nightbr
+
 ### 2.3.0 (2016-08-20)
  * Adding getting URL method by @stefanzweifel
 
