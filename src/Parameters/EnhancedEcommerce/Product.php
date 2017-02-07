@@ -34,5 +34,8 @@ class Product extends CompoundParameter
         '/^custom_metric_(\d{1,3})$/' => 'cm',
     ];
 
-    protected $requiredParameters = ['sku', 'name'];
+    /**
+     * @var array
+     */
+    protected $requiredParameters = [];
 }
