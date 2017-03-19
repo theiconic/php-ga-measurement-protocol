@@ -1,4 +1,8 @@
 ## Version 2
+### 2.5.0 (2017-03-20)
+ * Fixing required params for Products, by @rhrebecek
+ * Making Analytics class completely extensible
+
 ### 2.4.1 (2017-01-19)
  * Fixing URL encoding for Japanese characters by using RFC3986, by @ryo88c
 
