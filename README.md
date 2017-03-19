@@ -168,7 +168,7 @@ $analytics->setTransactionId('7778922')
     ->setShipping(15.0)
     ->setCouponCode('MY_COUPON');
 
-// Include a product, only required fields are SKU and Name
+// Include a product
 $productData1 = [
     'sku' => 'AAAA-6666',
     'name' => 'Test Product 2',
