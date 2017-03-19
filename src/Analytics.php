@@ -295,21 +295,21 @@ class Analytics
      *
      * @var string
      */
-    private $uriScheme = 'http';
+    protected $uriScheme = 'http';
 
     /**
      * Indicates if the request to GA will be asynchronous (non-blocking).
      *
      * @var boolean
      */
-    private $isAsyncRequest = false;
+    protected $isAsyncRequest = false;
 
     /**
      * Endpoint to connect to when sending data to GA.
      *
      * @var string
      */
-    private $endpoint = '://www.google-analytics.com/collect';
+    protected $endpoint = '://www.google-analytics.com/collect';
 
     /**
      * Endpoint to connect to when validating hits.
@@ -317,42 +317,42 @@ class Analytics
      *
      * @var string
      */
-    private $debugEndpoint = '://www.google-analytics.com/debug/collect';
+    protected $debugEndpoint = '://www.google-analytics.com/debug/collect';
 
     /**
      * Indicates if the request is in debug mode(validating hits).
      *
      * @var boolean
      */
-    private $isDebug = false;
+    protected $isDebug = false;
 
     /**
      * Holds the single parameters added to the hit.
      *
      * @var SingleParameter[]
      */
-    private $singleParameters = [];
+    protected $singleParameters = [];
 
     /**
      * Holds the compound parameters collections added to the hit.
      *
      * @var  CompoundParameterCollection[]
      */
-    private $compoundParametersCollections = [];
+    protected $compoundParametersCollections = [];
 
     /**
      * Holds the HTTP client used to connect to GA.
      *
      * @var HttpClient
      */
-    private $httpClient;
+    protected $httpClient;
 
     /**
      * Initializes to a list of all the available parameters to be sent in a hit.
      *
      * @var array
      */
-    private $availableParameters = [
+    protected $availableParameters = [
         'ApplicationId' => 'AppTracking\\ApplicationId',
         'ApplicationInstallerId' => 'AppTracking\\ApplicationInstallerId',
         'ApplicationName' => 'AppTracking\\ApplicationName',
@@ -511,7 +511,7 @@ class Analytics
      *
      * @return HttpClient
      */
-    private function getHttpClient()
+    protected function getHttpClient()
     {
         if ($this->httpClient === null) {
             // @codeCoverageIgnoreStart
@@ -527,7 +527,7 @@ class Analytics
      *
      * @return string
      */
-    private function getEndpoint()
+    protected function getEndpoint()
     {
         return ($this->isDebug) ? $this->uriScheme . $this->debugEndpoint : $this->uriScheme . $this->endpoint;
     }
@@ -553,7 +553,7 @@ class Analytics
      * @return AnalyticsResponse
      * @throws Exception\InvalidPayloadDataException
      */
-    private function sendHit($methodName)
+    protected function sendHit($methodName)
     {
         $hitType = strtoupper(substr($methodName, 4));
 
@@ -598,7 +598,7 @@ class Analytics
      *
      * @return bool
      */
-    private function hasMinimumRequiredParameters()
+    protected function hasMinimumRequiredParameters()
     {
         $minimumRequiredParameters = [
             'v' => false,
@@ -623,7 +623,7 @@ class Analytics
      * @param $action
      * @return $this
      */
-    private function setParameterActionTo($parameter, $action)
+    protected function setParameterActionTo($parameter, $action)
     {
         $actionConstant = $this->getParameterClassConstant(
             'TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\\'
@@ -646,7 +646,7 @@ class Analytics
      * @return mixed
      * @throws \BadMethodCallException
      */
-    private function getParameterClassConstant($constant, $exceptionMsg)
+    protected function getParameterClassConstant($constant, $exceptionMsg)
     {
         if (defined($constant)) {
             return constant($constant);
@@ -663,7 +663,7 @@ class Analytics
      * @return $this
      * @throws \InvalidArgumentException
      */
-    private function setParameter($methodName, array $methodArguments)
+    protected function setParameter($methodName, array $methodArguments)
     {
         $parameterClass = substr($methodName, 3);
 
@@ -697,7 +697,7 @@ class Analytics
      * @return $this
      * @throws \InvalidArgumentException
      */
-    private function addItem($methodName, array $methodArguments)
+    protected function addItem($methodName, array $methodArguments)
     {
         $parameterClass = substr($methodName, 3);
 
@@ -739,7 +739,7 @@ class Analytics
      * @return string
      * @throws \InvalidArgumentException
      */
-    private function getParameter($methodName, array $methodArguments)
+    protected function getParameter($methodName, array $methodArguments)
     {
         $parameterClass = substr($methodName, 3);
 
@@ -784,7 +784,7 @@ class Analytics
      * @param $methodArguments
      * @return string
      */
-    private function getIndexFromArguments($methodArguments)
+    protected function getIndexFromArguments($methodArguments)
     {
         $index = '';
         if (isset($methodArguments[1]) && is_numeric($methodArguments[1])) {
@@ -802,7 +802,7 @@ class Analytics
      * @return string
      * @throws \BadMethodCallException
      */
-    private function getFullParameterClass($parameterClass, $methodName)
+    protected function getFullParameterClass($parameterClass, $methodName)
     {
         if (empty($this->availableParameters[$parameterClass])) {
             throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
@@ -812,7 +812,7 @@ class Analytics
     }
 
     /**
-     * Routes the method call to the adequate private method.
+     * Routes the method call to the adequate protected method.
      *
      * @param $methodName
      * @param array $methodArguments
@@ -853,7 +853,7 @@ class Analytics
      * @param string $methodName
      * @return string
      */
-    private function fixTypos($methodName)
+    protected function fixTypos($methodName)
     {
         // @TODO deprecated in v2, to be removed in v3
         if ($methodName === 'setUserTiminCategory') {
