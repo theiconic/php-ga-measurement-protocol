@@ -1,4 +1,7 @@
 ## Version 2
+### 2.5.1 (2017-03-20)
+ * Fixing required params for all hits, either Client ID or User ID
+
 ### 2.5.0 (2017-03-20)
  * Fixing required params for Products, by @rhrebecek
  * Making Analytics class completely extensible
