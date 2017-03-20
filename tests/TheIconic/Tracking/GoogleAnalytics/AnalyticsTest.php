@@ -449,6 +449,45 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException
+     */
+    public function testMinimumParametersForSendHitMissingClientIdAndUserId()
+    {
+        $this->analytics
+            ->setProtocolVersion('1')
+            ->setTrackingId('UA-26293424-11')
+            ->setDocumentPath('/');
+
+        $this->analytics->sendPageview();
+    }
+
+    /**
+     */
+    public function testMinimumParametersForSendHitMissingClientIdButUserId()
+    {
+        $this->analytics
+            ->setProtocolVersion('1')
+            ->setTrackingId('UA-26293424-11')
+            ->setUserId('sdsdsd')
+            ->setDocumentPath('/');
+
+        $this->analytics->sendPageview();
+    }
+
+    /**
+     */
+    public function testMinimumParametersForSendHitWithClientIdButMissingUserId()
+    {
+        $this->analytics
+            ->setProtocolVersion('1')
+            ->setTrackingId('UA-26293424-11')
+            ->setClientId('sdsdsd')
+            ->setDocumentPath('/');
+
+        $this->analytics->sendPageview();
+    }
+
+    /**
      * @expectedException \BadMethodCallException
      */
     public function testSetInvalidSendHit()

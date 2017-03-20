@@ -604,6 +604,7 @@ class Analytics
             'v' => false,
             'tid' => false,
             'cid' => false,
+            'uid' => false,
             't' => false,
         ];
 
@@ -611,6 +612,14 @@ class Analytics
             if (in_array($parameterName, array_keys($this->singleParameters))) {
                 $minimumRequiredParameters[$parameterName] = true;
             }
+        }
+
+        if ((!$minimumRequiredParameters['cid'] && $minimumRequiredParameters['uid'])) {
+            $minimumRequiredParameters['cid'] = true;
+        }
+
+        if ((!$minimumRequiredParameters['uid'] && $minimumRequiredParameters['cid'])) {
+            $minimumRequiredParameters['uid'] = true;
         }
 
         return !in_array(false, $minimumRequiredParameters, true);

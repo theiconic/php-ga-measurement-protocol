@@ -58,7 +58,7 @@ You can use this package on its own, or use a convenient framework integration:
 Feel free to create an integration with your favourite framework, let us know so we list it here.
 
 ## Usage
-The required parameters for all hits are Protocol Version, Tracking ID and Client ID. Some optional ones like IP Override are recommended if you don't want all hits to seem like coming from your servers.
+The required parameters for all hits are Protocol Version, Tracking ID and at least one of these: Client ID or User ID. Some optional ones like IP Override are recommended if you don't want all hits to seem like coming from your servers.
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
