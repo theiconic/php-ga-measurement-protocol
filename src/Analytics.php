@@ -348,6 +348,14 @@ class Analytics
     protected $httpClient;
 
     /**
+     * Indicates if the request to GA will be executed (by default) or not.
+     *
+     * @var boolean
+     */
+    protected $isDisabled = false;
+
+    
+    /**
      * Initializes to a list of all the available parameters to be sent in a hit.
      *
      * @var array
@@ -452,15 +460,23 @@ class Analytics
      * @param bool $isSsl
      * @throws \InvalidArgumentException
      */
-    public function __construct($isSsl = false)
+    public function __construct($isSsl = false, $isDisabled = false)
     {
         if (!is_bool($isSsl)) {
             throw new \InvalidArgumentException('First constructor argument "isSSL" must be boolean');
         }
 
+        if (!is_bool($isDisabled)) {
+            throw new \InvalidArgumentException('Secondt constructor argument "isDisabled" must be boolean');
+        }
+
         if ($isSsl) {
             $this->uriScheme .= 's';
             $this->endpoint = str_replace('www', 'ssl', $this->endpoint);
+        }
+        
+        if ($isDisabled) {
+            $this->isDisabled = true;
         }
     }
 
@@ -568,10 +584,12 @@ class Analytics
             throw new InvalidPayloadDataException();
         }
 
-        return $this->getHttpClient()->post(
-            $this->getUrl(),
-            $this->isAsyncRequest
-        );
+        if (!$this->isDisabled) {
+            return $this->getHttpClient()->post(
+                $this->getUrl(),
+                $this->isAsyncRequest
+            );
+        }
     }
 
     /**
