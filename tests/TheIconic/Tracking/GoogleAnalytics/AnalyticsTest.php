@@ -55,10 +55,24 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         (new Analytics('1'));
     }
 
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidClassInitialization2()
+    {
+        (new Analytics(false, '1'));
+    }
+
     public function testHttpsEndpoint()
     {
         $sslAnalytics = new Analytics(true);
         $this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\Analytics', $sslAnalytics);
+    }
+
+    public function testDisableArgument()
+    {
+        $analytics = new Analytics(false, true);
     }
 
     public function testSetParameter()
