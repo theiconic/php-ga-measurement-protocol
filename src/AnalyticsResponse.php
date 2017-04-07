@@ -13,7 +13,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  *
  * @package TheIconic\Tracking\GoogleAnalytics
  */
-class AnalyticsResponse
+class AnalyticsResponse implements AnalyticsResponseInterface
 {
     /**
      * HTTP status code for the response.

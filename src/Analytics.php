@@ -467,7 +467,7 @@ class Analytics
         }
 
         if (!is_bool($isDisabled)) {
-            throw new \InvalidArgumentException('Secondt constructor argument "isDisabled" must be boolean');
+            throw new \InvalidArgumentException('Second constructor argument "isDisabled" must be boolean');
         }
 
         if ($isSsl) {
@@ -475,9 +475,7 @@ class Analytics
             $this->endpoint = str_replace('www', 'ssl', $this->endpoint);
         }
         
-        if ($isDisabled) {
-            $this->isDisabled = true;
-        }
+		$this->isDisabled = $isDisabled;
     }
 
     /**
@@ -584,12 +582,14 @@ class Analytics
             throw new InvalidPayloadDataException();
         }
 
-        if (!$this->isDisabled) {
+        if ($this->isDisabled) {
+			return new NullAnalyticsResponse();
+        } else {
             return $this->getHttpClient()->post(
                 $this->getUrl(),
                 $this->isAsyncRequest
             );
-        }
+		}
     }
 
     /**
