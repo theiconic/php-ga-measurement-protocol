@@ -188,7 +188,7 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics->setProductActionToPurchae();
     }
 
-    public function testDisbablingSend()
+    public function testDisablingSend()
     {
         $analyticsDisabled = new Analytics(false, true);
         $analyticsDisabled
