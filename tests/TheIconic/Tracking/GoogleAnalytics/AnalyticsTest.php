@@ -55,6 +55,15 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         (new Analytics('1'));
     }
 
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidClassInitialization2()
+    {
+        (new Analytics(false, '1'));
+    }
+
     public function testHttpsEndpoint()
     {
         $sslAnalytics = new Analytics(true);
@@ -177,6 +186,27 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
     public function testSetInvalidProductAction()
     {
         $this->analytics->setProductActionToPurchae();
+    }
+
+    public function testDisbablingSend()
+    {
+		$analyticsDisabled = new Analytics(false, true);
+		$analyticsDisabled
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\thepage')
+            ->setHitType('pageview');
+
+		$result = $analyticsDisabled->sendPageview();
+		$this->assertInstanceOf(
+			'TheIconic\Tracking\GoogleAnalytics\NullAnalyticsResponse',
+			$result
+		);
+
+		$this->assertNull($result->getHttpStatusCode());
+		$this->assertNull($result->getRequestUrl());
+		$this->assertEquals([], $result->getDebugResponse());
     }
 
     public function testSendSimpleHit()
