@@ -564,7 +564,7 @@ class Analytics
      * Sends a hit to GA. The hit will contain in the payload all the parameters added before.
      *
      * @param $methodName
-     * @return AnalyticsResponse
+     * @return AnalyticsResponseInterface
      * @throws Exception\InvalidPayloadDataException
      */
     protected function sendHit($methodName)
