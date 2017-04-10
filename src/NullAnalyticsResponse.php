@@ -24,11 +24,11 @@ class NullAnalyticsResponse implements AnalyticsResponseInterface
      * It returns NULL as it is null-object.
      *
      * @api
-     * @return null
+     * @return string
      */
     public function getRequestUrl()
     {
-        return null;
+        return '';
     }
 
     /**
