@@ -458,6 +458,7 @@ class Analytics
      * It parses the available parameters.
      *
      * @param bool $isSsl
+     * @param bool $isDisabled
      * @throws \InvalidArgumentException
      */
     public function __construct($isSsl = false, $isDisabled = false)
