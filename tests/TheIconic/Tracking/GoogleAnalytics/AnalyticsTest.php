@@ -190,23 +190,23 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
 
     public function testDisbablingSend()
     {
-		$analyticsDisabled = new Analytics(false, true);
-		$analyticsDisabled
+        $analyticsDisabled = new Analytics(false, true);
+        $analyticsDisabled
             ->setProtocolVersion('1')
             ->setTrackingId('555')
             ->setClientId('666')
             ->setDocumentPath('\thepage')
             ->setHitType('pageview');
 
-		$result = $analyticsDisabled->sendPageview();
-		$this->assertInstanceOf(
-			'TheIconic\Tracking\GoogleAnalytics\NullAnalyticsResponse',
-			$result
-		);
+        $result = $analyticsDisabled->sendPageview();
+        $this->assertInstanceOf(
+            'TheIconic\Tracking\GoogleAnalytics\NullAnalyticsResponse',
+            $result
+        );
 
-		$this->assertNull($result->getHttpStatusCode());
-		$this->assertNull($result->getRequestUrl());
-		$this->assertEquals([], $result->getDebugResponse());
+        $this->assertNull($result->getHttpStatusCode());
+        $this->assertEmpty($result->getRequestUrl());
+        $this->assertEquals([], $result->getDebugResponse());
     }
 
     public function testSendSimpleHit()
