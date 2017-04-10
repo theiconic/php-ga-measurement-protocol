@@ -474,8 +474,8 @@ class Analytics
             $this->uriScheme .= 's';
             $this->endpoint = str_replace('www', 'ssl', $this->endpoint);
         }
-        
-		$this->isDisabled = $isDisabled;
+
+        $this->isDisabled = $isDisabled;
     }
 
     /**
@@ -583,13 +583,13 @@ class Analytics
         }
 
         if ($this->isDisabled) {
-			return new NullAnalyticsResponse();
+            return new NullAnalyticsResponse();
         } else {
             return $this->getHttpClient()->post(
                 $this->getUrl(),
                 $this->isAsyncRequest
             );
-		}
+        }
     }
 
     /**
