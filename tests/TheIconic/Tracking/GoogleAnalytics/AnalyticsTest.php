@@ -495,11 +495,21 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
      */
     public function testMinimumParametersForSendHitMissingClientIdButUserId()
     {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
         $this->analytics
             ->setProtocolVersion('1')
             ->setTrackingId('UA-26293424-11')
             ->setUserId('sdsdsd')
             ->setDocumentPath('/');
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo($this->analytics->getUrl() . '&t=pageview')
+            );
+
+        $this->analytics->setHttpClient($httpClient);
 
         $this->analytics->sendPageview();
     }
@@ -508,11 +518,21 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
      */
     public function testMinimumParametersForSendHitWithClientIdButMissingUserId()
     {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
+
         $this->analytics
             ->setProtocolVersion('1')
             ->setTrackingId('UA-26293424-11')
             ->setClientId('sdsdsd')
             ->setDocumentPath('/');
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->equalTo($this->analytics->getUrl() . '&t=pageview')
+            );
+
+        $this->analytics->setHttpClient($httpClient);
 
         $this->analytics->sendPageview();
     }
