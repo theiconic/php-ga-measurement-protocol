@@ -11,9 +11,13 @@
     ],
     "require": {
         "php": ">=5.5",
-        "guzzlehttp/guzzle": "^6.0"
+        "php-http/client-implementation": "^1.0",
+        "php-http/discovery": "^1.0",
+        "psr/http-message": "^1.0"
     },
     "require-dev": {
+        "guzzlehttp/psr7": "^1.3",
+        "php-http/mock-client": "^0.3",
         "phpunit/phpunit": "4.7.*",
         "satooshi/php-coveralls": "1.0.1"
     },
