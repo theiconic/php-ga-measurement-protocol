@@ -107,7 +107,7 @@ $analytics
     ->setAsyncRequest(true)
     ->sendPageview();
 ```
-This means that we are sending the request and not waiting for a response. The AnalyticsResponse object that you will get back has NULL for HTTP status code.
+This means that we are sending the request and not waiting for a response. The AnalyticsResponseInterface object that you will get back has NULL for HTTP status code.
 ### Order Tracking with simple E-commerce
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
