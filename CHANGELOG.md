@@ -1,4 +1,7 @@
 ## Version 2
+### 2.6.0 (2017-04-10)
+ * Adding Disabling library feature, by @edim24
+
 ### 2.5.1 (2017-03-20)
  * Fixing required params for all hits, either Client ID or User ID
 
