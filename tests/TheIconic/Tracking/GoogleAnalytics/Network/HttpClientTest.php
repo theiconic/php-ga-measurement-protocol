@@ -2,11 +2,7 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
-use TheIconic\Tracking\GoogleAnalytics\Parameters\General\CacheBuster;
-use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundParameterTestCollection;
-use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundTestParameter;
-use TheIconic\Tracking\GoogleAnalytics\Tests\SingleTestParameter;
-use TheIconic\Tracking\GoogleAnalytics\Tests\SingleTestParameterIndexed;
+use Psr\Http\Message\RequestInterface;
 
 class HttpClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +19,45 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->httpClient = new HttpClient();
+    }
 
+    /**
+     * @dataProvider dataProviderInvalidOptions
+     *
+     * @param array $options
+     * @param $exceptionMessage
+     */
+    public function testPostValidatesOptions(array $options, $exceptionMessage)
+    {
+        $guzzleClient = $this->getMockBuilder('GuzzleHttp\Client')
+            ->setMethods(['sendAsync'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $guzzleClient->expects($this->never())->method('sendAsync');
+        $this->httpClient->setClient($guzzleClient);
+
+        $this->setExpectedException(\UnexpectedValueException::class, $exceptionMessage);
+
+        $this->httpClient->post('http://test-collector.com/collect?v=1', $options);
+    }
+
+    public static function dataProviderInvalidOptions()
+    {
+        $timeoutExc = 'The timeout must be an integer with a value greater than 0';
+        $asyncExc = 'The async option must be boolean';
+
+        return [
+            [['timeout' => 'no'], $timeoutExc],
+            [['timeout' => -1], $timeoutExc],
+            [['timeout' => true], $timeoutExc],
+            [['async' => 'false'], $asyncExc],
+            [['async' => 1], $asyncExc],
+        ];
+    }
+
+    public function testPost()
+    {
         $mockResponse = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
             ->setMethods(['getStatusCode'])
             ->disableOriginalConstructor()
@@ -44,7 +78,32 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 
         $guzzleClient->expects($this->atLeast(1))
             ->method('sendAsync')
-            ->with($this->anything())
+            ->withConsecutive(
+                [
+                    $this->isInstanceOf(RequestInterface::class),
+                    [
+                        'synchronous' => true,
+                        'timeout' => 100,
+                        'connect_timeout' => 100,
+                    ],
+                ],
+                [
+                    $this->isInstanceOf(RequestInterface::class),
+                    [
+                        'synchronous' => false,
+                        'timeout' => 30,
+                        'connect_timeout' => 30,
+                    ],
+                ],
+                [
+                    $this->isInstanceOf(RequestInterface::class),
+                    [
+                        'synchronous' => true,
+                        'timeout' => 3,
+                        'connect_timeout' => 3,
+                    ],
+                ]
+            )
             ->will($this->returnValue($mockPromise));
 
         $this->httpClient->setClient($guzzleClient);
@@ -58,17 +117,17 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnArgument(1));
 
         $this->mockHttpClient->setClient($guzzleClient);
-    }
 
-    public function testPost()
-    {
         $response = $this->mockHttpClient->post('http://test-collector.com/collect?v=1');
         $this->assertInstanceOf('Psr\Http\Message\ResponseInterface', $response);
 
-        $responseAsync = $this->mockHttpClient->post('http://test-collector.com/collect?v=1', true);
+        $responseAsync = $this->mockHttpClient->post(
+            'http://test-collector.com/collect?v=1',
+            ['async' => true, 'timeout' => 30]
+        );
         $this->assertInstanceOf('GuzzleHttp\Promise\PromiseInterface', $responseAsync);
 
-        $response = $this->httpClient->post('http://test-collector.com/collect?v=1');
+        $response = $this->httpClient->post('http://test-collector.com/collect?v=1', ['timeout' => 3]);
 
         $this->assertInstanceOf('TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse', $response);
 

@@ -354,6 +354,10 @@ class Analytics
      */
     protected $isDisabled = false;
 
+    /**
+     * @var array
+     */
+    protected $options = [];
     
     /**
      * Initializes to a list of all the available parameters to be sent in a hit.
@@ -459,9 +463,10 @@ class Analytics
      *
      * @param bool $isSsl
      * @param bool $isDisabled
+     * @param array $options
      * @throws \InvalidArgumentException
      */
-    public function __construct($isSsl = false, $isDisabled = false)
+    public function __construct($isSsl = false, $isDisabled = false, array $options = [])
     {
         if (!is_bool($isSsl)) {
             throw new \InvalidArgumentException('First constructor argument "isSSL" must be boolean');
@@ -477,6 +482,7 @@ class Analytics
         }
 
         $this->isDisabled = $isDisabled;
+        $this->options = $options;
     }
 
     /**
@@ -585,12 +591,25 @@ class Analytics
 
         if ($this->isDisabled) {
             return new NullAnalyticsResponse();
-        } else {
-            return $this->getHttpClient()->post(
-                $this->getUrl(),
-                $this->isAsyncRequest
-            );
         }
+
+        return $this->getHttpClient()->post($this->getUrl(), $this->getHttpClientOptions());
+    }
+
+    /**
+     * Build the options array for the http client based on the Analytics object options.
+     *
+     * @return array
+     */
+    protected function getHttpClientOptions()
+    {
+        $options = ['async' => $this->isAsyncRequest];
+
+        if (isset($this->options['timeout'])) {
+            $options['timeout'] = $this->options['timeout'];
+        }
+
+        return $options;
     }
 
     /**

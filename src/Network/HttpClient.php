@@ -83,10 +83,10 @@ class HttpClient
      *
      * @internal
      * @param string $url
-     * @param boolean $nonBlocking
+     * @param array $options
      * @return AnalyticsResponse
      */
-    public function post($url, $nonBlocking = false)
+    public function post($url, array $options = [])
     {
         $request = new Request(
             'GET',
@@ -94,19 +94,49 @@ class HttpClient
             ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT]
         );
 
+        $opts = $this->parseOptions($options);
         $response = $this->getClient()->sendAsync($request, [
-            'synchronous' => !$nonBlocking,
-            'timeout' => self::REQUEST_TIMEOUT_SECONDS,
-            'connect_timeout' => self::REQUEST_TIMEOUT_SECONDS,
+            'synchronous' => !$opts['async'],
+            'timeout' => $opts['timeout'],
+            'connect_timeout' => $opts['timeout'],
         ]);
 
-        if ($nonBlocking) {
+        if ($opts['async']) {
             self::$promises[] = $response;
         } else {
             $response = $response->wait();
         }
 
         return $this->getAnalyticsResponse($request, $response);
+    }
+
+    /**
+     * Parse the given options and fill missing fields with default values.
+     *
+     * @param array $options
+     * @return array
+     */
+    private function parseOptions(array $options)
+    {
+        $defaultOptions = [
+            'timeout' => static::REQUEST_TIMEOUT_SECONDS,
+            'async' => false,
+        ];
+
+        $opts = [];
+        foreach ($defaultOptions as $option => $value) {
+            $opts[$option] = isset($options[$option]) ? $options[$option] : $defaultOptions[$option];
+        }
+
+        if (!is_int($opts['timeout']) || $opts['timeout'] <= 0) {
+            throw new \UnexpectedValueException('The timeout must be an integer with a value greater than 0');
+        }
+
+        if (!is_bool($opts['async'])) {
+            throw new \UnexpectedValueException('The async option must be boolean');
+        }
+
+        return $opts;
     }
 
     /**
