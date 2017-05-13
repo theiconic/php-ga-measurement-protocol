@@ -234,6 +234,8 @@ GA actually returns a JSON that is parsed into an associative array. Read ([here
 In your app configuration, you can have a flag for enabling or disabling the library, this in order to not actually
 send hits to GA, in this case the lib returns a AnalyticsResponseInterface object that returns empty values.
 
+This is specially useful in dev or staging environments.
+
 ```php
 // Instantiate the Analytics object by passing the second parameter in the constructor as TRUE
 $analytics = new Analytics(true, true);
