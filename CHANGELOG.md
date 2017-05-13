@@ -1,4 +1,7 @@
 ## Version 2
+### 2.7.0 (2017-05-13)
+ * Adding timeout option, by @venyii
+
 ### 2.6.0 (2017-04-10)
  * Adding Disabling library feature, by @edim24
 
