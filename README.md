@@ -98,16 +98,6 @@ $analytics->get<ParameterName>();
 All methods for setting parameters should **Autocomplete** if you use an IDE such as PHPStorm, which makes building the Analytics object very easy.
 
 ## Use Cases
-### Asynchronous Requests (Non-Blocking)
-By default, sending a hit to GA will be a synchronous request, and block the execution of the script until it gets a response from the server or timeouts after 100 secs (throwing a Guzzle exception). However, an asynchronous non-blocking request can be sent by calling setAsyncRequest(true) before sending the hit:
-```php
-// When building the Analytics hit, just make a call to the setAsyncRequest method passing true
-// now sending the hit won't block the execution of the script
-$analytics
-    ->setAsyncRequest(true)
-    ->sendPageview();
-```
-This means that we are sending the request and not waiting for a response. The AnalyticsResponseInterface object that you will get back has NULL for HTTP status code.
 ### Order Tracking with simple E-commerce
 ```php
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
