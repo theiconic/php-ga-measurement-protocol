@@ -2,7 +2,6 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
-use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\ContentGrouping\ContentGroup;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\Affiliation;
 use TheIconic\Tracking\GoogleAnalytics\Parameters\EnhancedEcommerce\CouponCode;
