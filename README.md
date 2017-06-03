@@ -47,7 +47,7 @@ Or if you are using ```PHP 5.4 or above``` and ```Guzzle 5``` then:
 }
 ```
 
-Take notice v1 won't receive more updates, you are encourage to update to v2.
+Take notice v1 is no longer maintained and lacks newer features (such as Debug and Hit validation), you are encourage to update to v2.
 
 ## Integrations
 You can use this package on its own, or use a convenient framework integration:
