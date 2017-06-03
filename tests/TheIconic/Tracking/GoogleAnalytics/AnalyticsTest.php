@@ -446,10 +446,6 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $products->add(new Product($productData1));
         $products->add(new Product($productData2));
 
-        $compoundParameters = [
-            'Product' => $products,
-        ];
-
         $this->analytics->setProductActionToPurchase();
 
         $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
@@ -458,9 +454,6 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             ->method('post')
             ->with(
                 $this->equalTo($this->analytics->getUrl())
-                // $this->equalTo('http://www.google-analytics.com/collect'),
-                // $this->equalTo($singleParameters),
-                // $this->equalTo($compoundParameters)
             );
 
         $this->analytics->setHttpClient($httpClient);
