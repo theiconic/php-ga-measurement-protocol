@@ -652,11 +652,11 @@ class Analytics
             }
         }
 
-        if ((!$minimumRequiredParameters['cid'] && $minimumRequiredParameters['uid'])) {
+        if (!$minimumRequiredParameters['cid'] && $minimumRequiredParameters['uid']) {
             $minimumRequiredParameters['cid'] = true;
         }
 
-        if ((!$minimumRequiredParameters['uid'] && $minimumRequiredParameters['cid'])) {
+        if (!$minimumRequiredParameters['uid'] && $minimumRequiredParameters['cid']) {
             $minimumRequiredParameters['uid'] = true;
         }
 
