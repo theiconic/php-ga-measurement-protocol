@@ -806,7 +806,7 @@ class Analytics
             $fullParameterCollectionClass = $fullParameterClass . 'Collection';
 
             // Test if the class Collection exist
-            if (class_exists($fullParameterCollectionClass)) {
+            if (class_exists($fullParameterCollectionClass, false)) {
                 return null;
             }
             // If not, it's a SingleParameter Object, continue the magic
