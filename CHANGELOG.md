@@ -1,4 +1,7 @@
 ## Version 2
+### 2.7.1 (2017-06-30)
+ * Fixing class_exists bug when getting parameters, by @peterjaap
+
 ### 2.7.0 (2017-05-13)
  * Adding timeout option, by @venyii
 

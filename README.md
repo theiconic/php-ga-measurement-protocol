@@ -245,6 +245,7 @@ $analytics = new Analytics(true, true);
 * Radek Hřebeček - [http://www.hrebecek.cz/](http://www.hrebecek.cz)
 * edim24 - [ryo88c](https://github.com/edim24)
 * venyii - [venyii](https://github.com/venyii)
+* Peter Jaap Blaakmeer - [peterjaap](https://github.com/peterjaap)
 
 ## License
 
