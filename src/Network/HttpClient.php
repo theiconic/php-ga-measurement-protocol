@@ -6,6 +6,7 @@ use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
+use GuzzleHttp\FORCE_IP_RESOLVE;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -99,6 +100,7 @@ class HttpClient
             'synchronous' => !$opts['async'],
             'timeout' => $opts['timeout'],
             'connect_timeout' => $opts['timeout'],
+            'force_ip_resolve' => $opts['force_ip_resolve'],
         ]);
 
         if ($opts['async']) {
@@ -121,6 +123,7 @@ class HttpClient
         $defaultOptions = [
             'timeout' => static::REQUEST_TIMEOUT_SECONDS,
             'async' => false,
+            'force_ip_resolve' => 'v4',
         ];
 
         $opts = [];

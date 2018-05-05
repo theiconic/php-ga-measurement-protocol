@@ -358,7 +358,7 @@ class Analytics
      * @var array
      */
     protected $options = [];
-    
+
     /**
      * Initializes to a list of all the available parameters to be sent in a hit.
      *
@@ -607,6 +607,10 @@ class Analytics
 
         if (isset($this->options['timeout'])) {
             $options['timeout'] = $this->options['timeout'];
+        }
+
+        if (isset($this->options['force_ip_resolve'])) {
+            $options['force_ip_resolve'] = $this->options['force_ip_resolve'];
         }
 
         return $options;
