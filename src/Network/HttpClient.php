@@ -96,12 +96,9 @@ class HttpClient
         );
 
         $opts = $this->parseOptions($options);
-        $response = $this->getClient()->sendAsync($request, [
-            'synchronous' => !$opts['async'],
-            'timeout' => $opts['timeout'],
-            'connect_timeout' => $opts['timeout'],
-            'force_ip_resolve' => $opts['force_ip_resolve'],
-        ]);
+        $opts = $this->prepareAsyncOptions($opts);
+
+        $response = $this->getClient()->sendAsync($request, $opts);
 
         if ($opts['async']) {
             self::$promises[] = $response;
@@ -110,6 +107,26 @@ class HttpClient
         }
 
         return $this->getAnalyticsResponse($request, $response);
+    }
+
+
+    /**
+     * @param array $options
+     * @return array
+     */
+    public function prepareAsyncOptions(array $options)
+    {
+        $opts = array(
+            'synchronous' => !$options['async'],
+            'timeout' => $options['timeout'],
+            'connect_timeout' => $options['timeout'],
+        );
+
+        if (!empty($options['force_ip_resolve'])) {
+            $opts['force_ip_resolve'] = $options['force_ip_resolve'];
+        }
+
+        return $opts;
     }
 
     /**
@@ -123,7 +140,7 @@ class HttpClient
         $defaultOptions = [
             'timeout' => static::REQUEST_TIMEOUT_SECONDS,
             'async' => false,
-            'force_ip_resolve' => 'v4',
+            'force_ip_resolve' => '',
         ];
 
         $opts = [];
