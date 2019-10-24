@@ -14,7 +14,7 @@ use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
  * The main interface for the clients, it relies heavily in magic methods exposing
  * an interface with method tags.
  *
- * ==== GETTERS ====
+ * ==== SETTERS ====
  * General
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setProtocolVersion($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setTrackingId($value)
@@ -154,7 +154,7 @@ use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentId($value)
  * @method \TheIconic\Tracking\GoogleAnalytics\Analytics setExperimentVariant($value)
  *
- * ==== SETTERS ====
+ * ==== GETTERS ====
  * General
  * @method string|int|null getProtocolVersion()
  * @method string|int|null getTrackingId()
