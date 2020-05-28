@@ -111,6 +111,42 @@ class HttpClient
     }
 
     /**
+     * Sends batch request to Google Analytics.
+     *
+     * @internal
+     * @param string $url
+     * @param array $batchUrls
+     * @param array $options
+     * @return AnalyticsResponse
+     */
+    public function batch($url, array $batchUrls, array $options = [])
+    {
+        $body = implode($batchUrls, PHP_EOL);
+
+        $request = new Request(
+            'POST',
+            $url,
+            ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT],
+            $body
+        );
+
+        $opts = $this->parseOptions($options);
+        $response = $this->getClient()->sendAsync($request, [
+            'synchronous' => !$opts['async'],
+            'timeout' => $opts['timeout'],
+            'connect_timeout' => $opts['timeout'],
+        ]);
+
+        if ($opts['async']) {
+            self::$promises[] = $response;
+        } else {
+            $response = $response->wait();
+        }
+
+        return $this->getAnalyticsResponse($request, $response);
+    }
+
+    /**
      * Parse the given options and fill missing fields with default values.
      *
      * @param array $options

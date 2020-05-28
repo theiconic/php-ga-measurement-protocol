@@ -7,6 +7,7 @@ use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
 use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
 use TheIconic\Tracking\GoogleAnalytics\Network\PrepareUrl;
 use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
+use TheIconic\Tracking\GoogleAnalytics\Exception\EnqueueUrlsOverflowException;
 
 /**
  * Class Analytics
@@ -320,6 +321,14 @@ class Analytics
     protected $debugEndpoint = '://www.google-analytics.com/debug/collect';
 
     /**
+     * Endpoint to connect to when sending batch data to GA.
+     *
+     * @var string
+     */
+    protected $batchEndpoint = '://www.google-analytics.com/batch';
+     
+
+    /**
      * Indicates if the request is in debug mode(validating hits).
      *
      * @var boolean
@@ -353,6 +362,11 @@ class Analytics
      * @var boolean
      */
     protected $isDisabled = false;
+
+    /**
+     * @var array
+     */
+    protected $enqueuedUrls = [];
 
     /**
      * @var array
@@ -554,6 +568,16 @@ class Analytics
     }
 
     /**
+     * Gets the full batch endpoint to GA.
+     *
+     * @return string
+     */
+    protected function getBatchEndpoint()
+    {
+        return $this->uriScheme . $this->batchEndpoint;
+    }
+
+    /**
      * Sets debug mode to true or false.
      *
      * @api
@@ -578,6 +602,47 @@ class Analytics
     {
         $hitType = strtoupper(substr($methodName, 4));
 
+        $this->setAndValidateHit($hitType);
+
+        if ($this->isDisabled) {
+            return new NullAnalyticsResponse();
+        }
+
+        return $this->getHttpClient()->post($this->getUrl(), $this->getHttpClientOptions());
+    }
+
+    /**
+     * Enqueue a hit to GA. The hit will contain in the payload all the parameters added before.
+     *
+     * @param $methodName
+     * @return $this
+     * @throws Exception\InvalidPayloadDataException
+     */
+    protected function enqueueHit($methodName)
+    {
+
+        if(count($this->enqueuedUrls) == 20) {
+            throw new EnqueueUrlsOverflowException();
+        }
+
+        $hitType = strtoupper(substr($methodName, 7));
+
+        $this->setAndValidateHit($hitType);
+        $this->enqueuedUrls[] = $this->getUrl(true);
+
+        return $this;
+    }
+
+    /**
+     * Validate and set hitType
+     *
+     * @param $methodName
+     * @return void
+     * @throws Exception\InvalidPayloadDataException
+     */
+    protected function setAndValidateHit($hitType)
+    {
+        
         $hitConstant = $this->getParameterClassConstant(
             'TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType::HIT_TYPE_' . $hitType,
             'Hit type ' . $hitType . ' is not defined, check spelling'
@@ -588,12 +653,20 @@ class Analytics
         if (!$this->hasMinimumRequiredParameters()) {
             throw new InvalidPayloadDataException();
         }
+    }
 
+    /**
+     * Sends enqueued hits to GA. These hits will contain in the payload all the parameters added before.
+     *
+     * @return AnalyticsResponseInterface
+     */
+    public function sendEnqueuedHits()
+    {
         if ($this->isDisabled) {
             return new NullAnalyticsResponse();
         }
 
-        return $this->getHttpClient()->post($this->getUrl(), $this->getHttpClientOptions());
+        return $this->getHttpClient()->batch($this->getBatchEndpoint(), $this->enqueuedUrls, $this->getHttpClientOptions());
     }
 
     /**
@@ -618,14 +691,15 @@ class Analytics
      * @api
      * @return string
      */
-    public function getUrl()
+    public function getUrl($onlyQuery = false)
     {
         $prepareUrl = new PrepareUrl;
 
         return $prepareUrl->build(
             $this->getEndpoint(),
             $this->singleParameters,
-            $this->compoundParametersCollections
+            $this->compoundParametersCollections,
+            $onlyQuery
         );
     }
 
@@ -859,6 +933,16 @@ class Analytics
     }
 
     /**
+     * Empty batch queue
+     *
+     * @return void
+     */
+    public function emptyQueue()
+    {
+        $this->enqueuedUrls = [];
+    }
+
+    /**
      * Routes the method call to the adequate protected method.
      *
      * @param $methodName
@@ -884,6 +968,10 @@ class Analytics
 
         if (preg_match('/^(send)(\w+)/', $methodName, $matches)) {
             return $this->sendHit($methodName);
+        }
+
+        if (preg_match('/^(enqueue)(\w+)/', $methodName, $matches)) {
+            return $this->enqueueHit($methodName);
         }
 
         // Get Parameters
