@@ -121,7 +121,7 @@ class HttpClient
      */
     public function batch($url, array $batchUrls, array $options = [])
     {
-        $body = implode($batchUrls, PHP_EOL);
+        $body = implode(PHP_EOL, $batchUrls);
 
         $request = new Request(
             'POST',
