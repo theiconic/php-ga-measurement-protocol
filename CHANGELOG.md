@@ -1,4 +1,7 @@
 ## Version 2
+### 2.8.0 (2020-09-10)
+ * Adding optional Guzzle 7 dependency, by @irazasyed
+ 
 ### 2.7.2 (2020-05-31)
  * Fixing social parameters that were not inheriting the correct class, by @alberto-bottarini
 
