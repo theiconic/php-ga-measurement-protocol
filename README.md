@@ -247,7 +247,6 @@ $analytics = new Analytics(true, true);
 * venyii - [venyii](https://github.com/venyii)
 * Peter Jaap Blaakmeer - [peterjaap](https://github.com/peterjaap)
 * Alberto Bottarini - [alberto-bottarini](http://www.albertobottarini.com)
-* Irfaq Syed - [irazasyed](https://lukonet.com/)
 
 ## License
 
