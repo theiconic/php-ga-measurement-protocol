@@ -325,6 +325,56 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics->sendEnqueuedHits();
     }
 
+    public function testSendBatchHitsAfterEmpty()
+    {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['batch']);
+
+        $httpClient->expects($this->exactly(2))
+            ->method('batch')
+            ->withConsecutive(
+                [
+                    'http://www.google-analytics.com/batch',
+                    [
+                        'v=1&tid=555&cid=666&dp=%5Cmypage&t=pageview',
+                        'v=1&tid=555&cid=666&dp=%5Cmypage2&t=pageview'
+                    ],
+                ],
+                [
+                    'http://www.google-analytics.com/batch',
+                    [
+                        'v=1&tid=555&cid=666&dp=%5Cmypage&t=pageview',
+                        'v=1&tid=555&cid=666&dp=%5Cmypage2&t=pageview',
+                        'v=1&tid=555&cid=666&dp=%5Cmypage2&t=pageview',
+                    ]
+                ]
+            );
+
+        $this->analytics->setHttpClient($httpClient);
+
+        $this->analytics
+            ->setDebug(true)
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\mypage')
+            ->enqueuePageview()
+            ->setDocumentPath('\mypage2')
+            ->enqueuePageview();
+        $this->analytics->sendEnqueuedHits();
+
+        $this->analytics
+            ->setDebug(true)
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\mypage')
+            ->enqueuePageview()
+            ->setDocumentPath('\mypage2')
+            ->enqueuePageview()
+            ->enqueuePageview();
+        $this->analytics->sendEnqueuedHits();
+    }
+
     /**
      * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\EnqueueUrlsOverflowException
      */

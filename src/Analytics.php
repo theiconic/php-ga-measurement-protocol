@@ -667,7 +667,11 @@ class Analytics
             return new NullAnalyticsResponse();
         }
 
-        return $this->getHttpClient()->batch($this->getBatchEndpoint(), $this->enqueuedUrls, $this->getHttpClientOptions());
+        $response = $this->getHttpClient()->batch($this->getBatchEndpoint(), $this->enqueuedUrls, $this->getHttpClientOptions());
+
+        $this->emptyQueue();
+
+        return $response;
     }
 
     /**
