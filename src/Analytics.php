@@ -937,11 +937,13 @@ class Analytics
     /**
      * Empty batch queue
      *
-     * @return void
+     * @return $this
      */
     public function emptyQueue()
     {
         $this->enqueuedUrls = [];
+
+        return $this;
     }
 
     /**

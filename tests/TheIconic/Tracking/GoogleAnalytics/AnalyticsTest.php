@@ -360,6 +360,57 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             ->enqueuePageview();
     }
 
+    public function testEmptyBatchHits()
+    {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['batch']);
+
+        $this->analytics
+            ->setDebug(true)
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\mypage')
+            ->enqueuePageview()
+            ->setDocumentPath('\mypage2')
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->emptyQueue()
+            ->setDocumentPath('\mypage')
+            ->enqueuePageview()
+            ->setDocumentPath('\mypage2')
+            ->enqueuePageview();
+
+        $httpClient->expects($this->once())
+            ->method('batch')
+            ->with(
+                'http://www.google-analytics.com/batch',
+                [
+                    'v=1&tid=555&cid=666&dp=%5Cmypage&t=pageview',
+                    'v=1&tid=555&cid=666&dp=%5Cmypage2&t=pageview'
+                ]
+            );
+
+        $this->analytics->setHttpClient($httpClient);
+
+        $this->analytics->sendEnqueuedHits();
+    }
+
     public function testFixTypos()
     {
         $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
