@@ -325,6 +325,41 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics->sendEnqueuedHits();
     }
 
+    /**
+     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\EnqueueUrlsOverflowException
+     */
+    public function testEnqueueOverflowException()
+    {
+        $this->analytics
+            ->setDebug(true)
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\mypage')
+            ->enqueuePageview()
+            ->setDocumentPath('\mypage2')
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview()
+            ->enqueuePageview();
+    }
+
     public function testFixTypos()
     {
         $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['post']);
