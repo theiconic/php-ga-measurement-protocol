@@ -2,6 +2,8 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters\SocialInteractions;
 
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
+
 /**
  * Class SocialAction
  *
@@ -9,7 +11,7 @@ namespace TheIconic\Tracking\GoogleAnalytics\Parameters\SocialInteractions;
  *
  * @package TheIconic\Tracking\GoogleAnalytics\Parameters\SocialInteractions
  */
-class SocialAction
+class SocialAction extends SingleParameter
 {
     /**
      * @inheritDoc

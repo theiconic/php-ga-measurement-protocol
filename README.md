@@ -246,6 +246,7 @@ $analytics = new Analytics(true, true);
 * edim24 - [ryo88c](https://github.com/edim24)
 * venyii - [venyii](https://github.com/venyii)
 * Peter Jaap Blaakmeer - [peterjaap](https://github.com/peterjaap)
+* Alberto Bottarini - [alberto-bottarini](http://www.albertobottarini.com)
 
 ## License
 
