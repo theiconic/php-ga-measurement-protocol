@@ -2,12 +2,13 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
-use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
-use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
+use BadMethodCallException;
+use TheIconic\Tracking\GoogleAnalytics\Exception\EnqueueUrlsOverflowException;
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
 use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
 use TheIconic\Tracking\GoogleAnalytics\Network\PrepareUrl;
-use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
-use TheIconic\Tracking\GoogleAnalytics\Exception\EnqueueUrlsOverflowException;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 
 /**
  * Class Analytics
@@ -765,14 +766,14 @@ class Analytics
      * @param $constant
      * @param $exceptionMsg
      * @return mixed
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     protected function getParameterClassConstant($constant, $exceptionMsg)
     {
         if (defined($constant)) {
             return constant($constant);
         } else {
-            throw new \BadMethodCallException($exceptionMsg);
+            throw new BadMethodCallException($exceptionMsg);
         }
     }
 
@@ -921,12 +922,12 @@ class Analytics
      * @param $parameterClass
      * @param $methodName
      * @return string
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     protected function getFullParameterClass($parameterClass, $methodName)
     {
         if (empty($this->availableParameters[$parameterClass])) {
-            throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
+            throw new BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
         } else {
             return '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
         }
@@ -948,7 +949,7 @@ class Analytics
      * @param $methodName
      * @param array $methodArguments
      * @return mixed
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function __call($methodName, array $methodArguments)
     {
@@ -979,7 +980,7 @@ class Analytics
             return $this->getParameter($methodName, $methodArguments);
         }
 
-        throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
+        throw new BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
     }
 
     /**
