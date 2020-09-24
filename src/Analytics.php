@@ -835,8 +835,9 @@ class Analytics
 
         $collectionIndex = $this->getIndexFromArguments($methodArguments);
 
-        if (isset($this->compoundParametersCollections[$parameterClass . $collectionIndex])) {
-            $this->compoundParametersCollections[$parameterClass . $collectionIndex]->add($parameterObject);
+        $parameterIndex = $parameterClass . $collectionIndex;
+        if (isset($this->compoundParametersCollections[$parameterIndex])) {
+            $this->compoundParametersCollections[$parameterIndex]->add($parameterObject);
         } else {
             $fullParameterCollectionClass = $fullParameterClass . 'Collection';
 
@@ -845,7 +846,7 @@ class Analytics
 
             $parameterObjectCollection->add($parameterObject);
 
-            $this->compoundParametersCollections[$parameterClass . $collectionIndex] = $parameterObjectCollection;
+            $this->compoundParametersCollections[$parameterIndex] = $parameterObjectCollection;
         }
 
         return $this;
