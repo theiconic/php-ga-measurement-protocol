@@ -94,20 +94,7 @@ class HttpClient
             ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT]
         );
 
-        $opts = $this->parseOptions($options);
-        $response = $this->getClient()->sendAsync($request, [
-            'synchronous' => !$opts['async'],
-            'timeout' => $opts['timeout'],
-            'connect_timeout' => $opts['timeout'],
-        ]);
-
-        if ($opts['async']) {
-            self::$promises[] = $response;
-        } else {
-            $response = $response->wait();
-        }
-
-        return $this->getAnalyticsResponse($request, $response);
+        return $this->sendRequest($request, $options);
     }
 
     /**
@@ -130,6 +117,11 @@ class HttpClient
             $body
         );
 
+        return $this->sendRequest($request, $options);
+    }
+
+    private function sendRequest(Request $request, array $options = [])
+    {
         $opts = $this->parseOptions($options);
         $response = $this->getClient()->sendAsync($request, [
             'synchronous' => !$opts['async'],
