@@ -928,9 +928,9 @@ class Analytics
     {
         if (empty($this->availableParameters[$parameterClass])) {
             throw new BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
-        } else {
-            return '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
         }
+
+        return '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
     }
 
     /**
