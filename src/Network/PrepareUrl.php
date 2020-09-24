@@ -34,7 +34,7 @@ class PrepareUrl
      * @param CompoundParameterCollection[] $compoundParameters
      * @return string
      */
-    public function build($url, array $singleParameters, array $compoundParameters)
+    public function build($url, array $singleParameters, array $compoundParameters, $onlyQuery = false)
     {
         $singlesPost = $this->getSingleParametersPayload($singleParameters);
 
@@ -46,7 +46,7 @@ class PrepareUrl
             $this->payloadParameters['z'] = $this->cacheBuster;
         }
         $query = http_build_query($this->payloadParameters, null, ini_get('arg_separator.output'), PHP_QUERY_RFC3986);
-        return $url . '?' . $query;
+        return $onlyQuery ? $query : ($url . '?' . $query);
     }
 
     /**

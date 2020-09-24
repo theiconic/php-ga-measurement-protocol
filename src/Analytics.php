@@ -2,11 +2,13 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
-use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
-use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
+use BadMethodCallException;
+use TheIconic\Tracking\GoogleAnalytics\Exception\EnqueueUrlsOverflowException;
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
 use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
 use TheIconic\Tracking\GoogleAnalytics\Network\PrepareUrl;
-use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\CompoundParameterCollection;
+use TheIconic\Tracking\GoogleAnalytics\Parameters\SingleParameter;
 
 /**
  * Class Analytics
@@ -320,6 +322,14 @@ class Analytics
     protected $debugEndpoint = '://www.google-analytics.com/debug/collect';
 
     /**
+     * Endpoint to connect to when sending batch data to GA.
+     *
+     * @var string
+     */
+    protected $batchEndpoint = '://www.google-analytics.com/batch';
+     
+
+    /**
      * Indicates if the request is in debug mode(validating hits).
      *
      * @var boolean
@@ -353,6 +363,11 @@ class Analytics
      * @var boolean
      */
     protected $isDisabled = false;
+
+    /**
+     * @var array
+     */
+    protected $enqueuedUrls = [];
 
     /**
      * @var array
@@ -554,6 +569,16 @@ class Analytics
     }
 
     /**
+     * Gets the full batch endpoint to GA.
+     *
+     * @return string
+     */
+    protected function getBatchEndpoint()
+    {
+        return $this->uriScheme . $this->batchEndpoint;
+    }
+
+    /**
      * Sets debug mode to true or false.
      *
      * @api
@@ -578,6 +603,47 @@ class Analytics
     {
         $hitType = strtoupper(substr($methodName, 4));
 
+        $this->setAndValidateHit($hitType);
+
+        if ($this->isDisabled) {
+            return new NullAnalyticsResponse();
+        }
+
+        return $this->getHttpClient()->post($this->getUrl(), $this->getHttpClientOptions());
+    }
+
+    /**
+     * Enqueue a hit to GA. The hit will contain in the payload all the parameters added before.
+     *
+     * @param $methodName
+     * @return $this
+     * @throws Exception\InvalidPayloadDataException
+     */
+    protected function enqueueHit($methodName)
+    {
+
+        if(count($this->enqueuedUrls) == 20) {
+            throw new EnqueueUrlsOverflowException();
+        }
+
+        $hitType = strtoupper(substr($methodName, 7));
+
+        $this->setAndValidateHit($hitType);
+        $this->enqueuedUrls[] = $this->getUrl(true);
+
+        return $this;
+    }
+
+    /**
+     * Validate and set hitType
+     *
+     * @param $methodName
+     * @return void
+     * @throws Exception\InvalidPayloadDataException
+     */
+    protected function setAndValidateHit($hitType)
+    {
+        
         $hitConstant = $this->getParameterClassConstant(
             'TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType::HIT_TYPE_' . $hitType,
             'Hit type ' . $hitType . ' is not defined, check spelling'
@@ -588,12 +654,24 @@ class Analytics
         if (!$this->hasMinimumRequiredParameters()) {
             throw new InvalidPayloadDataException();
         }
+    }
 
+    /**
+     * Sends enqueued hits to GA. These hits will contain in the payload all the parameters added before.
+     *
+     * @return AnalyticsResponseInterface
+     */
+    public function sendEnqueuedHits()
+    {
         if ($this->isDisabled) {
             return new NullAnalyticsResponse();
         }
 
-        return $this->getHttpClient()->post($this->getUrl(), $this->getHttpClientOptions());
+        $response = $this->getHttpClient()->batch($this->getBatchEndpoint(), $this->enqueuedUrls, $this->getHttpClientOptions());
+
+        $this->emptyQueue();
+
+        return $response;
     }
 
     /**
@@ -618,14 +696,15 @@ class Analytics
      * @api
      * @return string
      */
-    public function getUrl()
+    public function getUrl($onlyQuery = false)
     {
         $prepareUrl = new PrepareUrl;
 
         return $prepareUrl->build(
             $this->getEndpoint(),
             $this->singleParameters,
-            $this->compoundParametersCollections
+            $this->compoundParametersCollections,
+            $onlyQuery
         );
     }
 
@@ -691,14 +770,14 @@ class Analytics
      * @param $constant
      * @param $exceptionMsg
      * @return mixed
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     protected function getParameterClassConstant($constant, $exceptionMsg)
     {
         if (defined($constant)) {
             return constant($constant);
         } else {
-            throw new \BadMethodCallException($exceptionMsg);
+            throw new BadMethodCallException($exceptionMsg);
         }
     }
 
@@ -760,8 +839,9 @@ class Analytics
 
         $collectionIndex = $this->getIndexFromArguments($methodArguments);
 
-        if (isset($this->compoundParametersCollections[$parameterClass . $collectionIndex])) {
-            $this->compoundParametersCollections[$parameterClass . $collectionIndex]->add($parameterObject);
+        $parameterIndex = $parameterClass . $collectionIndex;
+        if (isset($this->compoundParametersCollections[$parameterIndex])) {
+            $this->compoundParametersCollections[$parameterIndex]->add($parameterObject);
         } else {
             $fullParameterCollectionClass = $fullParameterClass . 'Collection';
 
@@ -770,7 +850,7 @@ class Analytics
 
             $parameterObjectCollection->add($parameterObject);
 
-            $this->compoundParametersCollections[$parameterClass . $collectionIndex] = $parameterObjectCollection;
+            $this->compoundParametersCollections[$parameterIndex] = $parameterObjectCollection;
         }
 
         return $this;
@@ -847,15 +927,27 @@ class Analytics
      * @param $parameterClass
      * @param $methodName
      * @return string
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     protected function getFullParameterClass($parameterClass, $methodName)
     {
         if (empty($this->availableParameters[$parameterClass])) {
-            throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
-        } else {
-            return '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+            throw new BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
         }
+
+        return '\\TheIconic\\Tracking\\GoogleAnalytics\\Parameters\\' . $this->availableParameters[$parameterClass];
+    }
+
+    /**
+     * Empty batch queue
+     *
+     * @return $this
+     */
+    public function emptyQueue()
+    {
+        $this->enqueuedUrls = [];
+
+        return $this;
     }
 
     /**
@@ -864,7 +956,7 @@ class Analytics
      * @param $methodName
      * @param array $methodArguments
      * @return mixed
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function __call($methodName, array $methodArguments)
     {
@@ -886,12 +978,16 @@ class Analytics
             return $this->sendHit($methodName);
         }
 
+        if (preg_match('/^(enqueue)(\w+)/', $methodName, $matches)) {
+            return $this->enqueueHit($methodName);
+        }
+
         // Get Parameters
         if (preg_match('/^(get)(\w+)/', $methodName, $matches)) {
             return $this->getParameter($methodName, $methodArguments);
         }
 
-        throw new \BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
+        throw new BadMethodCallException('Method ' . $methodName . ' not defined for Analytics class');
     }
 
     /**

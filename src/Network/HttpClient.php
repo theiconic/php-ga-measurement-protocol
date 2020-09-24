@@ -94,6 +94,34 @@ class HttpClient
             ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT]
         );
 
+        return $this->sendRequest($request, $options);
+    }
+
+    /**
+     * Sends batch request to Google Analytics.
+     *
+     * @internal
+     * @param string $url
+     * @param array $batchUrls
+     * @param array $options
+     * @return AnalyticsResponse
+     */
+    public function batch($url, array $batchUrls, array $options = [])
+    {
+        $body = implode(PHP_EOL, $batchUrls);
+
+        $request = new Request(
+            'POST',
+            $url,
+            ['User-Agent' => self::PHP_GA_MEASUREMENT_PROTOCOL_USER_AGENT],
+            $body
+        );
+
+        return $this->sendRequest($request, $options);
+    }
+
+    private function sendRequest(Request $request, array $options = [])
+    {
         $opts = $this->parseOptions($options);
         $response = $this->getClient()->sendAsync($request, [
             'synchronous' => !$opts['async'],

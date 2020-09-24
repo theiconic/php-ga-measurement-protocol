@@ -197,6 +197,58 @@ $analytics->setEventCategory('Checkout')
     ->sendEvent();
 ```
 
+### Batch Hits
+
+GA has an endpoint that you can hit to register multiple hits at once, with a limit of 20 hits. Hits to be send can be placed in a queue as you build up the Analytics object.
+
+Here's an example that sends two hits, and then empties the queue.
+
+```php
+$analytics = new Analytics(false, false);
+
+$analytics
+    ->setProtocolVersion('1')
+    ->setTrackingId('UA-xxxxxx-x')
+    ->setClientId('xxxxxx.xxxxxx');    
+
+foreach(range(0, 19) as $i) {
+    $analytics = $analytics
+        ->setDocumentPath("/mypage$i")
+        ->enqueuePageview(); //enqueue url without pushing
+}
+
+$analytics->sendEnqueuedHits(); //push 20 pageviews in a single request and empties the queue
+```
+
+The queue is emptied when the hits are sent, but it can also be empty manually with `emptyQueue` method.
+
+```php
+$analytics = new Analytics(false, false);
+
+$analytics
+    ->setProtocolVersion('1')
+    ->setTrackingId('UA-xxxxxx-x')
+    ->setClientId('xxxxxx.xxxxxx');    
+
+foreach(range(0, 5) as $i) {
+    $analytics = $analytics
+        ->setDocumentPath("/mypage$i")
+        ->enqueuePageview(); //enqueue url without pushing
+}
+
+$analytics->emptyQueue(); // empty queue, allows to enqueue 20 hits again
+
+foreach(range(1, 20) as $i) {
+    $analytics = $analytics
+        ->setDocumentPath("/mypage$i")
+        ->enqueuePageview(); //enqueue url without pushing
+}
+
+$analytics->sendEnqueuedHits(); //push 20 pageviews in a single request and empties the queue
+```
+
+If more than 20 hits are attempted to be enqueue, the library will throw a `EnqueueUrlsOverflowException`.
+
 ### Validating Hits
 
 From Google Developer Guide:
