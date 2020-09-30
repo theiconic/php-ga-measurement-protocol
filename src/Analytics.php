@@ -622,7 +622,6 @@ class Analytics
 
         if (count($this->enqueuedUrls) == 20) {
             $this->sendEnqueuedHits();
-            $this->enqueuedUrls = [];
         }
 
         $hitType = strtoupper(substr($methodName, 7));
