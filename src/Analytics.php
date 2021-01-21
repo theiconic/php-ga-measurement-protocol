@@ -3,7 +3,6 @@
 namespace TheIconic\Tracking\GoogleAnalytics;
 
 use BadMethodCallException;
-use TheIconic\Tracking\GoogleAnalytics\Exception\EnqueueUrlsOverflowException;
 use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidPayloadDataException;
 use TheIconic\Tracking\GoogleAnalytics\Network\HttpClient;
 use TheIconic\Tracking\GoogleAnalytics\Network\PrepareUrl;
@@ -327,7 +326,6 @@ class Analytics
      * @var string
      */
     protected $batchEndpoint = '://www.google-analytics.com/batch';
-     
 
     /**
      * Indicates if the request is in debug mode(validating hits).
@@ -373,7 +371,7 @@ class Analytics
      * @var array
      */
     protected $options = [];
-    
+
     /**
      * Initializes to a list of all the available parameters to be sent in a hit.
      *
@@ -622,8 +620,8 @@ class Analytics
     protected function enqueueHit($methodName)
     {
 
-        if(count($this->enqueuedUrls) == 20) {
-            throw new EnqueueUrlsOverflowException();
+        if (count($this->enqueuedUrls) == 20) {
+            $this->sendEnqueuedHits();
         }
 
         $hitType = strtoupper(substr($methodName, 7));
@@ -643,7 +641,7 @@ class Analytics
      */
     protected function setAndValidateHit($hitType)
     {
-        
+
         $hitConstant = $this->getParameterClassConstant(
             'TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType::HIT_TYPE_' . $hitType,
             'Hit type ' . $hitType . ' is not defined, check spelling'
@@ -698,7 +696,7 @@ class Analytics
      */
     public function getUrl($onlyQuery = false)
     {
-        $prepareUrl = new PrepareUrl;
+        $prepareUrl = new PrepareUrl();
 
         return $prepareUrl->build(
             $this->getEndpoint(),
@@ -948,6 +946,16 @@ class Analytics
         $this->enqueuedUrls = [];
 
         return $this;
+    }
+
+    /**
+     * Determine if enqueued urls are present
+     *
+     * @return bool
+     */
+    public function hasEnqueuedUrls()
+    {
+        return count($this->enqueuedUrls) > 0;
     }
 
     /**
