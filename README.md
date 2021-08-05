@@ -23,13 +23,6 @@ Send data to Google Analytics from the server using PHP. This library fully impl
 * Content Experiments
 * Content Grouping
 
-## Sponsor
-
-If you use this library, please consider to [:heart: Sponsor](https://github.com/sponsors/jorgeborges). Reaching the goal you can see in my sponsor page will allow me to focus on:
-- Upgrading the library to support PHP version >=7.2
-- Keep dependencies up to date
-- Fix any critical bugs
-
 ## Installation
 
 Use Composer to install this package.
