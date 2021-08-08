@@ -51,7 +51,7 @@ Take notice v1 is no longer maintained and lacks newer features (such as Debug a
 
 ## Integrations
 You can use this package on its own, or use a convenient framework integration:
-* Laravel 4/5 - https://github.com/irazasyed/laravel-gamp
+* Laravel 5+ - https://github.com/irazasyed/laravel-gamp
 * Yii 2 - https://github.com/baibaratsky/yii2-ga-measurement-protocol
 * Symfony2 - https://github.com/fourlabsldn/GampBundle
 
