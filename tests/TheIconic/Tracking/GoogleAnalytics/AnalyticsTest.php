@@ -375,11 +375,22 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
         $this->analytics->sendEnqueuedHits();
     }
 
-    /**
-     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\EnqueueUrlsOverflowException
-     */
-    public function testEnqueueOverflowException()
+
+    public function testEnqueueAutomaticBatchSent()
     {
+        $httpClient = $this->getMock('TheIconic\Tracking\GoogleAnalytics\Network\HttpClient', ['batch']);
+        $this->analytics->setHttpClient($httpClient);
+
+        $httpClient->expects($this->once())
+            ->method('batch')
+            ->with(
+                'http://www.google-analytics.com/batch',
+                array_merge(
+                    ['v=1&tid=555&cid=666&dp=%5Cmypage&t=pageview'],
+                    array_fill(0, 19, 'v=1&tid=555&cid=666&dp=%5Cmypage2&t=pageview')
+                )
+            );
+
         $this->analytics
             ->setDebug(true)
             ->setProtocolVersion('1')
@@ -408,6 +419,23 @@ class AnalyticsTest extends \PHPUnit_Framework_TestCase
             ->enqueuePageview()
             ->enqueuePageview()
             ->enqueuePageview();
+    }
+
+    public function testHasEnqueuedUrls()
+    {
+        $this->analytics
+            ->setDebug(true)
+            ->setProtocolVersion('1')
+            ->setTrackingId('555')
+            ->setClientId('666')
+            ->setDocumentPath('\mypage')
+            ->enqueuePageview();
+
+        $this->assertTrue($this->analytics->hasEnqueuedUrls());
+
+        $this->analytics->emptyQueue();
+
+        $this->assertFalse($this->analytics->hasEnqueuedUrls());
     }
 
     public function testEmptyBatchHits()
