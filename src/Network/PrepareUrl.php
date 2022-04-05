@@ -45,7 +45,7 @@ class PrepareUrl
         if (!empty($this->cacheBuster)) {
             $this->payloadParameters['z'] = $this->cacheBuster;
         }
-        $query = http_build_query($this->payloadParameters, null, ini_get('arg_separator.output'), PHP_QUERY_RFC3986);
+        $query = http_build_query($this->payloadParameters, "", ini_get('arg_separator.output'), PHP_QUERY_RFC3986);
         return $onlyQuery ? $query : ($url . '?' . $query);
     }
 
