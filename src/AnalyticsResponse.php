@@ -37,6 +37,13 @@ class AnalyticsResponse implements AnalyticsResponseInterface
     protected $responseBody;
 
     /**
+     * Reason phrase.
+     *
+     * @var string
+     */
+    protected $reasonPhrase;
+
+    /**
      * Gets the relevant data from the Guzzle clients.
      *
      * @param RequestInterface $request
@@ -47,9 +54,11 @@ class AnalyticsResponse implements AnalyticsResponseInterface
         if ($response instanceof ResponseInterface) {
             $this->httpStatusCode = $response->getStatusCode();
             $this->responseBody = $response->getBody()->getContents();
+            $this->reasonPhrase = $response->getReasonPhrase();
         } elseif ($response instanceof PromiseInterface) {
             $this->httpStatusCode = null;
             $this->responseBody = null;
+            $this->reasonPhrase = null;
         } else {
             throw new \InvalidArgumentException(
                 'Second constructor argument "response" must be instance of ResponseInterface or PromiseInterface'
@@ -69,6 +78,17 @@ class AnalyticsResponse implements AnalyticsResponseInterface
     public function getHttpStatusCode()
     {
         return $this->httpStatusCode;
+    }
+
+    /**
+     * Gets the HTTP reason phrase.
+     *
+     * @api
+     * @return string
+     */
+    public function getReasonPhrase()
+    {
+        return $this->reasonPhrase;
     }
 
     /**
