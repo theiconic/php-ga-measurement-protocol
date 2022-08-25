@@ -18,6 +18,14 @@ interface AnalyticsResponseInterface
     public function getHttpStatusCode();
 
     /**
+     * Gets the HTTP reason phrase.
+     *
+     * @api
+     * @return string
+     */
+    public function getReasonPhrase();
+
+    /**
      * Gets the request URI used to get the response.
      *
      * @api

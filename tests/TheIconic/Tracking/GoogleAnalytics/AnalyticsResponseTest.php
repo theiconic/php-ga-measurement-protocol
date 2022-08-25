@@ -59,6 +59,15 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
             ->method('getUri')
             ->will($this->returnValue(new Uri('http://test-collector/hello')));
 
+        $this->mockRequest = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
+            ->setMethods(['getUri'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockRequest->expects($this->atLeast(1))
+            ->method('getReasonPhrase')
+            ->will($this->returnValue("ReasonPhrase"));
+
         $this->analyticsResponse = new AnalyticsResponse($this->mockRequest, $mockResponse);
 
 
@@ -105,6 +114,12 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('200', $this->analyticsResponse->getHttpStatusCode());
         $this->assertEquals(null, $this->analyticsResponseAsync->getHttpStatusCode());
+    }
+
+    public function testGetReasonPhrase()
+    {
+        $this->assertEquals('ReasonPhrase', $this->analyticsResponse->getReasonPhrase());
+        $this->assertEquals('ReasonPhrase', $this->analyticsResponseAsync->getReasonPhrase());
     }
 
     public function testGetUrl()
