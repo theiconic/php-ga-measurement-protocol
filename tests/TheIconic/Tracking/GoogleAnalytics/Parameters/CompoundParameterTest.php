@@ -3,15 +3,17 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 
 use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundTestParameter;
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidCompoundParameterException;
+use PHPUnit\Framework\TestCase;
 
-class CompoundParameterTest extends \PHPUnit_Framework_TestCase
+class CompoundParameterTest extends TestCase
 {
     /**
      * @var CompoundParameter
      */
     private $compoundParameter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->compoundParameter = new CompoundTestParameter(['sku' => 5, 'name' => 'hello', 'dimension_3' => 'yep']);
     }
@@ -27,19 +29,15 @@ class CompoundParameterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expect, $this->compoundParameter->getParameters());
     }
 
-    /**
-     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidCompoundParameterException
-     */
     public function testRequiredCompundParameter()
     {
+        $this->expectException(InvalidCompoundParameterException::class);
         (new CompoundTestParameter(['sku' => 5]));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidDataCompundParameter()
     {
+        $this->expectException(\InvalidArgumentException::class);
         (new CompoundTestParameter(['sku' => 5, 'name' => 'hello', 'dimensions_3' => 'yep']));
     }
 }

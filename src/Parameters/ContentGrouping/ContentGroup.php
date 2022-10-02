@@ -25,7 +25,7 @@ class ContentGroup extends SingleParameter
      *
      * @return int
      */
-    protected function maxIndex()
+    protected function maxIndex(): int
     {
         return 5;
     }

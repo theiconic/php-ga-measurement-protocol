@@ -8,8 +8,9 @@ use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundParameterTestCollection;
 use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundTestParameter;
 use TheIconic\Tracking\GoogleAnalytics\Tests\SingleTestParameter;
 use TheIconic\Tracking\GoogleAnalytics\Tests\SingleTestParameterIndexed;
+use PHPUnit\Framework\TestCase;
 
-class PrepareUrlTest extends \PHPUnit_Framework_TestCase
+class PrepareUrlTest extends TestCase
 {
     public function testBuild()
     {

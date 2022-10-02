@@ -56,7 +56,7 @@ abstract class CompoundParameter implements CompoundParameterInterface
      *
      * @throws InvalidCompoundParameterException
      */
-    public function __construct(array $compoundData)
+    public function __construct(array $compoundData = [])
     {
         foreach ($this->requiredParameters as $requiredParameter) {
             if (!array_key_exists($requiredParameter, $compoundData)) {
