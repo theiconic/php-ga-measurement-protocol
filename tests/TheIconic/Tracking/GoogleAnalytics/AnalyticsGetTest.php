@@ -2,11 +2,14 @@
 
 namespace TheIconic\Tracking\GoogleAnalytics;
 
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidIndexException;
+
+use PHPUnit\Framework\TestCase;
 /**
  * Class AnalyticsGetTest
  * @package TheIconic\Tracking\GoogleAnalytics
  */
-class AnalyticsGetTest extends \PHPUnit_Framework_TestCase
+class AnalyticsGetTest extends TestCase
 {
     /**
      * @var Analytics
@@ -18,8 +21,7 @@ class AnalyticsGetTest extends \PHPUnit_Framework_TestCase
      */
     private $analyticsSsl;
 
-
-    public function setUp()
+    public function setUp(): void
     {
         $this->analytics = new Analytics();
         $this->analyticsSsl = new Analytics(true);
@@ -75,15 +77,14 @@ class AnalyticsGetTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetInvalidParameter()
     {
+        $this->expectException(\BadMethodCallException::class);
         $this->analytics
             ->getNonExistant();
     }
 
-    /**
-     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidIndexException
-     */
     public function testGetInvalidIndexedParameter()
     {
+        $this->expectException(InvalidIndexException::class);
         $analytics = $this->analytics
             ->setProductImpressionListName('list name', 1)
             ->setProductImpressionListName('list test', 2);
@@ -138,7 +139,7 @@ class AnalyticsGetTest extends \PHPUnit_Framework_TestCase
 
         $this->analytics->addProduct($productData);
 
-        $productData = [
+        $productsData = [
             'sku' => 'AAAA-5555',
             'name' => 'Test Product',
             'brand' => 'Test Brand',
@@ -150,7 +151,7 @@ class AnalyticsGetTest extends \PHPUnit_Framework_TestCase
 
         $this->analytics->setProductImpressionListName('List_1', 1);
 
-        $this->analytics->addProductImpression($productData, 1);
+        $this->analytics->addProductImpression($productsData, 1);
 
         $this->assertEquals('AAAA-6666', $this->analytics->getProduct()[0]['sku']);
         $this->assertEquals('AAAA-5555', $this->analytics->getProductImpression(1)[0]['sku']);

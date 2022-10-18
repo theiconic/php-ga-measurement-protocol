@@ -5,8 +5,10 @@ namespace TheIconic\Tracking\GoogleAnalytics\Parameters;
 use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundParameterTestCollection;
 use TheIconic\Tracking\GoogleAnalytics\Tests\CompoundTestParameter;
 use TheIconic\Tracking\GoogleAnalytics\Tests\InvalidCompoundParameterTestCollection;
+use TheIconic\Tracking\GoogleAnalytics\Exception\InvalidNameException;
+use PHPUnit\Framework\TestCase;
 
-class CompoundParameterCollectionTest extends \PHPUnit_Framework_TestCase
+class CompoundParameterCollectionTest extends TestCase
 {
     /**
      *
@@ -14,16 +16,14 @@ class CompoundParameterCollectionTest extends \PHPUnit_Framework_TestCase
      */
     protected $testCollection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->testCollection = new CompoundParameterTestCollection(7);
     }
 
-    /**
-     * @expectedException \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidNameException
-     */
     public function testInvalidCompoundParameterCollection()
     {
+        $this->expectException(InvalidNameException::class);
         (new InvalidCompoundParameterTestCollection());
     }
 

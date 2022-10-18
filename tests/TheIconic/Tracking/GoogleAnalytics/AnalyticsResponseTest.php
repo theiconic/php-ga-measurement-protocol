@@ -4,8 +4,9 @@ namespace TheIconic\Tracking\GoogleAnalytics;
 
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
-class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
+class AnalyticsResponseTest extends TestCase
 {
     /**
      * @var AnalyticsResponse
@@ -27,7 +28,7 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
      */
     private $mockRequest;
 
-    public function setUp()
+    public function setUp(): void
     {
         $mockResponse = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
             ->setMethods(['getStatusCode', 'getBody'])
@@ -36,7 +37,7 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
 
         $mockResponse->expects($this->atLeast(1))
             ->method('getStatusCode')
-            ->will($this->returnValue('200'));
+            ->will($this->returnValue(200));
 
         $invalidBodyMock = $this->getMockBuilder('Psr\Http\Message\StreamInterface')
             ->disableOriginalConstructor()
@@ -61,7 +62,6 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->analyticsResponse = new AnalyticsResponse($this->mockRequest, $mockResponse);
 
-
         $mockResponseAsync = $this->getMockBuilder('GuzzleHttp\Promise\Promise')
             ->disableOriginalConstructor()
             ->getMock();
@@ -76,7 +76,7 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
 
         $mockDebugResponse->expects($this->atLeast(1))
             ->method('getStatusCode')
-            ->will($this->returnValue('200'));
+            ->will($this->returnValue(200));
 
         $bodyMock = $this->getMockBuilder('Psr\Http\Message\StreamInterface')
             ->disableOriginalConstructor()
@@ -93,11 +93,10 @@ class AnalyticsResponseTest extends \PHPUnit_Framework_TestCase
         $this->analyticsDebugResponse = new AnalyticsResponse($this->mockRequest, $mockDebugResponse);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testConstructorWithWrongResponseValue()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         new AnalyticsResponse($this->mockRequest, new \stdClass());
     }
 
