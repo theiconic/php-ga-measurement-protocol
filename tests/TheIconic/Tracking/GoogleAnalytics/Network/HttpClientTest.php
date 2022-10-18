@@ -3,8 +3,9 @@
 namespace TheIconic\Tracking\GoogleAnalytics\Network;
 
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
-class HttpClientTest extends \PHPUnit_Framework_TestCase
+class HttpClientTest extends TestCase
 {
     /**
      * @var HttpClient
@@ -16,7 +17,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
      */
     private $mockHttpClient;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->httpClient = new HttpClient();
     }
@@ -37,7 +38,8 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $guzzleClient->expects($this->never())->method('sendAsync');
         $this->httpClient->setClient($guzzleClient);
 
-        $this->setExpectedException(\UnexpectedValueException::class, $exceptionMessage);
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage($exceptionMessage);
 
         $this->httpClient->post('http://test-collector.com/collect?v=1', $options);
     }

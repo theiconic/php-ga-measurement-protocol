@@ -24,7 +24,7 @@ trait Indexable
      *
      * @return int
      */
-    protected function minIndex()
+    protected function minIndex(): int
     {
         return 1;
     }
@@ -34,7 +34,7 @@ trait Indexable
      *
      * @return int
      */
-    protected function maxIndex()
+    protected function maxIndex(): int
     {
         return 200;
     }
@@ -43,12 +43,12 @@ trait Indexable
      * Replaces a placeholder for the index passed.
      *
      * @param string $string
-     * @param int $index
+     * @param string $index
      * @return string
-     * @throws \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidIndexException
-     * @throws \TheIconic\Tracking\GoogleAnalytics\Exception\InvalidNameException
+     * @throws InvalidIndexException
+     * @throws InvalidNameException
      */
-    protected function addIndex($string, $index)
+    protected function addIndex(string $string, string $index): string
     {
         if (empty($string)) {
             throw new InvalidNameException('Name attribute not defined for class ' . get_class($this));

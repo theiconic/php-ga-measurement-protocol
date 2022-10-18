@@ -327,7 +327,7 @@ class Analytics
      * @var string
      */
     protected $batchEndpoint = '://www.google-analytics.com/batch';
-     
+
 
     /**
      * Indicates if the request is in debug mode(validating hits).
@@ -373,7 +373,7 @@ class Analytics
      * @var array
      */
     protected $options = [];
-    
+
     /**
      * Initializes to a list of all the available parameters to be sent in a hit.
      *
@@ -479,18 +479,9 @@ class Analytics
      * @param bool $isSsl
      * @param bool $isDisabled
      * @param array $options
-     * @throws \InvalidArgumentException
      */
-    public function __construct($isSsl = false, $isDisabled = false, array $options = [])
+    public function __construct(bool $isSsl = false, bool $isDisabled = false, array $options = [])
     {
-        if (!is_bool($isSsl)) {
-            throw new \InvalidArgumentException('First constructor argument "isSSL" must be boolean');
-        }
-
-        if (!is_bool($isDisabled)) {
-            throw new \InvalidArgumentException('Second constructor argument "isDisabled" must be boolean');
-        }
-
         if ($isSsl) {
             $this->uriScheme .= 's';
             $this->endpoint = str_replace('www', 'ssl', $this->endpoint);
@@ -643,7 +634,7 @@ class Analytics
      */
     protected function setAndValidateHit($hitType)
     {
-        
+
         $hitConstant = $this->getParameterClassConstant(
             'TheIconic\Tracking\GoogleAnalytics\Parameters\Hit\HitType::HIT_TYPE_' . $hitType,
             'Hit type ' . $hitType . ' is not defined, check spelling'
@@ -863,7 +854,7 @@ class Analytics
      *
      * @param $methodName
      * @param array $methodArguments
-     * @return string
+     * @return string|mixed
      * @throws \InvalidArgumentException
      */
     protected function getParameter($methodName, array $methodArguments)
@@ -893,13 +884,14 @@ class Analytics
         }
 
         /** @var SingleParameter $parameterObject */
-        $parameterObject = new $fullParameterClass($parameterIndex);
+        $parameterObject = $parameterIndex ? new $fullParameterClass($parameterIndex) : new $fullParameterClass();
 
-        if (!array_key_exists($parameterObject->getName(), $this->singleParameters)) {
+        $name = $parameterObject->getName()??null;
+        if (!array_key_exists($name, $this->singleParameters)) {
             return null;
         }
 
-        $currentParameterObject = $this->singleParameters[$parameterObject->getName()];
+        $currentParameterObject = $this->singleParameters[$name];
 
         return $currentParameterObject->getValue();
 
