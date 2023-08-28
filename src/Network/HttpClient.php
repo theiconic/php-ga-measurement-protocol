@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -48,7 +49,7 @@ class HttpClient
      */
     public function __destruct()
     {
-        Promise\unwrap(self::$promises);
+        Utils::unwrap(self::$promises);
     }
 
     /**
