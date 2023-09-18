@@ -48,7 +48,7 @@ class HttpClient
      */
     public function __destruct()
     {
-        Promise\unwrap(self::$promises);
+        Promise\Utils::unwrap(self::$promises);
     }
 
     /**
